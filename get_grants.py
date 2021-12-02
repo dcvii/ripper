@@ -44,13 +44,16 @@ def run_getter():
     cur.close()
 
     df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
-    df[[3]] = df[[3]].astype(str)
+    df.infer_objects()
+   # df = df.astype(str)
 
-    s = []
-    with open('test.out', 'wt') as f:
-        for _, row in df.iloc[:, 2:3].iterrows():
-            print(row, file=f)
-            #s.append = row.astype(str)
+    print(df)
+
+    # s = []
+    # with open('test.out', 'wt') as f:
+    #     for _, value in df.iloc[3].iteritem():
+    #         print(value, file=f)
+    #         #s.append = row.astype(str)
 
 
 
