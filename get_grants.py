@@ -47,8 +47,11 @@ def run_getter():
     df.infer_objects()
    # df = df.astype(str)
 
-    print(df)
-
+    #print(df.info)
+    print('writing')
+    d2 = df.pop(2)
+    d2.to_csv('out.csv')
+   
     # s = []
     # with open('test.out', 'wt') as f:
     #     for _, value in df.iloc[3].iteritem():
