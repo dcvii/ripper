@@ -12,8 +12,6 @@ from vertica_python.vertica.cursor import DEFAULT_BUFFER_SIZE
 def pull_grants(cur):
 
     s = open('sql/grants.sql', 'r')
-    
-
     return df
 
 
