@@ -21,8 +21,7 @@ def run_getter():
     with vertica_python.connect(**conn_info) as conn:
         cur = conn.cursor()
 
-        sql = open('sql/grants.sql', 'r')
-        cmd = ''
+        sql = open('sql/get_all_schemas.sql', 'r')
         for line in sql:
             cmd += line
         #print(sql.rstrip())
@@ -78,7 +77,7 @@ def putter():
 
 
 
-lname = 'log/grants.log'
+lname = 'log/schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 run_getter()
