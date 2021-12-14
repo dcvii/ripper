@@ -22,11 +22,12 @@ def run_getter():
     with vertica_python.connect(**conn_info) as conn:
         cur = conn.cursor()
 
+        # multiline single sql statement
         sql = open('sql/get_all_schemas.sql', 'r')
         cmd = ''
         for line in sql:
             cmd += line
-        #print(sql.rstrip())
+        
         try:
             cur.execute(cmd)
         except:
@@ -37,6 +38,7 @@ def run_getter():
             results = cur.fetchall()
             df = pd.DataFrame(results)
             rcnt = df.shape[0]
+            
         finally:
             logging.info('-----')
             #logging.info(sql.rstrip())
@@ -44,14 +46,18 @@ def run_getter():
         
     cur.close()
 
-    # df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
-    df.infer_objects()
-   # df = df.astype(str)
+    bucket = os.getenv("S3_BUCKET")
+    # what are the results.
+    for row in results:
+        schema, table, ct = row
 
-    #print(df.info)
+        target = "(directory='"+bucket+"/"+schema+"/"+table+"')"
+        outstring = "EXPORT TO PARQUET "+target+" AS SELECT * FROM "+schema+"."+table+";"
+        print(outstring)
+
     print('writing file')
-    #d2 = df.pop(2)
-    print(df.to_string(index=False, header=False))
+
+    # print(df.to_string(index=False, header=False))
     scratch = df.to_string(index=False, header=False)
     f = open('blah.csv','w')
     f.write(scratch)
@@ -60,16 +66,13 @@ def run_getter():
     # using csv library
     f = open('vert.csv','w')
     writer = csv.writer(f, delimiter='|', lineterminator='\n')
-    for line in scratch:
-        writer.writerow(line)
+    for line in results:
+        writer.writerow(line)  
     
+    ## pure datafram
     df.to_csv('out_schema.csv')
    
-    # s = []
-    # with open('test.out', 'wt') as f:
-    #     for _, value in df.iloc[3].iteritem():
-    #         print(value, file=f)
-    #         #s.append = row.astype(str)
+ 
 
 def putter():
     # take out.csv and coput into table. 

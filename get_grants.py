@@ -51,12 +51,7 @@ def run_getter():
     print('writing')
     d2 = df.pop(2)
     d2.to_csv('out.csv')
-   
-    # s = []
-    # with open('test.out', 'wt') as f:
-    #     for _, value in df.iloc[3].iteritem():
-    #         print(value, file=f)
-    #         #s.append = row.astype(str)
+
 
 def putter():
     # take out.csv and coput into table. 
