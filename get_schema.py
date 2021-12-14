@@ -33,6 +33,7 @@ def run_getter():
         except:
             print('FAIL')
             logging.error("SQL Query Failure")
+            rcnt = 0
 
         else:
             results = cur.fetchall()
@@ -41,36 +42,41 @@ def run_getter():
             
         finally:
             logging.info('-----')
-            #logging.info(sql.rstrip())
             logging.info("records: %s", rcnt)
         
     cur.close()
 
     bucket = os.getenv("S3_BUCKET")
     # what are the results.
+    f = open('scripts/parquet.sql', 'w')
+
     for row in results:
         schema, table, ct = row
 
         target = "(directory='"+bucket+"/"+schema+"/"+table+"')"
-        outstring = "EXPORT TO PARQUET "+target+" AS SELECT * FROM "+schema+"."+table+";"
+        outstring = "EXPORT TO PARQUET "+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
         print(outstring)
+        outstring+="\n"
+        f.write(outstring)
 
-    print('writing file')
+    f.close()
+
+   #  print('writing file')
 
     # print(df.to_string(index=False, header=False))
-    scratch = df.to_string(index=False, header=False)
-    f = open('blah.csv','w')
-    f.write(scratch)
-    f.close
+    # scratch = df.to_string(index=False, header=False)
+    # f = open('blah.csv','w')
+    # f.write(scratch)
+    # f.close
 
-    # using csv library
-    f = open('vert.csv','w')
-    writer = csv.writer(f, delimiter='|', lineterminator='\n')
-    for line in results:
-        writer.writerow(line)  
+    # # using csv library
+    # f = open('vert.csv','w')
+    # writer = csv.writer(f, delimiter='|', lineterminator='\n')
+    # for line in results:
+    #     writer.writerow(line)  
     
-    ## pure datafram
-    df.to_csv('out_schema.csv')
+    # ## pure datafram
+    # df.to_csv('out_schema.csv')
    
  
 

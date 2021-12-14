@@ -331,3 +331,136 @@ order by 1,3;
 2021-12-14 14:03:48,393 records: 46
 2021-12-14 14:03:48,393 Close the connection
 2021-12-14 14:03:48,393 Close the cursor
+2021-12-14 14:14:50,193 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 14:14:50,310 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 14:14:50,440 User dbadmin successfully authenticated
+2021-12-14 14:14:50,440 Connection is ready
+2021-12-14 14:14:50,441 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:14:50,516 -----
+2021-12-14 14:14:50,516 Close the connection
+2021-12-14 14:15:28,499 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 14:15:28,559 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 14:15:28,688 User dbadmin successfully authenticated
+2021-12-14 14:15:28,689 Connection is ready
+2021-12-14 14:15:28,690 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:15:28,762 -----
+2021-12-14 14:15:28,762 records: 46
+2021-12-14 14:15:28,762 Close the connection
+2021-12-14 14:15:28,763 Close the cursor
+2021-12-14 14:16:44,417 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 14:16:44,456 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 14:16:44,579 User dbadmin successfully authenticated
+2021-12-14 14:16:44,580 Connection is ready
+2021-12-14 14:16:44,580 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:16:44,646 -----
+2021-12-14 14:16:44,646 records: 46
+2021-12-14 14:16:44,646 Close the connection
+2021-12-14 14:16:44,647 Close the cursor
+2021-12-14 14:23:02,313 Connecting as user "dbadmin" to database "teva" on host "10.5.10.23" with port 5433
+2021-12-14 14:23:02,467 Establishing connection to host "10.5.10.23" on port 5433
+2021-12-14 14:23:02,905 User dbadmin successfully authenticated
+2021-12-14 14:23:02,906 Connection is ready
+2021-12-14 14:23:02,907 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:23:03,050 SQL Query Failure
+2021-12-14 14:23:03,051 -----
+2021-12-14 14:23:03,051 Close the connection
+2021-12-14 14:23:29,629 Connecting as user "dbadmin" to database "teva" on host "10.5.10.23" with port 5433
+2021-12-14 14:23:29,657 Establishing connection to host "10.5.10.23" on port 5433
+2021-12-14 14:23:30,094 User dbadmin successfully authenticated
+2021-12-14 14:23:30,095 Connection is ready
+2021-12-14 14:23:30,095 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:23:30,242 SQL Query Failure
+2021-12-14 14:23:30,242 -----
+2021-12-14 14:23:30,242 Close the connection
+2021-12-14 14:31:40,300 Connecting as user "dbadmin" to database "teva" on host "10.5.10.147" with port 5433
+2021-12-14 14:31:40,353 Establishing connection to host "10.5.10.147" on port 5433
+2021-12-14 14:31:40,805 User dbadmin successfully authenticated
+2021-12-14 14:31:40,805 Connection is ready
+2021-12-14 14:31:40,806 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:31:40,963 SQL Query Failure
+2021-12-14 14:31:40,964 -----
+2021-12-14 14:31:40,964 records: 0
+2021-12-14 14:31:40,964 Close the connection
+2021-12-14 14:31:40,964 Close the cursor
+2021-12-14 14:33:04,406 Connecting as user "dbadmin" to database "teva" on host "10.5.10.147" with port 5433
+2021-12-14 14:33:04,442 Establishing connection to host "10.5.10.147" on port 5433
+2021-12-14 14:33:04,881 User dbadmin successfully authenticated
+2021-12-14 14:33:04,882 Connection is ready
+2021-12-14 14:33:04,882 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:33:05,466 -----
+2021-12-14 14:33:05,466 records: 1880
+2021-12-14 14:33:05,467 Close the connection
+2021-12-14 14:33:05,467 Close the cursor
+2021-12-14 14:36:52,033 Connecting as user "dbadmin" to database "teva" on host "10.5.10.147" with port 5433
+2021-12-14 14:36:52,283 Establishing connection to host "10.5.10.147" on port 5433
+2021-12-14 14:36:52,727 User dbadmin successfully authenticated
+2021-12-14 14:36:52,727 Connection is ready
+2021-12-14 14:36:52,728 Execute simple query: [select 
+    table_schema,
+    table_name,
+    row_count
+from
+    migration.source_schemas
+    where is_partitioned is false
+order by 1,3;
+]
+2021-12-14 14:36:53,288 -----
+2021-12-14 14:36:53,288 records: 1880
+2021-12-14 14:36:53,288 Close the connection
+2021-12-14 14:36:53,289 Close the cursor
