@@ -1,0 +1,129 @@
+2021-12-13 15:17:52,063 Connecting as user "dbadmin" to database "teva" on host "10.5.10.23" with port 5433
+2021-12-13 15:17:52,155 Establishing connection to host "10.5.10.23" on port 5433
+2021-12-13 15:18:40,433 Connecting as user "dbadmin" to database "teva" on host "10.5.10.23" with port 5433
+2021-12-13 15:18:40,470 Establishing connection to host "10.5.10.23" on port 5433
+2021-12-13 15:19:44,363 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-13 15:19:44,391 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-13 15:19:44,523 User dbadmin successfully authenticated
+2021-12-13 15:19:44,524 Connection is ready
+2021-12-13 15:19:44,525 Close the connection
+2021-12-13 15:20:44,321 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-13 15:20:44,350 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-13 15:20:44,476 User dbadmin successfully authenticated
+2021-12-13 15:20:44,476 Connection is ready
+2021-12-13 15:20:44,477 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-13 15:20:44,543 -----
+2021-12-13 15:20:44,543 records: 46
+2021-12-13 15:20:44,543 Close the connection
+2021-12-13 15:20:44,543 Close the cursor
+2021-12-14 12:06:13,232 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:06:13,296 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:06:13,411 User dbadmin successfully authenticated
+2021-12-14 12:06:13,412 Connection is ready
+2021-12-14 12:06:13,414 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:06:13,480 -----
+2021-12-14 12:06:13,481 records: 46
+2021-12-14 12:06:13,481 Close the connection
+2021-12-14 12:06:13,481 Close the cursor
+2021-12-14 12:09:46,353 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:09:46,413 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:09:46,543 User dbadmin successfully authenticated
+2021-12-14 12:09:46,544 Connection is ready
+2021-12-14 12:09:46,544 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:09:46,613 -----
+2021-12-14 12:09:46,613 records: 46
+2021-12-14 12:09:46,613 Close the connection
+2021-12-14 12:09:46,613 Close the cursor
+2021-12-14 12:10:55,194 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:10:55,223 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:10:55,349 User dbadmin successfully authenticated
+2021-12-14 12:10:55,349 Connection is ready
+2021-12-14 12:10:55,350 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:10:55,412 -----
+2021-12-14 12:10:55,412 records: 46
+2021-12-14 12:10:55,412 Close the connection
+2021-12-14 12:10:55,412 Close the cursor
+2021-12-14 12:12:40,151 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:12:40,199 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:12:40,330 User dbadmin successfully authenticated
+2021-12-14 12:12:40,330 Connection is ready
+2021-12-14 12:12:40,331 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:12:40,395 -----
+2021-12-14 12:12:40,395 records: 46
+2021-12-14 12:12:40,395 Close the connection
+2021-12-14 12:12:40,395 Close the cursor
+2021-12-14 12:18:51,632 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:18:51,749 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:18:51,873 User dbadmin successfully authenticated
+2021-12-14 12:18:51,873 Connection is ready
+2021-12-14 12:18:51,874 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:18:51,935 -----
+2021-12-14 12:18:51,935 records: 46
+2021-12-14 12:18:51,935 Close the connection
+2021-12-14 12:18:51,936 Close the cursor
+2021-12-14 12:26:02,704 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:26:02,820 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:26:02,950 User dbadmin successfully authenticated
+2021-12-14 12:26:02,951 Connection is ready
+2021-12-14 12:26:02,952 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:26:03,015 -----
+2021-12-14 12:26:03,015 records: 46
+2021-12-14 12:26:03,015 Close the connection
+2021-12-14 12:26:03,015 Close the cursor
+2021-12-14 12:32:40,447 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-14 12:32:40,589 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-14 12:32:40,729 User dbadmin successfully authenticated
+2021-12-14 12:32:40,730 Connection is ready
+2021-12-14 12:32:40,730 Execute simple query: [select 
+    table_schema,
+    table_name
+from
+    migration.source_schemas
+    where is_partitioned is false;
+]
+2021-12-14 12:32:40,799 -----
+2021-12-14 12:32:40,799 records: 46
+2021-12-14 12:32:40,799 Close the connection
+2021-12-14 12:32:40,800 Close the cursor

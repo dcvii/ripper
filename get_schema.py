@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 import pandas as pd
+import csv
 
 
 def run_getter():
@@ -22,6 +23,7 @@ def run_getter():
         cur = conn.cursor()
 
         sql = open('sql/get_all_schemas.sql', 'r')
+        cmd = ''
         for line in sql:
             cmd += line
         #print(sql.rstrip())
@@ -42,14 +44,26 @@ def run_getter():
         
     cur.close()
 
-    df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
+    # df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
     df.infer_objects()
    # df = df.astype(str)
 
     #print(df.info)
-    print('writing')
-    d2 = df.pop(2)
-    d2.to_csv('out.csv')
+    print('writing file')
+    #d2 = df.pop(2)
+    print(df.to_string(index=False, header=False))
+    scratch = df.to_string(index=False, header=False)
+    f = open('blah.csv','w')
+    f.write(scratch)
+    f.close
+
+    # using csv library
+    f = open('vert.csv','w')
+    writer = csv.writer(f, delimiter='|', lineterminator='\n')
+    for line in scratch:
+        writer.writerow(line)
+    
+    df.to_csv('out_schema.csv')
    
     # s = []
     # with open('test.out', 'wt') as f:
@@ -77,7 +91,7 @@ def putter():
 
 
 
-lname = 'log/schemas.log'
+lname = 'log/get_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 run_getter()

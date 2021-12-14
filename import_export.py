@@ -96,6 +96,8 @@ def s3_import_source(schema,table):
 
 def main():
 
+    schemas_list = fetch_all_schemas()
+    
     ddl_files = os.listdir('ddl/')
     s_count = 0
     for fname in ddl_files:

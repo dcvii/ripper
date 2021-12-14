@@ -7,8 +7,6 @@ processed  boolean,
 ts_run_date timestamp
 );
 
-truncate table migration.target_grants;
-
 
 create table if not exists migration.target_grants_src (
 id    integer,
@@ -17,7 +15,7 @@ script varchar(500)
 
 
 create table if not exists migration.source_schemas as 
-select 
+(select 
  tables.table_schema,
  tables.table_name,
  is_partitioned,
@@ -93,4 +91,6 @@ FROM (SELECT t.table_schema,
 ) row_count
 WHERE row_count > 0
 
-order by 1,4,3;
+order by 1,4,3
+);
+

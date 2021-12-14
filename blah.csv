@@ -1,0 +1,46 @@
+     atlas             dealer_dim_src
+   brdbeer                session_dim
+    cortex                   for_mike
+masterdata              alteryx_input
+     aetna          provider_base_src
+     atlas               arrivals_src
+    cortex                 new_flight
+ migration          source_schemas_vw
+     aetna provider_specialty_sql_src
+     atlas                 region_dim
+     atlas                   date_dim
+       ehr           icd_nine_lkp_src
+masterdata                 places_src
+     aetna      provider_base_db2_src
+     aetna       provider_loc_sql_src
+       ehr            departments_src
+     atlas               zip_code_lkp
+      cops             event_flx_keys
+       ehr               accounts_src
+masterdata               names_01_src
+   brdbeer                 user_agent
+      cops                  event_flx
+      drug                  ctrx2_src
+ migration          target_grants_src
+    survey           general_info_src
+     aetna              specialty_int
+     atlas                mock_dealer
+     atlas             vehicle_config
+     click                  main_fact
+       ehr               patients_src
+     aetna          provider_base_dup
+     atlas           cust_dim_vpy_src
+     atlas                 sales_fact
+   brdbeer             page_dimension
+       ehr              hospitals_src
+     aetna                  specialty
+ logistics                  timetable
+    survey                 opioid_src
+    survey                 hcahps_src
+     aetna      provider_base_sql_src
+     atlas                   port_dim
+     atlas               cust_dim_src
+    cortex                  iata_xref
+     aetna provider_specialty_db2_src
+       ehr             encounters_src
+masterdata                   lsad_lkp
