@@ -16,29 +16,42 @@ def chunker(stream):
 def get_chunks():
     i = 0
     c = 0
+    sql = {}
     chunk = {}
     lines = []
-    with open('sql/grants.sql', 'r') as file:
+    with open('scripts/blah.sql', 'r') as file:
         for line in file:
 
-            print("line: ",i,line)
-            lines+= line
+            logging.info("line: {} {}".format(i,line.strip()))
+            sql[i] = line.strip()
+            lines.append(sql)
 
             m0 = re.search(r";$",line)
             if m0 != None:         
                 chunk[c] = lines
                 c+=1
-                lines = []
+                lines.clear()
             i+=1
         
         print("number of chunks: ", c)
         file.close()
     
-    for cc in chunk:
-        print(cc, chunk[cc])
-   
+    return chunk
+
+
+def query_chunks(qset):
+    
+    for v in qset.keys():
+        print(qset[v])
+
 
 
 lname = 'log/chunker.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
-get_chunks()
+h = get_chunks()
+
+for qset in h:
+    print(qset)
+    for v in qset.values():
+        print(v)
+
