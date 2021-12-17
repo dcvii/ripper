@@ -1,174 +1,130 @@
-2021-12-16 16:58:13,019 chunk: 0 line: 0 end: True select count(*) from ehr.encounters_src;
-2021-12-16 16:58:13,019 chunk: 1 line: 0 end: True select count(*) from ehr.encounters_src;
-2021-12-16 16:58:13,019 chunk: 2 line: 0 end: True create schema if not exists migration;
-2021-12-16 16:58:13,019 chunk: 3 line: 0 end: False create table if not exists migration.target_grants (
-2021-12-16 16:58:13,019 chunk: 3 line: 1 end: False id    integer,
-2021-12-16 16:58:13,019 chunk: 3 line: 2 end: False script varchar(500),
-2021-12-16 16:58:13,019 chunk: 3 line: 3 end: False processed  boolean,
-2021-12-16 16:58:13,019 chunk: 3 line: 4 end: False ts_run_date timestamp
-2021-12-16 16:58:13,020 chunk: 3 line: 5 end: True );
-2021-12-16 16:58:13,020 chunk: 4 line: 0 end: False create table if not exists migration.target_grants_src (
-2021-12-16 16:58:13,020 chunk: 4 line: 1 end: False id    integer,
-2021-12-16 16:58:13,020 chunk: 4 line: 2 end: False script varchar(500)
-2021-12-16 16:58:13,020 chunk: 4 line: 3 end: True );
-2021-12-16 16:58:13,020 chunk: 5 line: 0 end: False select
-2021-12-16 16:58:13,020 chunk: 5 line: 1 end: False tables.table_schema,
-2021-12-16 16:58:13,020 chunk: 5 line: 2 end: False tables.table_name,
-2021-12-16 16:58:13,020 chunk: 5 line: 3 end: False is_partitioned,
-2021-12-16 16:58:13,020 chunk: 5 line: 4 end: False row_count,
-2021-12-16 16:58:13,020 chunk: 5 line: 5 end: False partition_expression
-2021-12-16 16:58:13,020 chunk: 5 line: 6 end: False from
-2021-12-16 16:58:13,020 chunk: 5 line: 7 end: False (
-2021-12-16 16:58:13,020 chunk: 5 line: 8 end: False select
-2021-12-16 16:58:13,020 chunk: 5 line: 9 end: False table_schema,
-2021-12-16 16:58:13,020 chunk: 5 line: 10 end: False table_name,
-2021-12-16 16:58:13,020 chunk: 5 line: 11 end: False partition_expression,
-2021-12-16 16:58:13,020 chunk: 5 line: 12 end: False table_definition,
-2021-12-16 16:58:13,020 chunk: 5 line: 13 end: False length(partition_expression)>0 is_partitioned
-2021-12-16 16:58:13,020 chunk: 5 line: 14 end: False from
-2021-12-16 16:58:13,020 chunk: 5 line: 15 end: False v_catalog.tables
-2021-12-16 16:58:13,021 chunk: 5 line: 16 end: False where
-2021-12-16 16:58:13,021 chunk: 5 line: 17 end: False length(table_definition) = 0 -- skip external tables
-2021-12-16 16:58:13,021 chunk: 5 line: 18 end: False and not is_system_table      -- not system table
-2021-12-16 16:58:13,021 chunk: 5 line: 19 end: False and not is_temp_table        -- not temp table
-2021-12-16 16:58:13,021 chunk: 5 line: 20 end: False ) tables
-2021-12-16 16:58:13,021 chunk: 5 line: 21 end: False natural join
-2021-12-16 16:58:13,021 chunk: 5 line: 22 end: False (
-2021-12-16 16:58:13,021 chunk: 5 line: 23 end: False select
-2021-12-16 16:58:13,021 chunk: 5 line: 24 end: False distinct table_schema, table_name
-2021-12-16 16:58:13,021 chunk: 5 line: 25 end: False from
-2021-12-16 16:58:13,021 chunk: 5 line: 26 end: False v_catalog.columns
-2021-12-16 16:58:13,021 chunk: 5 line: 27 end: False group by
-2021-12-16 16:58:13,021 chunk: 5 line: 28 end: False table_schema,
-2021-12-16 16:58:13,021 chunk: 5 line: 29 end: False table_name
-2021-12-16 16:58:13,021 chunk: 5 line: 30 end: False minus
-2021-12-16 16:58:13,021 chunk: 5 line: 31 end: False select
-2021-12-16 16:58:13,021 chunk: 5 line: 32 end: False distinct table_schema, table_name
-2021-12-16 16:58:13,021 chunk: 5 line: 33 end: False from
-2021-12-16 16:58:13,021 chunk: 5 line: 34 end: False v_catalog.columns
-2021-12-16 16:58:13,021 chunk: 5 line: 35 end: False where
-2021-12-16 16:58:13,021 chunk: 5 line: 36 end: False data_type in ('time', 'timetz', 'interval')
-2021-12-16 16:58:13,021 chunk: 5 line: 37 end: False OR
-2021-12-16 16:58:13,021 chunk: 5 line: 38 end: False numeric_precision > 38
-2021-12-16 16:58:13,021 chunk: 5 line: 39 end: False group by
-2021-12-16 16:58:13,021 chunk: 5 line: 40 end: False table_schema,
-2021-12-16 16:58:13,021 chunk: 5 line: 41 end: False table_name
-2021-12-16 16:58:13,022 chunk: 5 line: 42 end: False ) col_types
-2021-12-16 16:58:13,022 chunk: 5 line: 43 end: False natural join
-2021-12-16 16:58:13,022 chunk: 5 line: 44 end: False (
-2021-12-16 16:58:13,022 chunk: 5 line: 45 end: False SELECT
-2021-12-16 16:58:13,022 chunk: 5 line: 46 end: False table_schema,
-2021-12-16 16:58:13,022 chunk: 5 line: 47 end: False table_name,
-2021-12-16 16:58:13,022 chunk: 5 line: 48 end: False NVL(CASE WHEN NOT is_segmented THEN (row_count / node_cnt)::INT ELSE row_count END, 0) row_count
-2021-12-16 16:58:13,022 chunk: 5 line: 49 end: False FROM (SELECT t.table_schema,
-2021-12-16 16:58:13,022 chunk: 5 line: 50 end: False t.table_name,
-2021-12-16 16:58:13,022 chunk: 5 line: 51 end: False ps.projection_name,
-2021-12-16 16:58:13,022 chunk: 5 line: 52 end: False (SELECT MIN(is_segmented)
-2021-12-16 16:58:13,022 chunk: 5 line: 53 end: False FROM projections p
-2021-12-16 16:58:13,022 chunk: 5 line: 54 end: False WHERE p.projection_name = ps.projection_name
-2021-12-16 16:58:13,022 chunk: 5 line: 55 end: False AND p.projection_schema = ps.anchor_table_schema) is_segmented,
-2021-12-16 16:58:13,022 chunk: 5 line: 56 end: False node_cnt,
-2021-12-16 16:58:13,022 chunk: 5 line: 57 end: False SUM(ps.row_count - NVL(dv.deleted_row_count, 0)) row_count
-2021-12-16 16:58:13,022 chunk: 5 line: 58 end: False FROM v_catalog.tables t
-2021-12-16 16:58:13,023 chunk: 5 line: 59 end: False LEFT JOIN projection_storage ps
-2021-12-16 16:58:13,023 chunk: 5 line: 60 end: False ON t.table_id = ps.anchor_table_id
-2021-12-16 16:58:13,023 chunk: 5 line: 61 end: False LEFT JOIN delete_vectors dv
-2021-12-16 16:58:13,023 chunk: 5 line: 62 end: False ON dv.node_name = ps.node_name
-2021-12-16 16:58:13,023 chunk: 5 line: 63 end: False AND dv.schema_name = ps.anchor_table_schema
-2021-12-16 16:58:13,023 chunk: 5 line: 64 end: False AND dv.projection_name = ps.projection_name
-2021-12-16 16:58:13,023 chunk: 5 line: 65 end: False CROSS JOIN (SELECT COUNT(1) node_cnt FROM nodes WHERE node_type = 'PERMANENT') n
-2021-12-16 16:58:13,023 chunk: 5 line: 66 end: False GROUP BY 1, 2, 3, 4, 5
-2021-12-16 16:58:13,023 chunk: 5 line: 67 end: False LIMIT 1 OVER(PARTITION BY t.table_schema, t.table_name ORDER BY 1)) foo
-2021-12-16 16:58:13,023 chunk: 5 line: 68 end: False ) row_count
-2021-12-16 16:58:13,023 chunk: 5 line: 69 end: False WHERE row_count > 0
-2021-12-16 16:58:13,023 chunk: 5 line: 70 end: True order by 4,1,2,3;
-2021-12-16 16:58:13,023 chunk: 6 line: 0 end: False create table if not exists migration.source_schemas as
-2021-12-16 16:58:13,023 chunk: 6 line: 1 end: False (select
-2021-12-16 16:58:13,023 chunk: 6 line: 2 end: False tables.table_schema,
-2021-12-16 16:58:13,023 chunk: 6 line: 3 end: False tables.table_name,
-2021-12-16 16:58:13,023 chunk: 6 line: 4 end: False is_partitioned,
-2021-12-16 16:58:13,023 chunk: 6 line: 5 end: False row_count,
-2021-12-16 16:58:13,023 chunk: 6 line: 6 end: False partition_expression
-2021-12-16 16:58:13,024 chunk: 6 line: 7 end: False from
-2021-12-16 16:58:13,024 chunk: 6 line: 8 end: False (
-2021-12-16 16:58:13,024 chunk: 6 line: 9 end: False select
-2021-12-16 16:58:13,024 chunk: 6 line: 10 end: False table_schema,
-2021-12-16 16:58:13,024 chunk: 6 line: 11 end: False table_name,
-2021-12-16 16:58:13,024 chunk: 6 line: 12 end: False partition_expression,
-2021-12-16 16:58:13,024 chunk: 6 line: 13 end: False table_definition,
-2021-12-16 16:58:13,024 chunk: 6 line: 14 end: False length(partition_expression)>0 is_partitioned
-2021-12-16 16:58:13,024 chunk: 6 line: 15 end: False from
-2021-12-16 16:58:13,024 chunk: 6 line: 16 end: False v_catalog.tables
-2021-12-16 16:58:13,024 chunk: 6 line: 17 end: False where
-2021-12-16 16:58:13,024 chunk: 6 line: 18 end: False length(table_definition) = 0 -- skip external tables
-2021-12-16 16:58:13,024 chunk: 6 line: 19 end: False and not is_system_table      -- not system table
-2021-12-16 16:58:13,025 chunk: 6 line: 20 end: False and not is_temp_table        -- not temp table
-2021-12-16 16:58:13,025 chunk: 6 line: 21 end: False ) tables
-2021-12-16 16:58:13,025 chunk: 6 line: 22 end: False natural join
-2021-12-16 16:58:13,025 chunk: 6 line: 23 end: False (
-2021-12-16 16:58:13,025 chunk: 6 line: 24 end: False select
-2021-12-16 16:58:13,025 chunk: 6 line: 25 end: False distinct table_schema, table_name
-2021-12-16 16:58:13,025 chunk: 6 line: 26 end: False from
-2021-12-16 16:58:13,025 chunk: 6 line: 27 end: False v_catalog.columns
-2021-12-16 16:58:13,025 chunk: 6 line: 28 end: False group by
-2021-12-16 16:58:13,025 chunk: 6 line: 29 end: False table_schema,
-2021-12-16 16:58:13,025 chunk: 6 line: 30 end: False table_name
-2021-12-16 16:58:13,025 chunk: 6 line: 31 end: False minus
-2021-12-16 16:58:13,025 chunk: 6 line: 32 end: False select
-2021-12-16 16:58:13,025 chunk: 6 line: 33 end: False distinct table_schema, table_name
-2021-12-16 16:58:13,025 chunk: 6 line: 34 end: False from
-2021-12-16 16:58:13,025 chunk: 6 line: 35 end: False v_catalog.columns
-2021-12-16 16:58:13,025 chunk: 6 line: 36 end: False where
-2021-12-16 16:58:13,026 chunk: 6 line: 37 end: False data_type in ('time', 'timetz', 'interval')
-2021-12-16 16:58:13,026 chunk: 6 line: 38 end: False OR
-2021-12-16 16:58:13,026 chunk: 6 line: 39 end: False numeric_precision > 38
-2021-12-16 16:58:13,026 chunk: 6 line: 40 end: False group by
-2021-12-16 16:58:13,026 chunk: 6 line: 41 end: False table_schema,
-2021-12-16 16:58:13,026 chunk: 6 line: 42 end: False table_name
-2021-12-16 16:58:13,026 chunk: 6 line: 43 end: False ) col_types
-2021-12-16 16:58:13,026 chunk: 6 line: 44 end: False natural join
-2021-12-16 16:58:13,026 chunk: 6 line: 45 end: False (
-2021-12-16 16:58:13,026 chunk: 6 line: 46 end: False SELECT
-2021-12-16 16:58:13,026 chunk: 6 line: 47 end: False table_schema,
-2021-12-16 16:58:13,026 chunk: 6 line: 48 end: False table_name,
-2021-12-16 16:58:13,026 chunk: 6 line: 49 end: False NVL(CASE WHEN NOT is_segmented THEN (row_count / node_cnt)::INT ELSE row_count END, 0) row_count
-2021-12-16 16:58:13,026 chunk: 6 line: 50 end: False FROM (SELECT t.table_schema,
-2021-12-16 16:58:13,026 chunk: 6 line: 51 end: False t.table_name,
-2021-12-16 16:58:13,026 chunk: 6 line: 52 end: False ps.projection_name,
-2021-12-16 16:58:13,026 chunk: 6 line: 53 end: False (SELECT MIN(is_segmented)
-2021-12-16 16:58:13,027 chunk: 6 line: 54 end: False FROM projections p
-2021-12-16 16:58:13,027 chunk: 6 line: 55 end: False WHERE p.projection_name = ps.projection_name
-2021-12-16 16:58:13,027 chunk: 6 line: 56 end: False AND p.projection_schema = ps.anchor_table_schema) is_segmented,
-2021-12-16 16:58:13,027 chunk: 6 line: 57 end: False node_cnt,
-2021-12-16 16:58:13,027 chunk: 6 line: 58 end: False SUM(ps.row_count - NVL(dv.deleted_row_count, 0)) row_count
-2021-12-16 16:58:13,027 chunk: 6 line: 59 end: False FROM v_catalog.tables t
-2021-12-16 16:58:13,027 chunk: 6 line: 60 end: False LEFT JOIN projection_storage ps
-2021-12-16 16:58:13,027 chunk: 6 line: 61 end: False ON t.table_id = ps.anchor_table_id
-2021-12-16 16:58:13,027 chunk: 6 line: 62 end: False LEFT JOIN delete_vectors dv
-2021-12-16 16:58:13,027 chunk: 6 line: 63 end: False ON dv.node_name = ps.node_name
-2021-12-16 16:58:13,027 chunk: 6 line: 64 end: False AND dv.schema_name = ps.anchor_table_schema
-2021-12-16 16:58:13,027 chunk: 6 line: 65 end: False AND dv.projection_name = ps.projection_name
-2021-12-16 16:58:13,027 chunk: 6 line: 66 end: False CROSS JOIN (SELECT COUNT(1) node_cnt FROM nodes WHERE node_type = 'PERMANENT') n
-2021-12-16 16:58:13,027 chunk: 6 line: 67 end: False GROUP BY 1, 2, 3, 4, 5
-2021-12-16 16:58:13,027 chunk: 6 line: 68 end: False LIMIT 1 OVER(PARTITION BY t.table_schema, t.table_name ORDER BY 1)) foo
-2021-12-16 16:58:13,027 chunk: 6 line: 69 end: False ) row_count
-2021-12-16 16:58:13,027 chunk: 6 line: 70 end: False WHERE row_count > 0
-2021-12-16 16:58:13,027 chunk: 6 line: 71 end: False order by 1,4,3
-2021-12-16 16:58:13,027 chunk: 6 line: 72 end: True );
-2021-12-16 16:58:13,027 chunk: 7 line: 0 end: True select count(*) from ehr.encounte_src;
-2021-12-16 16:58:13,027 chunk: 8 line: 0 end: True select count(*) from -- ehr.encounters_src;
-2021-12-16 16:58:13,027 chunk: 9 line: 0 end: True select count(*) from ehr.encounters_src;
-2021-12-16 16:58:13,028 chunk: 10 line: 0 end: False select
-2021-12-16 16:58:13,028 chunk: 10 line: 1 end: False table_schema,
-2021-12-16 16:58:13,028 chunk: 10 line: 2 end: False table_name,
-2021-12-16 16:58:13,028 chunk: 10 line: 3 end: False row_count
-2021-12-16 16:58:13,028 chunk: 10 line: 4 end: False from
-2021-12-16 16:58:13,028 chunk: 10 line: 5 end: False migration.source_schemas
-2021-12-16 16:58:13,028 chunk: 10 line: 6 end: False where is_partitioned is false
-2021-12-16 16:58:13,028 chunk: 10 line: 7 end: True order by 1,3;
-2021-12-16 16:58:13,028 chunk: 11 line: 0 end: True truncate table migration.target_grants_src;
-2021-12-16 16:58:13,028 chunk: 12 line: 0 end: False copy migration.target_grants_src from local
-2021-12-16 16:58:13,028 chunk: 12 line: 1 end: False '/Users/mbowen/devcode/PYDEV/ripper/out.csv'
-2021-12-16 16:58:13,028 chunk: 12 line: 2 end: False WITH DELIMITER ',' ENCLOSED BY '"' rejectmax 0
-2021-12-16 16:58:13,028 chunk: 12 line: 3 end: True REJECTED DATA AS TABLE migration.grants_rejects;
-2021-12-16 16:58:13,028 chunk: 13 line: 0 end: True select shit from mike;
+2021-12-17 14:23:35,088 chunk: 1 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,089 chunk: 2 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,089 chunk: 3 line: 0 end: True create schema if not exists migration;
+2021-12-17 14:23:35,089 chunk: 3 line: 1 end: True create table if not exists migration.target_grants (
+2021-12-17 14:23:35,090 chunk: 3 line: 2 end: True id    integer,
+2021-12-17 14:23:35,090 chunk: 3 line: 3 end: True script varchar(500),
+2021-12-17 14:23:35,090 chunk: 3 line: 4 end: True processed  boolean,
+2021-12-17 14:23:35,090 chunk: 3 line: 5 end: True ts_run_date timestamp
+2021-12-17 14:23:35,090 chunk: 4 line: 0 end: True );
+2021-12-17 14:23:35,090 chunk: 5 line: 0 end: True select shit from mike;
+2021-12-17 14:23:35,090 chunk: 6 line: 0 end: True select count(*) from -- ehr.encounte_src;
+2021-12-17 14:23:35,090 chunk: 7 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,091 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-17 14:23:35,162 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-17 14:23:35,274 User dbadmin successfully authenticated
+2021-12-17 14:23:35,274 Connection is ready
+2021-12-17 14:23:35,274 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:23:35,356 -----
+2021-12-17 14:23:35,356 select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,356 records: [[12457]]
+2021-12-17 14:23:35,356 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:23:35,412 -----
+2021-12-17 14:23:35,412 select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,412 records: [[12457]]
+2021-12-17 14:23:35,412 Execute simple query: [create schema if not exists migration;
+]
+2021-12-17 14:23:35,467 Severity: NOTICE, Message: Object "migration" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:23:35,468 -----
+2021-12-17 14:23:35,468 create schema if not exists migration;
+2021-12-17 14:23:35,468 records: []
+2021-12-17 14:23:35,468 Execute simple query: [create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+]
+2021-12-17 14:23:35,508 Severity: NOTICE, Message: Object "target_grants" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:23:35,511 -----
+2021-12-17 14:23:35,511 create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+2021-12-17 14:23:35,511 records: []
+2021-12-17 14:23:35,511 Execute simple query: [select shit from mike;
+]
+2021-12-17 14:23:35,676 SQL Query Failure
+2021-12-17 14:23:35,676 -----
+2021-12-17 14:23:35,676 select shit from mike;
+2021-12-17 14:23:35,676 records: 0
+2021-12-17 14:23:35,677 Execute simple query: [select count(*) from -- ehr.encounte_src;
+]
+2021-12-17 14:23:35,723 SQL Query Failure
+2021-12-17 14:23:35,723 -----
+2021-12-17 14:23:35,723 select count(*) from -- ehr.encounte_src;
+2021-12-17 14:23:35,723 records: 0
+2021-12-17 14:23:35,725 Execute simple query: [select count(*) from ehr.encounters_src;]
+2021-12-17 14:23:35,783 -----
+2021-12-17 14:23:35,783 select count(*) from ehr.encounters_src;
+2021-12-17 14:23:35,783 records: [[12457]]
+2021-12-17 14:23:35,783 Close the connection
+2021-12-17 14:25:14,622 chunk: 1 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:25:14,622 chunk: 2 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:25:14,622 chunk: 3 line: 0 end: True create schema if not exists migration;
+2021-12-17 14:25:14,622 chunk: 3 line: 1 end: True create table if not exists migration.target_grants (
+2021-12-17 14:25:14,622 chunk: 3 line: 2 end: True id    integer,
+2021-12-17 14:25:14,622 chunk: 3 line: 3 end: True script varchar(500),
+2021-12-17 14:25:14,622 chunk: 3 line: 4 end: True processed  boolean,
+2021-12-17 14:25:14,622 chunk: 3 line: 5 end: True ts_run_date timestamp
+2021-12-17 14:25:14,622 chunk: 4 line: 0 end: True );
+2021-12-17 14:25:14,622 chunk: 5 line: 0 end: True select shit from mike;
+2021-12-17 14:25:14,622 chunk: 6 line: 0 end: True select count(*) from -- ehr.encounte_src;
+2021-12-17 14:25:14,622 chunk: 7 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:25:14,623 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-17 14:25:14,646 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-17 14:25:14,781 User dbadmin successfully authenticated
+2021-12-17 14:25:14,781 Connection is ready
+2021-12-17 14:25:14,781 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:25:14,861 -----
+2021-12-17 14:25:14,861 select count(*) from ehr.encounters_src;
+2021-12-17 14:25:14,861 records: [[12457]]
+2021-12-17 14:25:14,862 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:25:14,922 -----
+2021-12-17 14:25:14,922 select count(*) from ehr.encounters_src;
+2021-12-17 14:25:14,922 records: [[12457]]
+2021-12-17 14:25:14,922 Execute simple query: [create schema if not exists migration;
+]
+2021-12-17 14:25:14,965 Severity: NOTICE, Message: Object "migration" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:25:14,969 -----
+2021-12-17 14:25:14,969 create schema if not exists migration;
+2021-12-17 14:25:14,969 records: []
+2021-12-17 14:25:14,969 Execute simple query: [create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+]
+2021-12-17 14:25:15,011 Severity: NOTICE, Message: Object "target_grants" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:25:15,014 -----
+2021-12-17 14:25:15,015 create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+2021-12-17 14:25:15,015 records: []
+2021-12-17 14:25:15,015 Execute simple query: [select shit from mike;
+]
+2021-12-17 14:25:15,065 SQL Query Failure
+2021-12-17 14:25:15,065 -----
+2021-12-17 14:25:15,065 select shit from mike;
+2021-12-17 14:25:15,065 records: 0
+2021-12-17 14:25:15,067 Execute simple query: [select count(*) from -- ehr.encounte_src;
+]
+2021-12-17 14:25:15,108 SQL Query Failure
+2021-12-17 14:25:15,108 -----
+2021-12-17 14:25:15,109 select count(*) from -- ehr.encounte_src;
+2021-12-17 14:25:15,109 records: 0
+2021-12-17 14:25:15,111 Execute simple query: [select count(*) from ehr.encounters_src;]
+2021-12-17 14:25:15,178 -----
+2021-12-17 14:25:15,178 select count(*) from ehr.encounters_src;
+2021-12-17 14:25:15,178 records: [[12457]]
+2021-12-17 14:25:15,178 Close the connection

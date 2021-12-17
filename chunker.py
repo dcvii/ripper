@@ -2,7 +2,7 @@ import vertica_python
 import os
 import sys
 import logging
-import pandas as pd
+# import pandas as pd
 from vertica_python.vertica.cursor import DEFAULT_BUFFER_SIZE
 import regex as re
 
@@ -34,57 +34,74 @@ def get_chunks(fspec):
     with open(fspec, 'r') as file:
         for line in valid_lines(file):
 
-            h = {'chunk': c, 'line': i, 'sql': line, 'end': isEnd(line)}
+            if isEnd(line):
+                c+=1  #new chunk
+                i = 0 #reset line
+                e = True
+            else:
+                i+=1 #another line in the same chunk
+            
+            h = {'chunk': c, 'line': i, 'sql': line, 'end': e}
             logging.info("chunk: {} line: {} end: {} {}".format(c,i,h['end'],line.strip()))
             
             cmds.append(h)
-
-            if h['end']:
-                c+=1  #new chunk
-                i = 0 #reset line
-            else:
-                i+=1 #another line in the same chunk
         
             
         print("number of chunks: ", c)
         file.close()
 
-    # for cmd in cmds:
-    #     print(cmd)
-
     return cmds
 
+def run_sql(cset):
 
-def process_sql(stmt):
+
+    ## create single connection to run statements from the command set
+    conn_info = {'host': os.getenv("DB_HOST"), 
+    'port': os.getenv("DB_PORT"), 
+    'user': os.getenv("DB_USERNAME"), 
+    'password': os.getenv("DB_PASSWORD"), 
+    'database': os.getenv("DB_DATABASE"),
+    'log_level': logging.INFO,
+    'log_path': ''}
+
+    print("connection:", conn_info['host'])
+        
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
     
-    print("statement: ",stmt)
-
-
-lname = 'log/chunker.log'
-logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
-h = get_chunks('scripts/blah.sql')
-# print(h)
-
-
-sql =''
-for cmd in h:
-    l = cmd['line']
-    s = cmd['sql']
-    c = cmd['chunk']
-    sql+= s
-    if l == 0:       
-        #print('----chunk: ',c)
-        #print(s)
-        process_sql(sql)
+        ## break full command set from the file into executable sql statements
         sql =''
-
-        #print(s)
+        for cmd in cset:
+            l = cmd['line']
+            s = cmd['sql']
+            c = cmd['chunk']
+            sql+= s
+            if l == 0:       
+                try:
+                    print("statement: ",sql)
+                    cur.execute(sql)
+                except:
+                    print('FAIL')
+                    logging.error("SQL Query Failure")
+                    rec = 0
+                else:                   
+                    rec = cur.fetchall()
+                    print("PASS: {} recs".format(rec))
+                finally:
+                    logging.info('-----')
+                    logging.info(sql.rstrip())
+                    logging.info("records: %s", rec)
+                    sql =''
 
     
+def main():
+
+    lname = 'log/chunker.log'
+    logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
+    cmd_set = get_chunks('scripts/short.sql')
+    run_sql(cmd_set)
 
 
-# for qset in h:
-#     print(qset)
-#     for v in qset.values():
-#         print(v)
-
+        #print(s)
+main()
+    
