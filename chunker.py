@@ -9,26 +9,43 @@ import regex as re
 # Abstract
 # This will chunk sql statements to be run but taking an input list and parsing for statement delimiters
 
-def get_chunks():
+def isEmpty(line):
+    return len(line.strip())<1
+
+def isComment(line):
+    m = re.search(r"^\s?--",line)
+    return m != None
+
+def isEnd(line):
+    m = re.search(r"\S?;\s?$",line)
+    return m != None
+
+def valid_lines(f):
+    for l in f:
+        if (not isEmpty(l)) and (not isComment(l)):
+            yield l
+
+def get_chunks(fspec):
     i = 0
     c = 0
     sql = {}
     h = {}
     cmds = []
-    with open('scripts/blah.sql', 'r') as file:
-        for line in file:
+    with open(fspec, 'r') as file:
+        for line in valid_lines(file):
 
-            logging.info("chunk: {} line: {} {}".format(c,i,line.strip()))
-            h = {'chunk':c, 'line': i, 'sql': line.strip()}
+            h = {'chunk': c, 'line': i, 'sql': line, 'end': isEnd(line)}
+            logging.info("chunk: {} line: {} end: {} {}".format(c,i,h['end'],line.strip()))
+            
+            cmds.append(h)
 
-            m0 = re.search(r";$",line)
-            if m0 != None:         
+            if h['end']:
                 c+=1  #new chunk
                 i = 0 #reset line
             else:
                 i+=1 #another line in the same chunk
         
-            cmds.append(h)
+            
         print("number of chunks: ", c)
         file.close()
 
@@ -38,16 +55,14 @@ def get_chunks():
     return cmds
 
 
-def query_chunks(qset):
+def process_sql(stmt):
     
-    for v in qset.keys():
-        print(qset[v])
-
+    print("statement: ",stmt)
 
 
 lname = 'log/chunker.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
-h = get_chunks()
+h = get_chunks('scripts/blah.sql')
 # print(h)
 
 
@@ -56,15 +71,14 @@ for cmd in h:
     l = cmd['line']
     s = cmd['sql']
     c = cmd['chunk']
+    sql+= s
     if l == 0:       
-        print('----chunk: ',c)
-        sql+= s
-        print(s)
+        #print('----chunk: ',c)
+        #print(s)
         process_sql(sql)
         sql =''
-    else:
-        sql+= s
-        print(s)
+
+        #print(s)
 
     
 
