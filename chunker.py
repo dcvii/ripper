@@ -2,7 +2,6 @@ import vertica_python
 import os
 import sys
 import logging
-# import pandas as pd
 from vertica_python.vertica.cursor import DEFAULT_BUFFER_SIZE
 import regex as re
 
@@ -40,6 +39,7 @@ def get_chunks(fspec):
                 e = True
             else:
                 i+=1 #another line in the same chunk
+                e = False
             
             h = {'chunk': c, 'line': i, 'sql': line, 'end': e}
             logging.info("chunk: {} line: {} end: {} {}".format(c,i,h['end'],line.strip()))
@@ -54,45 +54,49 @@ def get_chunks(fspec):
 
 def run_sql(cset):
 
+    ## open error file for punted failed statements
+    with open('scripts/failed.sql','w') as punt_file:
 
-    ## create single connection to run statements from the command set
-    conn_info = {'host': os.getenv("DB_HOST"), 
-    'port': os.getenv("DB_PORT"), 
-    'user': os.getenv("DB_USERNAME"), 
-    'password': os.getenv("DB_PASSWORD"), 
-    'database': os.getenv("DB_DATABASE"),
-    'log_level': logging.INFO,
-    'log_path': ''}
+        ## create single connection to run statements from the command set
+        conn_info = {'host': os.getenv("DB_HOST"), 
+        'port': os.getenv("DB_PORT"), 
+        'user': os.getenv("DB_USERNAME"), 
+        'password': os.getenv("DB_PASSWORD"), 
+        'database': os.getenv("DB_DATABASE"),
+        'log_level': logging.INFO,
+        'log_path': ''}
 
-    print("connection:", conn_info['host'])
+        print("connection:", conn_info['host'])
+            
+        with vertica_python.connect(**conn_info) as conn:
+            cur = conn.cursor()
         
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
-    
-        ## break full command set from the file into executable sql statements
-        sql =''
-        for cmd in cset:
-            l = cmd['line']
-            s = cmd['sql']
-            c = cmd['chunk']
-            sql+= s
-            if l == 0:       
-                try:
-                    print("statement: ",sql)
-                    cur.execute(sql)
-                except:
-                    print('FAIL')
-                    logging.error("SQL Query Failure")
-                    rec = 0
-                else:                   
-                    rec = cur.fetchall()
-                    print("PASS: {} recs".format(rec))
-                finally:
-                    logging.info('-----')
-                    logging.info(sql.rstrip())
-                    logging.info("records: %s", rec)
-                    sql =''
+            ## break full command set from the file into executable sql statements
+            sql =''
+            for cmd in cset:
+                l = cmd['line']
+                s = cmd['sql']
+                c = cmd['chunk']
+                sql+= s
+                if l == 0:       
+                    try:
+                        print("statement: ",sql)
+                        cur.execute(sql)
+                    except:
+                        print('FAIL')
+                        logging.error("SQL Query Failure")
+                        rec = 0
+                        punt_file.write(sql)
 
+                    else:                   
+                        rec = cur.fetchall()
+                        print("PASS: {} recs".format(rec))
+                    finally:
+                        logging.info('-----')
+                        logging.info(sql.rstrip())
+                        logging.info("records: %s", rec)
+                        sql =''
+    punt_file.close()
     
 def main():
 

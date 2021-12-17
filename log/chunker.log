@@ -128,3 +128,133 @@ ts_run_date timestamp
 2021-12-17 14:25:15,178 select count(*) from ehr.encounters_src;
 2021-12-17 14:25:15,178 records: [[12457]]
 2021-12-17 14:25:15,178 Close the connection
+2021-12-17 14:29:51,731 chunk: 1 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:29:51,732 chunk: 2 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:29:51,732 chunk: 3 line: 0 end: True create schema if not exists migration;
+2021-12-17 14:29:51,732 chunk: 3 line: 1 end: False create table if not exists migration.target_grants (
+2021-12-17 14:29:51,732 chunk: 3 line: 2 end: False id    integer,
+2021-12-17 14:29:51,732 chunk: 3 line: 3 end: False script varchar(500),
+2021-12-17 14:29:51,732 chunk: 3 line: 4 end: False processed  boolean,
+2021-12-17 14:29:51,732 chunk: 3 line: 5 end: False ts_run_date timestamp
+2021-12-17 14:29:51,732 chunk: 4 line: 0 end: True );
+2021-12-17 14:29:51,732 chunk: 5 line: 0 end: True select shit from mike;
+2021-12-17 14:29:51,732 chunk: 6 line: 0 end: True select count(*) from -- ehr.encounte_src;
+2021-12-17 14:29:51,733 chunk: 7 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:29:51,733 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-17 14:29:51,762 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-17 14:29:51,877 User dbadmin successfully authenticated
+2021-12-17 14:29:51,877 Connection is ready
+2021-12-17 14:29:51,877 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:29:51,933 -----
+2021-12-17 14:29:51,933 select count(*) from ehr.encounters_src;
+2021-12-17 14:29:51,933 records: [[12457]]
+2021-12-17 14:29:51,933 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:29:51,989 -----
+2021-12-17 14:29:51,989 select count(*) from ehr.encounters_src;
+2021-12-17 14:29:51,989 records: [[12457]]
+2021-12-17 14:29:51,989 Execute simple query: [create schema if not exists migration;
+]
+2021-12-17 14:29:52,029 Severity: NOTICE, Message: Object "migration" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:29:52,032 -----
+2021-12-17 14:29:52,033 create schema if not exists migration;
+2021-12-17 14:29:52,033 records: []
+2021-12-17 14:29:52,033 Execute simple query: [create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+]
+2021-12-17 14:29:52,072 Severity: NOTICE, Message: Object "target_grants" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:29:52,075 -----
+2021-12-17 14:29:52,076 create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+2021-12-17 14:29:52,076 records: []
+2021-12-17 14:29:52,076 Execute simple query: [select shit from mike;
+]
+2021-12-17 14:29:52,116 SQL Query Failure
+2021-12-17 14:29:52,116 -----
+2021-12-17 14:29:52,116 select shit from mike;
+2021-12-17 14:29:52,116 records: 0
+2021-12-17 14:29:52,118 Execute simple query: [select count(*) from -- ehr.encounte_src;
+]
+2021-12-17 14:29:52,159 SQL Query Failure
+2021-12-17 14:29:52,159 -----
+2021-12-17 14:29:52,159 select count(*) from -- ehr.encounte_src;
+2021-12-17 14:29:52,159 records: 0
+2021-12-17 14:29:52,160 Execute simple query: [select count(*) from ehr.encounters_src;]
+2021-12-17 14:29:52,224 -----
+2021-12-17 14:29:52,224 select count(*) from ehr.encounters_src;
+2021-12-17 14:29:52,224 records: [[12457]]
+2021-12-17 14:29:52,224 Close the connection
+2021-12-17 14:37:07,196 chunk: 1 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,202 chunk: 2 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,202 chunk: 3 line: 0 end: True create schema if not exists migration;
+2021-12-17 14:37:07,203 chunk: 3 line: 1 end: False create table if not exists migration.target_grants (
+2021-12-17 14:37:07,203 chunk: 3 line: 2 end: False id    integer,
+2021-12-17 14:37:07,203 chunk: 3 line: 3 end: False script varchar(500),
+2021-12-17 14:37:07,203 chunk: 3 line: 4 end: False processed  boolean,
+2021-12-17 14:37:07,203 chunk: 3 line: 5 end: False ts_run_date timestamp
+2021-12-17 14:37:07,203 chunk: 4 line: 0 end: True );
+2021-12-17 14:37:07,203 chunk: 5 line: 0 end: True select shit from mike;
+2021-12-17 14:37:07,203 chunk: 6 line: 0 end: True select count(*) from -- ehr.encounte_src;
+2021-12-17 14:37:07,203 chunk: 7 line: 0 end: True select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,211 Connecting as user "dbadmin" to database "vaasdemo" on host "35.166.171.38" with port 5433
+2021-12-17 14:37:07,371 Establishing connection to host "35.166.171.38" on port 5433
+2021-12-17 14:37:07,490 User dbadmin successfully authenticated
+2021-12-17 14:37:07,491 Connection is ready
+2021-12-17 14:37:07,491 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:37:07,550 -----
+2021-12-17 14:37:07,550 select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,550 records: [[12457]]
+2021-12-17 14:37:07,551 Execute simple query: [select count(*) from ehr.encounters_src;
+]
+2021-12-17 14:37:07,608 -----
+2021-12-17 14:37:07,608 select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,608 records: [[12457]]
+2021-12-17 14:37:07,608 Execute simple query: [create schema if not exists migration;
+]
+2021-12-17 14:37:07,653 Severity: NOTICE, Message: Object "migration" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:37:07,656 -----
+2021-12-17 14:37:07,657 create schema if not exists migration;
+2021-12-17 14:37:07,657 records: []
+2021-12-17 14:37:07,657 Execute simple query: [create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+]
+2021-12-17 14:37:07,699 Severity: NOTICE, Message: Object "target_grants" already exists; nothing was done, Sqlstate: 00000, Routine: outputAlreadyExistsEreport, File: /data/jenkins/workspace/RE-ReleaseBuilds/RE-Jackhammer_3/server/vertica/Commands/DDL.cpp, Line: 24372, Error Code: 4214
+2021-12-17 14:37:07,703 -----
+2021-12-17 14:37:07,703 create table if not exists migration.target_grants (
+id    integer,
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+2021-12-17 14:37:07,703 records: []
+2021-12-17 14:37:07,703 Execute simple query: [select shit from mike;
+]
+2021-12-17 14:37:07,746 SQL Query Failure
+2021-12-17 14:37:07,746 -----
+2021-12-17 14:37:07,746 select shit from mike;
+2021-12-17 14:37:07,746 records: 0
+2021-12-17 14:37:07,747 Execute simple query: [select count(*) from -- ehr.encounte_src;
+]
+2021-12-17 14:37:07,792 SQL Query Failure
+2021-12-17 14:37:07,793 -----
+2021-12-17 14:37:07,794 select count(*) from -- ehr.encounte_src;
+2021-12-17 14:37:07,794 records: 0
+2021-12-17 14:37:07,794 Execute simple query: [select count(*) from ehr.encounters_src;]
+2021-12-17 14:37:07,857 -----
+2021-12-17 14:37:07,857 select count(*) from ehr.encounters_src;
+2021-12-17 14:37:07,857 records: [[12457]]
+2021-12-17 14:37:07,857 Close the connection
