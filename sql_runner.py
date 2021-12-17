@@ -1,6 +1,5 @@
 import vertica_python
 import os
-import sys
 import logging
 from vertica_python.vertica.cursor import DEFAULT_BUFFER_SIZE
 import regex as re
@@ -48,6 +47,8 @@ def get_chunks(fspec):
         
             
         print("number of chunks: ", c)
+        if c > 1000:
+            raise 'too many notes'
         file.close()
 
     return cmds
@@ -100,12 +101,10 @@ def run_sql(cset):
     
 def main():
 
-    lname = 'log/chunker.log'
+    lname = 'log/sql_runner.log'
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
     cmd_set = get_chunks('scripts/short.sql')
     run_sql(cmd_set)
 
-
-        #print(s)
 main()
     
