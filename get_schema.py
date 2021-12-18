@@ -47,13 +47,15 @@ def run_getter():
     cur.close()
 
     bucket = os.getenv("S3_BUCKET")
+    bucket_key = os.getenv("BUCKET_KEY")
     # what are the results.
-    f = open('scripts/parquet.sql', 'w')
+    fspec = "scripts/"+bucket_key+"_out_parquet.sql"
+    f = open(fspec, 'w')
 
     for row in results:
         schema, table, ct = row
 
-        target = "(directory='"+bucket+"/"+schema+"/"+table+"')"
+        target = "(directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
         outstring = "EXPORT TO PARQUET "+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
         print(outstring)
         outstring+="\n"

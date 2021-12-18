@@ -19,3 +19,5 @@ There are four scopes for the migration.
 - three: single schema
 - four: single table
 
+## what remains
+This needs a facility to pull resource pool assignments, and grant them. It is unclear if the current grant script gets that. 
