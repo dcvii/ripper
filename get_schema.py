@@ -6,7 +6,7 @@ import pandas as pd
 import csv
 
 
-def run_getter():
+def run_getter(config):
  
 
     conn_info = {'host': os.getenv("DB_HOST"), 
@@ -23,7 +23,7 @@ def run_getter():
         cur = conn.cursor()
 
         # multiline single sql statement
-        sql = open('sql/get_all_schemas.sql', 'r')
+        sql = open(config['fspec'], 'r')
         cmd = ''
         for line in sql:
             cmd += line
@@ -55,15 +55,17 @@ def run_getter():
     for row in results:
         schema, table, ct = row
 
-        target = "(directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        outstring = "EXPORT TO PARQUET "+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
+        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
+        outstring = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
         print(outstring)
         outstring+="\n"
         f.write(outstring)
 
     f.close()
 
-   #  print('writing file')
+   
+    
+    #  print('writing file')
 
     # print(df.to_string(index=False, header=False))
     # scratch = df.to_string(index=False, header=False)
@@ -82,28 +84,29 @@ def run_getter():
    
  
 
-def putter():
-    # take out.csv and coput into table. 
+# def putter():
+#     # take out.csv and coput into table. 
 
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
-        'log_level': logging.INFO,
-        'log_path': ''}
+#     conn_info = {'host': os.getenv("DB_HOST"), 
+#         'port': os.getenv("DB_PORT"), 
+#         'user': os.getenv("DB_USERNAME"), 
+#         'password': os.getenv("DB_PASSWORD"), 
+#         'database': os.getenv("DB_DATABASE"),
+#         'log_level': logging.INFO,
+#         'log_path': ''}
 
-    print("connection:", conn_info['host'])
+#     print("connection:", conn_info['host'])
 
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()    
+#     with vertica_python.connect(**conn_info) as conn:
+#         cur = conn.cursor()    
 
-        sql = 'copy migration.target_grants from local '
+#         sql = 'copy migration.target_grants from local '
 
 
 
-lname = 'log/get_schemas.log'
+lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-run_getter()
-
+h = {'in_fspec': 'sql/get_all_parqiet.sql', 'out_fspec': 'sql/get_all_schemas.sql'}
+run_getter("parquet")
+run_getter('csv')

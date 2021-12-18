@@ -4,6 +4,7 @@ select
  is_partitioned,
  row_count,
  partition_expression
+ 'PARQUET'::varchar(20) as export_type 
 from
 (
 	select 
