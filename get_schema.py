@@ -107,8 +107,8 @@ def run_getter(config):
 lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type'}
+h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
 run_getter("parquet")
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type'}
+h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv' ,'export_dest': 'local'}
 run_getter('csv')
