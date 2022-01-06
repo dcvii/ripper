@@ -23,7 +23,7 @@ CREATE TABLE if not exists migration.source_schemas
     export_type varchar(20)
 );
 
-truncate table if exists migration.source_schemas;
+truncate table migration.source_schemas;
 
 insert into migration.source_schemas
 select 

@@ -23,7 +23,7 @@ def run_getter(config):
         cur = conn.cursor()
 
         # multiline single sql statement
-        sql = open(config['fspec'], 'r')
+        sql = open(config['in_fspec'], 'r')
         cmd = ''
         for line in sql:
             cmd += line
@@ -107,8 +107,8 @@ def run_getter(config):
 lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type'}
-run_getter("parquet")
+h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
+run_getter(h)
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type'}
-run_getter('csv')
+# h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv' ,'export_dest': 'local'}
+# run_getter('csv')
