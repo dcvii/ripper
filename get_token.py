@@ -7,7 +7,6 @@ import pandas as pd
 import boto3
 
 
-
 def get_token():
 
     client = boto3.client('sts')
@@ -18,15 +17,13 @@ def get_token():
     session_token = token['Credentials']['SessionToken']
     #expiration = token['Credentials']['Expiration']
 
-
     sql = "ALTER SESSION SET AWSAuth = '"+access_key_id+":"+secret_access_key+"'; ALTER SESSION SET AWSSessionToken = '"+session_token+"';"
-    print(sql)
+    #  print(sql)
     return sql
 
 
 def run_sql_exec(cmd):
  
-
     conn_info = {'host': os.getenv("DB_HOST"), 
         'port': os.getenv("DB_PORT"), 
         'user': os.getenv("DB_USERNAME"), 
@@ -53,6 +50,7 @@ def run_sql_exec(cmd):
             results = cur.fetchall()
             df = pd.DataFrame(results)
             rcnt = df.shape[0]
+            logging.info(results)
             
         finally:
             logging.info('-----')
@@ -60,6 +58,12 @@ def run_sql_exec(cmd):
         
     cur.close()
 
+    for row in results:
+        #outstring = row
+
+        print(row)
+        #outstring+="\n"
+        
     
     
 def main():
@@ -68,6 +72,7 @@ def main():
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
     cmd_set = get_token()
+    cmd_set += " SELECT * FROM configuration_parameters where parameter_name ilike '%AWS%';"
     run_sql_exec(cmd_set)
 
 main()
