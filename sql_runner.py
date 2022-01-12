@@ -103,7 +103,7 @@ def main():
 
     lname = 'log/sql_runner.log'
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
-    cmd_set = get_chunks('scripts/short.sql')
+    cmd_set = get_chunks('scripts/vaasdemo_out_parquet.sql')
     run_sql(cmd_set)
 
 main()
