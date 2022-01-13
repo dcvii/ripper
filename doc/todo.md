@@ -8,7 +8,7 @@
 
 ### core
 - chunking for sql_runner when queries > 1000 (inside, outside loop)
-- retain exceptional queries that fail in any case
+- doc
 - 
 
 ### fixes

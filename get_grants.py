@@ -5,7 +5,7 @@ import logging
 import pandas as pd
 
 
-def run_getter():
+def run_getter(fspec):
  
 
     conn_info = {'host': os.getenv("DB_HOST"), 
@@ -21,7 +21,7 @@ def run_getter():
     with vertica_python.connect(**conn_info) as conn:
         cur = conn.cursor()
 
-        sql = open('sql/grants.sql', 'r')
+        sql = open(fspec, 'r')
         cmd = ''
         for line in sql:
             cmd += line
@@ -48,12 +48,12 @@ def run_getter():
    # df = df.astype(str)
 
     #print(df.info)
-    print('writing')
+    print('writing grant script for target')
     d2 = df.pop(2)
-    d2.to_csv('out.csv')
+    d2.to_csv('scripts/target_grants.csv')
 
 
-def putter():
+def run_putter():
     # take out.csv and coput into table. 
 
     conn_info = {'host': os.getenv("DB_HOST"), 
@@ -69,12 +69,31 @@ def putter():
     with vertica_python.connect(**conn_info) as conn:
         cur = conn.cursor()    
 
-        sql = 'copy migration.target_grants from local '
+       
+
+        try:
+            cur.execute(sql)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = df.shape[0]
+        finally:
+            logging.info('-----')
+            #logging.info(sql.rstrip())
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
 
 
-
-lname = 'log/grants.log'
+lname = 'log/get_grants.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-run_getter()
 
+run_getter('sql/grants.sql')
+run_getter('scripts/load_grants.sql')
+
+run_putter()

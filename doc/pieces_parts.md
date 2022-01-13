@@ -3,7 +3,7 @@
 ## the setup
 - poetry
 - direnv
-- get_
+- token.sh
 
 ## The getters
 - get_grants
