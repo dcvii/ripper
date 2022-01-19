@@ -7,6 +7,16 @@ processed  boolean,
 ts_run_date timestamp
 );
 
+create table if not exists migration.data_exports (
+id    integer,
+rowcnt	integer,
+schema_nm	varchar(50),
+table_nm	varchar(75),
+script varchar(500),
+processed  boolean,
+ts_run_date timestamp
+);
+
 
 create table if not exists migration.target_grants_src (
 id    integer,
@@ -181,3 +191,6 @@ order by 4,1,2,3;
 update migration.source_schemas
 set export_type = 'DELIMITED'
 where export_type = 'CSV';
+
+
+
