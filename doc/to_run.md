@@ -39,15 +39,35 @@ This environment variable is not used.
 This is the bucket address. Exports will go to subfolders of this top level bucket.
 
 #### BUCKET_KEY
-This is the top level folder of the bucket. It should generally be the same as the database name, but if you run multiple exports, you can add other identifying information.
+This is the top level folder of the bucket. It should generally be the same as the database name, but if you run multiple exports, you can add other identifying information. The bucket_key should identify the database and the environment as well as source vs destination.  
 
 
 ## scenario A - all schemas
 
-### step one - run get_schema.py
-This will connect to Vertica and pull all of the schema information necessary. This will create two files. Both will go into the scripts directory with one named `data_exports.sql` and the other named `xxx_out_parquet.sql` with xxx being the BUCKET_KEY from the .envrc. The `data_export.sql` file is appropriate for loading into the migration schema. 
+### step one - get source schema: get_schema.py
+This will connect to Vertica and pull all of the schema information necessary. This will create three files in two steps.
+In the first step, two files are created. These are the exports.  Both will go into the scripts directory with one named `data_exports.sql` and the other named `xxx_out_parquet.sql` with xxx being the BUCKET_KEY from the .envrc. The `data_export.sql` file is appropriate for loading into the migration schema. 
 
-Additionally, a full export of the schema should be created with the standard. This is open. 
+In the second step, a full export of the schema is created with the standard. Note that this file, when created, has the entirety of the output file SQL embedded in double quotes. It is therefore not a proper sql file and must be manually edited to remove the quotes.
+
+This has consequences for the processing of the catalog as it affects the quoting of the names of objects with embedded spaces. 
+
+Other exceptional matters:
+- Take note of the use of reserved words in field definitions. 
+- Take note of external tables. They will not necessarily map in the target database.
+
+
+### step two - create target schema: put_schema.py
+This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of state
+
+
+### step three - export source data
+
+### step four - export grant information
+
+### step five - import grant information
+
+### step six - import target data
 
 ###
 
