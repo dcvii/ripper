@@ -4,6 +4,7 @@ import sys
 import logging
 import pandas as pd
 import csv
+import numpy as np
 
 
 def loader(config):
@@ -125,10 +126,51 @@ def run_getter(config):
     print("second file written")
 
 
+def get_catalog(config):
+ 
+
+    conn_info = {'host': os.getenv("DB_HOST"), 
+        'port': os.getenv("DB_PORT"), 
+        'user': os.getenv("DB_USERNAME"), 
+        'password': os.getenv("DB_PASSWORD"), 
+        'database': os.getenv("DB_DATABASE"),
+        'log_level': logging.INFO,
+        'log_path': ''}
+
+    print("connection:", conn_info['host'])
+
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
+
+        sql = open(config['in_fspec'], 'r')
+        cmd = ''
+        for line in sql:
+            cmd += line
+        #print(sql.rstrip())
+        try:
+            cur.execute(cmd)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = df.shape[0]
+        finally:
+            logging.info('-----')
+            #logging.info(sql.rstrip())
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
+
+    df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
+    print("third file written")
 
 
    
-
+home = "/Users/mbowen/devcode/PYDEV/ripper/"
+bucket_key = os.getenv("BUCKET_KEY")
 
 lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
@@ -136,9 +178,6 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
 run_getter(h)
 
+h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
+get_catalog(h)
 
-
-
-
-# h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv' ,'export_dest': 'local'}
-# run_getter('csv')

@@ -7,8 +7,8 @@ make sure your database is up and running.
 
 - navigate to proper subdirectory
 - run `poetry shell` to establish environment
-- setup the config.
-- run the `migration_ddl.sql` to create the migration metadata on the source database. 
+- setup the config. (.envrc)
+- run the *idempotent* `migration_ddl.sql` to create the migration metadata on the source database. 
 
 
 
@@ -45,7 +45,11 @@ This is the top level folder of the bucket. It should generally be the same as t
 ## scenario A - all schemas
 
 ### step one - run get_schema.py
-This will connect to Vertica and pull all of the schema information necessary 
+This will connect to Vertica and pull all of the schema information necessary. This will create two files. Both will go into the scripts directory with one named `data_exports.sql` and the other named `xxx_out_parquet.sql` with xxx being the BUCKET_KEY from the .envrc. The `data_export.sql` file is appropriate for loading into the migration schema. 
 
+Additionally, a full export of the schema should be created with the standard. This is open. 
+
+###
 
 ## scenario B
+
