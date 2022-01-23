@@ -111,7 +111,7 @@ def run_getter(config):
     print("second file written")
 
 
-def get_catalog(config):
+def put_catalog(config):
  
 
     conn_info = {'host': os.getenv("DB_HOST"), 
