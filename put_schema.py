@@ -30,7 +30,7 @@ def parse_file(fname):
         return chunks
 
 
-def run_sql(cset):
+def run_sql(cset,bucket_key):
  
     print('writing target catalog')
     conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
@@ -43,7 +43,8 @@ def run_sql(cset):
 
     print("connection:", conn_info['host'])
 
-    with open('scripts/failed_catalog.sql','w') as punt_file:
+    fspec = "scripts/failed_"+bucket_key+"_catalog.sql"
+    with open(fspec,'w') as punt_file:
 
         #multi multi
 
@@ -56,6 +57,7 @@ def run_sql(cset):
                     cur.execute(cmd)
                 except:
                     print('FAIL')
+                    print(cmd)
                     logging.error("SQL Query Failure")
                     punt_file.write(cmd)
 
@@ -65,7 +67,7 @@ def run_sql(cset):
                     rcnt = df.shape[0]
                 finally:
                     logging.info('-----')
-                    #logging.info(sql.rstrip())
+                    logging.info(cmd)
                     logging.info("records: %s", rcnt)
             
         cur.close()
@@ -79,16 +81,11 @@ def run_sql(cset):
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
 bucket_key = os.getenv("TARGET_BUCKET_KEY")
 
-lname = 'log/put_schemas.log'
+lname = "log/put_"+bucket_key+"_schemas.log"
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-# h = {'in_fspec': 'scripts/vaasdemo_catalog.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
-# run_getter(h)
-
-# h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
-# get_catalog(h)
 
 f = 'scripts/vaasdemo_catalog.sql'
 #f = 'scripts/tevaQA_catalog.sql'
 cmd_set = parse_file(f)
-run_sql(cmd_set)
+run_sql(cmd_set,bucket_key)

@@ -50,11 +50,14 @@ In the first step, two files are created. These are the exports.  Both will go i
 
 In the second step, a full export of the schema is created with the standard. Note that this file, when created, has the entirety of the output file SQL embedded in double quotes. It is therefore not a proper sql file and must be manually edited to remove the quotes.
 
-This has consequences for the processing of the catalog as it affects the quoting of the names of objects with embedded spaces. 
+This has consequences for the processing of the catalog as it affects the quoting of the names of objects with embedded spaces. Also other edits require some manual fixing.
 
 Other exceptional matters:
 - Take note of the use of reserved words in field definitions. 
 - Take note of external tables. They will not necessarily map in the target database.
+- Take note of flex tables. The views created will not necessarily work. 
+- Take note of public tables. These may fail.
+- It is best to manually recreate any projections. Reload only the bare DDL.
 
 
 ### step two - create target schema: put_schema.py

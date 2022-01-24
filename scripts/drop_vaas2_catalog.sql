@@ -1,0 +1,17 @@
+drop SCHEMA ehr cascade ;
+drop SCHEMA survey cascade ;
+drop SCHEMA masterdata cascade ;
+drop SCHEMA beer cascade ;
+drop SCHEMA atlas cascade ;
+drop SCHEMA brdbeer cascade ;
+drop SCHEMA aetna cascade ;
+drop SCHEMA click cascade ;
+drop SCHEMA drug cascade ;
+drop SCHEMA cops cascade ;
+drop SCHEMA commodity cascade ;
+drop SCHEMA logistics cascade ;
+drop SCHEMA cortex cascade ;
+drop SCHEMA migration cascade ;
+drop SCHEMA raw cascade ;
+drop SCHEMA cyclist cascade ;
+drop SCHEMA segment cascade ;
