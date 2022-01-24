@@ -58,7 +58,7 @@ Other exceptional matters:
 
 
 ### step two - create target schema: put_schema.py
-This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of state
+This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of statements it makes sense to run it automatically with the put_schema.py. This is because there may be exceptions. 
 
 
 ### step three - export source data

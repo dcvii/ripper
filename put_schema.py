@@ -1,3 +1,4 @@
+import cmd
 import vertica_python
 import os
 import sys
@@ -5,164 +6,89 @@ import logging
 import pandas as pd
 import csv
 import numpy as np
+import re
 
 
-def loader(config):
-
-    conn_info = {'host': os.getenv("DB_HOST"), 
-    'port': os.getenv("DB_PORT"), 
-    'user': os.getenv("DB_USERNAME"), 
-    'password': os.getenv("DB_PASSWORD"), 
-    'database': os.getenv("DB_DATABASE"),
-    'log_level': logging.INFO,
-    'log_path': ''}
-
-    print("connection:", conn_info['host'])
-
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
-
-        # multiline single sql statement
-        sql = open(config['in_fspec'], 'r')
+def parse_file(fname):
+    print('parsing catalog file')
+    ct = 0
+    with open(fname) as file:
+        lines = file.read()
+        chunks = []
         cmd = ''
-        for line in sql:
-            cmd += line
-        
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-            rcnt = 0
 
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
-            
-        finally:
-            logging.info('-----')
-            logging.info("records: %s", rcnt)
-        
-    cur.close()
+        for this_line in lines:
+            cmd += this_line
+            m0 = re.search(r';',this_line)
+            if m0 != None:                
+                chunks.append(cmd)
+                ct += 1
+                cmd = ''
+     
+           
+        print(ct,'chunks found')
+        return chunks
 
 
-def run_getter(config):
+def run_sql(cset):
  
-
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
+    print('writing target catalog')
+    conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
+        'port': os.getenv("TARGET_DB_PORT"), 
+        'user': os.getenv("TARGET_DB_USERNAME"), 
+        'password': os.getenv("TARGET_DB_PASSWORD"), 
+        'database': os.getenv("TARGET_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
     print("connection:", conn_info['host'])
 
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
+    with open('scripts/failed_catalog.sql','w') as punt_file:
 
-        # multiline single sql statement
-        sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
-        
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-            rcnt = 0
+        #multi multi
 
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
+        with vertica_python.connect(**conn_info) as conn:
+            cur = conn.cursor()
+
+            for cmd in cset:
+
+                try:
+                    cur.execute(cmd)
+                except:
+                    print('FAIL')
+                    logging.error("SQL Query Failure")
+                    punt_file.write(cmd)
+
+                else:
+                    results = cur.fetchall()
+                    df = pd.DataFrame(results)
+                    rcnt = df.shape[0]
+                finally:
+                    logging.info('-----')
+                    #logging.info(sql.rstrip())
+                    logging.info("records: %s", rcnt)
             
-        finally:
-            logging.info('-----')
-            logging.info("records: %s", rcnt)
-        
-    cur.close()
+        cur.close()
+    punt_file.close()
 
-    ## create script for running directly
-
-    
-    print("first file written")
-
-    ## create input for data_exports table
-
-    fspec = "scripts/data_exports.sql"
-    f = open(fspec, 'w')
-
-    x_id = 0
-    for row in results:
-        schema, table, ct = row
-        # x_id += 1
-        # xid = str(x_id)
-        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        script = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
-        outstring = f'{ct}'+","+schema+","+table+","+script+"\n"
-        f.write(outstring)
-    
-    f.close()
-    print("second file written")
-
-
-def put_catalog(config):
- 
-
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
-        'log_level': logging.INFO,
-        'log_path': ''}
-
-    print("connection:", conn_info['host'])
-
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
-
-        sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
-        #print(sql.rstrip())
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
-        finally:
-            logging.info('-----')
-            #logging.info(sql.rstrip())
-            logging.info("records: %s", rcnt)
-        
-    cur.close()
-
-    df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
-    print("third file written")
+    # df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
+    # print("third file written")
 
 
    
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("BUCKET_KEY")
+bucket_key = os.getenv("TARGET_BUCKET_KEY")
 
-lname = 'log/get_full_schemas.log'
+lname = 'log/put_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
-run_getter(h)
+# h = {'in_fspec': 'scripts/vaasdemo_catalog.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
+# run_getter(h)
 
-h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
-get_catalog(h)
+# h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
+# get_catalog(h)
 
+f = 'scripts/vaasdemo_catalog.sql'
+#f = 'scripts/tevaQA_catalog.sql'
+cmd_set = parse_file(f)
+run_sql(cmd_set)

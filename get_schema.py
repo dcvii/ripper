@@ -9,11 +9,11 @@ import numpy as np
 
 def loader(config):
 
-    conn_info = {'host': os.getenv("DB_HOST"), 
-    'port': os.getenv("DB_PORT"), 
-    'user': os.getenv("DB_USERNAME"), 
-    'password': os.getenv("DB_PASSWORD"), 
-    'database': os.getenv("DB_DATABASE"),
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+    'port': os.getenv("SRC_DB_PORT"), 
+    'user': os.getenv("SRC_DB_USERNAME"), 
+    'password': os.getenv("SRC_DB_PASSWORD"), 
+    'database': os.getenv("SRC_DB_DATABASE"),
     'log_level': logging.INFO,
     'log_path': ''}
 
@@ -50,11 +50,11 @@ def loader(config):
 def run_getter(config):
  
 
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
@@ -89,8 +89,8 @@ def run_getter(config):
 
     ## create script for running directly
 
-    bucket = os.getenv("S3_BUCKET")
-    bucket_key = os.getenv("BUCKET_KEY")
+    bucket = os.getenv("SRC_S3_BUCKET")
+    bucket_key = os.getenv("SRC_BUCKET_KEY")
     # what are the results.
     fspec = "scripts/"+bucket_key+"_out_"+config['export_type']+".sql"
     f = open(fspec, 'w')
@@ -129,11 +129,11 @@ def run_getter(config):
 def get_catalog(config):
  
 
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
@@ -170,7 +170,7 @@ def get_catalog(config):
 
    
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("BUCKET_KEY")
+bucket_key = os.getenv("SRC_BUCKET_KEY")
 
 lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
