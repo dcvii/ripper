@@ -9,6 +9,7 @@ import boto3
 
 def get_token():
 
+    sql = []
     client = boto3.client('sts')
 
     token = client.get_session_token()
@@ -17,12 +18,14 @@ def get_token():
     session_token = token['Credentials']['SessionToken']
     #expiration = token['Credentials']['Expiration']
 
-    sql = "ALTER SESSION SET AWSAuth = '"+access_key_id+":"+secret_access_key+"'; ALTER SESSION SET AWSSessionToken = '"+session_token+"';"
+    sql.append("ALTER SESSION SET AWSAuth = '"+access_key_id+":"+secret_access_key+"'; ")
+    sql.append("ALTER SESSION SET AWSSessionToken = '"+session_token+"';")
+    sql.append("SELECT * FROM configuration_parameters where parameter_name ilike '%AWS%';")
     #  print(sql)
     return sql
 
 
-def run_sql_exec(cmd):
+def run_sql_exec(cmd_set):
  
     conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
         'port': os.getenv("TARGET_DB_PORT"), 
@@ -38,23 +41,25 @@ def run_sql_exec(cmd):
         cur = conn.cursor()
 
         # multiline single sql statement
-          
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-            rcnt = 0
-
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
-            logging.info(results)
+        for sql in cmd_set:
+            print(sql)
             
-        finally:
-            logging.info('-----')
-            logging.info("records: %s", rcnt)
+            try:
+                cur.execute(sql)
+            except:
+                print('FAIL')
+                logging.error("SQL Query Failure")
+                rcnt = 0
+
+            else:
+                results = cur.fetchall()
+                df = pd.DataFrame(results)
+                rcnt = df.shape[0]
+                logging.info(results)
+                
+            finally:
+                logging.info('-----')
+                logging.info("records: %s", rcnt)
         
     cur.close()
 
@@ -72,7 +77,6 @@ def main():
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
     cmd_set = get_token()
-    cmd_set += " SELECT * FROM configuration_parameters where parameter_name ilike '%AWS%';"
     run_sql_exec(cmd_set)
 
 main()

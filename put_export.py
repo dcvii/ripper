@@ -7,10 +7,28 @@ import pandas as pd
 import csv
 import numpy as np
 import re
+import boto3
 
+def get_token():
+
+    print('getting session token')
+    sql = []
+    client = boto3.client('sts')
+
+    token = client.get_session_token()
+    access_key_id = token['Credentials']['AccessKeyId']
+    secret_access_key = token['Credentials']['SecretAccessKey']
+    session_token = token['Credentials']['SessionToken']
+    #expiration = token['Credentials']['Expiration']
+
+    sql.append("ALTER SESSION SET AWSAuth = '"+access_key_id+":"+secret_access_key+"'; ")
+    sql.append("ALTER SESSION SET AWSSessionToken = '"+session_token+"';")
+    sql.append("SELECT * FROM configuration_parameters where parameter_name ilike '%AWS%';")
+    #  print(sql)
+    return sql
 
 def parse_file(fname):
-    print('parsing catalog file')
+    print('parsing source catalog file')
     ct = 0
     with open(fname) as file:
         lines = file.read()
@@ -32,12 +50,12 @@ def parse_file(fname):
 
 def run_sql(cset,bucket_key):
  
-    print('writing target catalog')
-    conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
-        'port': os.getenv("TARGET_DB_PORT"), 
-        'user': os.getenv("TARGET_DB_USERNAME"), 
-        'password': os.getenv("TARGET_DB_PASSWORD"), 
-        'database': os.getenv("TARGET_DB_DATABASE"),
+    print('writing source data exports')
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
@@ -68,7 +86,7 @@ def run_sql(cset,bucket_key):
                 finally:
                     logging.info('-----')
                     logging.info(cmd)
-                    #logging.info("records: %s", rcnt)
+                    logging.info("records: %s", rcnt)
             
         cur.close()
     punt_file.close()
@@ -79,13 +97,13 @@ def run_sql(cset,bucket_key):
 
    
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("TARGET_BUCKET_KEY")
+bucket_key = os.getenv("SRC_BUCKET_KEY")
 
 lname = "log/put_"+bucket_key+"_export.log"
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-
+token_set = get_token()
 f = 'scripts/vaasdemo_out_parquet.sql'
 #f = 'scripts/tevaQA_catalog.sql'
-cmd_set = parse_file(f)
+cmd_set = token_set + parse_file(f)
 run_sql(cmd_set,bucket_key)
