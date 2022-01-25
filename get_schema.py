@@ -99,7 +99,7 @@ def run_getter(config):
         schema, table, ct = row
 
         target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        outstring = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
+        outstring = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+schema+"."+table+";"
         #print(outstring)
         outstring+="\n"
         f.write(outstring)
@@ -176,6 +176,9 @@ lname = 'log/get_full_schemas.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
+run_getter(h)
+
+h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'export_dest': 'local'}
 run_getter(h)
 
 h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}

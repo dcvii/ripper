@@ -24,11 +24,11 @@ def get_token():
 
 def run_sql_exec(cmd):
  
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
+    conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
+        'port': os.getenv("TARGET_DB_PORT"), 
+        'user': os.getenv("TARGET_DB_USERNAME"), 
+        'password': os.getenv("TARGET_DB_PASSWORD"), 
+        'database': os.getenv("TARGET_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
