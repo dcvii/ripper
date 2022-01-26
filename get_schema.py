@@ -99,31 +99,36 @@ def run_getter(config):
         schema, table, ct = row
 
         target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        outstring = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+schema+"."+table+";"
+        outstring = "EXPORT TO "+config['export_type'].upper()+target+" AS SELECT * FROM "+schema+"."+table+";"
         #print(outstring)
         outstring+="\n"
         f.write(outstring)
 
     f.close()
-    print("first file written")
+    print(config['export_type']+" export file written")
 
     ## create input for data_exports table
 
-    fspec = "scripts/data_exports.sql"
+    fspec = "scripts/"+bucket_key+"_in_"+config['export_type']+"_data_ingest.sql"
+    if config['export_type']=='parquet':
+        param = 'PARQUET'
+    else:
+        param = ''
+
     f = open(fspec, 'w')
 
     x_id = 0
     for row in results:
         schema, table, ct = row
-        # x_id += 1
-        # xid = str(x_id)
-        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        script = "EXPORT TO "+config['export_type']+target+" AS SELECT * FROM "+"'"+schema+"."+table+"';"
-        outstring = f'{ct}'+","+schema+","+table+","+script+"\n"
-        f.write(outstring)
+     
+        s3_source = "'"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"/*'"
+        script = "COPY "+schema+"."+table+" FROM "+s3_source+" "+param+";\n"
+        f.write(script)
     
     f.close()
-    print("second file written")
+    print(config['export_type'],"ingest file written")
+
+   
 
 
 def get_catalog(config):
@@ -165,7 +170,7 @@ def get_catalog(config):
     cur.close()
 
     df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
-    print("third file written")
+    print("catalog file written")
 
 
    
