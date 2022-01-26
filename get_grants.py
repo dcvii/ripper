@@ -8,11 +8,11 @@ import pandas as pd
 def run_getter(fspec):
  
 
-    conn_info = {'host': os.getenv("DB_HOST"), 
-        'port': os.getenv("DB_PORT"), 
-        'user': os.getenv("DB_USERNAME"), 
-        'password': os.getenv("DB_PASSWORD"), 
-        'database': os.getenv("DB_DATABASE"),
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 

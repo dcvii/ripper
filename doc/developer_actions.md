@@ -12,6 +12,7 @@ num| Date|By |Module|Purpose|Notes|Release|Effort|Priority|Status
 006|0112|MB|Docs||document manual process for establishing AWS access||||Open
 007|0118|MB|get_grants||add export commands to migration schema||||In Dev
 008|0118|MB|doc||write a config check||||In Dev
+009|0124|MB|get
 
 
 

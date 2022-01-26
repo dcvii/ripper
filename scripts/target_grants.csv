@@ -1,3 +1,4 @@
+,2
 0,GRANT USAGE ON SCHEMA v_internal TO public;
 1,GRANT USAGE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
 2,GRANT SELECT ON v_monitor.tuple_mover_operations TO public;
@@ -174,506 +175,506 @@
 173,GRANT EXECUTE ON TRANSFORM FUNCTION public.s3export() TO public;
 174,GRANT EXECUTE ON TRANSFORM FUNCTION public.rf_predictor_importance() TO public;
 175,GRANT EXECUTE ON TRANSFORM FUNCTION public.reverse_normalize() TO public;
-176,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_xgb_classifier_classes() TO public;
-177,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_rf_classifier_classes() TO public;
-178,GRANT EXECUTE ON FUNCTION public.predict_pmml() TO public;
-179,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_naive_bayes_classes() TO public;
-180,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_moving_average() TO public;
-181,"GRANT EXECUTE ON FUNCTION public.isOrContains(map Long Varchar, val Varchar) TO public;"
-182,GRANT EXECUTE ON TRANSFORM FUNCTION public.get_model_attribute() TO public;
-183,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_svd() TO public;
-184,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_pca() TO public;
-185,GRANT EXECUTE ON FUNCTION public.apply_bisecting_kmeans() TO public;
-186,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Char) TO public;
-187,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Date) TO public;
-188,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Integer) TO public;
-189,GRANT EXECUTE ON FUNCTION public.ST_YMax(geometry) TO public;
-190,GRANT EXECUTE ON FUNCTION public.ST_Y(geography) TO public;
-191,GRANT EXECUTE ON FUNCTION public.ST_XMin(geography) TO public;
-192,GRANT EXECUTE ON FUNCTION public.ST_X(geography) TO public;
-193,GRANT EXECUTE ON FUNCTION public.ST_X(geometry) TO public;
-194,"GRANT EXECUTE ON FUNCTION public.ST_Within(geometry, geometry) TO public;"
-195,"GRANT EXECUTE ON FUNCTION public.ST_Transform(geometry, Integer) TO public;"
-196,"GRANT EXECUTE ON FUNCTION public.ST_Touches(Long Varchar, Long Varchar) TO public;"
-197,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geography, geography) TO public;"
-198,"GRANT EXECUTE ON FUNCTION public.ST_SymDifference(geometry, geometry) TO public;"
-199,"GRANT EXECUTE ON FUNCTION public.ST_SimplifyPreserveTopology(geometry, Float) TO public;"
-200,"GRANT EXECUTE ON FUNCTION public.ST_Simplify(geometry, Float) TO public;"
-201,GRANT EXECUTE ON FUNCTION public.ST_SRID(geography) TO public;
-202,GRANT EXECUTE ON FUNCTION public.ST_SRID(Long Varchar) TO public;
-203,"GRANT EXECUTE ON FUNCTION public.ST_PointN(Long Varchar, Integer) TO public;"
-204,GRANT EXECUTE ON FUNCTION public.ST_Length(geography) TO public;
-205,GRANT EXECUTE ON FUNCTION public.ST_IsValid(geography) TO public;
-206,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(Long Varchar) TO public;
-207,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geometry) TO public;
-208,"GRANT EXECUTE ON FUNCTION public.ST_Intersects(geography, geography) TO public;"
-209,"GRANT EXECUTE ON FUNCTION public.ST_Intersection(geometry, geometry) TO public;"
-210,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(geography) TO public;
-211,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(Long Varchar, Integer) TO public;"
-212,GRANT EXECUTE ON FUNCTION public.ST_GeographyFromWKB(Long Varbinary) TO public;
-213,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(Long Varchar) TO public;
-214,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geography) TO public;
-215,GRANT EXECUTE ON FUNCTION public.ST_Envelope(geometry) TO public;
-216,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geography, geography) TO public;"
-217,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geometry, geometry) TO public;"
-218,GRANT EXECUTE ON FUNCTION public.ST_ConvexHull(geometry) TO public;
-219,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geometry, geometry) TO public;"
-220,GRANT EXECUTE ON FUNCTION public.ST_Boundary(geometry) TO public;
-221,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(geography) TO public;
-222,GRANT EXECUTE ON FUNCTION public.ST_Area(geography) TO public;
-223,GRANT EXECUTE ON FUNCTION public.ST_Area(Long Varchar) TO public;
-224,GRANT EXECUTE ON FUNCTION public.ST_Area(geometry) TO public;
-225,GRANT EXECUTE ON SOURCE public.STV_ShpSource() TO public;
-226,GRANT EXECUTE ON PARSER public.STV_ShpParser() TO public;
-227,GRANT EXECUTE ON FUNCTION public.STV_Reverse(geography) TO public;
-228,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geometry) TO public;"
-229,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(geography) TO public;
-230,GRANT EXECUTE ON FUNCTION public.STV_MemSize(geography) TO public;
-231,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, Float, Float) TO public;"
-232,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geography) TO public;
-233,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geometry) TO public;
-234,"GRANT EXECUTE ON FUNCTION public.STV_GeometryPoint(Float, Float, Integer) TO public;"
-235,GRANT EXECUTE ON FUNCTION public.STV_Geometry(Long Varchar) TO public;
-236,GRANT EXECUTE ON FUNCTION public.STV_Geometry(geography) TO public;
-237,GRANT EXECUTE ON FUNCTION public.STV_Geography(Long Varchar) TO public;
-238,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Extent(Long Varchar) TO public;
-239,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Drop_Index() TO public;
-240,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Describe_Index() TO public;
-241,"GRANT EXECUTE ON FUNCTION public.STV_DWithin(Long Varchar, Long Varchar, Float) TO public;"
-242,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(Long Varchar) TO public;
-243,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varchar) TO public;
-244,GRANT EXECUTE ON FUNCTION public.MapRegexExtractor(Long Varchar) TO public;
-245,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varbinary, Varchar) TO public;"
-246,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapKeys(Long Varchar) TO public;
-247,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapItems(Long Varbinary) TO public;
-248,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Long Varchar, Long Varchar) TO public;"
-249,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Varchar, Varchar) TO public;"
-250,GRANT EXECUTE ON TRANSFORM FUNCTION public.FlexTokenizer() TO public;
-251,GRANT EXECUTE ON PARSER public.FCefParser() TO public;
-252,GRANT EXECUTE ON PARSER public.FAvroParser() TO public;
-253,GRANT EXECUTE ON FUNCTION public.EmptyMap() TO public;
-254,GRANT EXECUTE ON TRANSFORM FUNCTION public.DelimitedExportMulti() TO public;
-255,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdSynToSyn(Long Varbinary) TO public;
-256,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdSynToCount(Long Varbinary) TO public;
-257,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdDataToLongSyn(Integer) TO public;
-258,
-259,
-260,GRANT TRUNCATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-261,GRANT CREATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-262,GRANT DROP ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-263,GRANT REFERENCES ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-264,GRANT ALTER ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-265,GRANT DELETE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-266,GRANT UPDATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-267,GRANT SELECT ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-268,GRANT INSERT ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
-269,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.WhitespaceLogTokenizer() TO dbadmin WITH GRANT OPTION;
-270,"GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.StringTokenizerDelim(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-271,GRANT EXECUTE ON FUNCTION v_txtindex.StemmerCaseInsensitive(v Long Varchar) TO dbadmin WITH GRANT OPTION;
-272,GRANT EXECUTE ON FUNCTION v_txtindex.Stemmer(v Long Varchar) TO dbadmin WITH GRANT OPTION;
-273,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.AdvancedLogTokenizer() TO dbadmin WITH GRANT OPTION;
-274,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Interval Year to Month) TO dbadmin WITH GRANT OPTION;
-275,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimestampTz) TO dbadmin WITH GRANT OPTION;
-276,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Timestamp) TO dbadmin WITH GRANT OPTION;
-277,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Time) TO dbadmin WITH GRANT OPTION;
-278,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Float) TO dbadmin WITH GRANT OPTION;
-279,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Varchar) TO dbadmin WITH GRANT OPTION;
-280,GRANT EXECUTE ON ANALYTIC FUNCTION v_func.argmax() TO dbadmin WITH GRANT OPTION;
-281,GRANT EXECUTE ON TRANSFORM FUNCTION public.s3export() TO dbadmin WITH GRANT OPTION;
-282,GRANT EXECUTE ON TRANSFORM FUNCTION public.reverse_normalize() TO dbadmin WITH GRANT OPTION;
-283,GRANT EXECUTE ON TRANSFORM FUNCTION public.read_tree() TO dbadmin WITH GRANT OPTION;
-284,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_xgb_classifier_classes() TO dbadmin WITH GRANT OPTION;
-285,GRANT EXECUTE ON FUNCTION public.predict_svm_regressor() TO dbadmin WITH GRANT OPTION;
-286,GRANT EXECUTE ON FUNCTION public.predict_svm_classifier() TO dbadmin WITH GRANT OPTION;
-287,GRANT EXECUTE ON FUNCTION public.predict_rf_classifier() TO dbadmin WITH GRANT OPTION;
-288,GRANT EXECUTE ON FUNCTION public.predict_logistic_reg() TO dbadmin WITH GRANT OPTION;
-289,GRANT EXECUTE ON TRANSFORM FUNCTION public.get_model_attribute() TO dbadmin WITH GRANT OPTION;
-290,GRANT EXECUTE ON TRANSFORM FUNCTION public.corr_matrix() TO dbadmin WITH GRANT OPTION;
-291,GRANT EXECUTE ON FUNCTION public.aws_get_config(Varchar) TO dbadmin WITH GRANT OPTION;
-292,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_pca() TO dbadmin WITH GRANT OPTION;
-293,GRANT EXECUTE ON FUNCTION public.apply_kmeans() TO dbadmin WITH GRANT OPTION;
-294,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_svd() TO dbadmin WITH GRANT OPTION;
-295,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_pca() TO dbadmin WITH GRANT OPTION;
-296,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Varchar) TO dbadmin WITH GRANT OPTION;
-297,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Char) TO dbadmin WITH GRANT OPTION;
-298,GRANT EXECUTE ON FUNCTION public.SetMapKeys() TO dbadmin WITH GRANT OPTION;
-299,GRANT EXECUTE ON FUNCTION public.ST_YMin(geography) TO dbadmin WITH GRANT OPTION;
-300,GRANT EXECUTE ON FUNCTION public.ST_YMin(Long Varchar) TO dbadmin WITH GRANT OPTION;
-301,GRANT EXECUTE ON FUNCTION public.ST_YMax(geography) TO dbadmin WITH GRANT OPTION;
-302,GRANT EXECUTE ON FUNCTION public.ST_YMax(Long Varchar) TO dbadmin WITH GRANT OPTION;
-303,GRANT EXECUTE ON FUNCTION public.ST_Y(geography) TO dbadmin WITH GRANT OPTION;
-304,GRANT EXECUTE ON FUNCTION public.ST_XMin(Long Varchar) TO dbadmin WITH GRANT OPTION;
-305,GRANT EXECUTE ON FUNCTION public.ST_XMin(geometry) TO dbadmin WITH GRANT OPTION;
-306,GRANT EXECUTE ON FUNCTION public.ST_XMax(geometry) TO dbadmin WITH GRANT OPTION;
-307,"GRANT EXECUTE ON FUNCTION public.ST_Within(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-308,"GRANT EXECUTE ON FUNCTION public.ST_Within(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-309,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geography, geography) TO dbadmin WITH GRANT OPTION;"
-310,GRANT EXECUTE ON FUNCTION public.ST_SRID(Long Varchar) TO dbadmin WITH GRANT OPTION;
-311,"GRANT EXECUTE ON FUNCTION public.ST_PointN(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
-312,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geometry, Integer) TO dbadmin WITH GRANT OPTION;"
-313,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(Long Varchar) TO dbadmin WITH GRANT OPTION;
-314,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(Long Varchar) TO dbadmin WITH GRANT OPTION;
-315,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geometry) TO dbadmin WITH GRANT OPTION;
-316,GRANT EXECUTE ON FUNCTION public.ST_Length(geography) TO dbadmin WITH GRANT OPTION;
-317,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(Long Varchar) TO dbadmin WITH GRANT OPTION;
-318,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(Long Varchar) TO dbadmin WITH GRANT OPTION;
-319,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
-320,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(Long Varchar) TO dbadmin WITH GRANT OPTION;
-321,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geometry) TO dbadmin WITH GRANT OPTION;
-322,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geography) TO dbadmin WITH GRANT OPTION;
-323,"GRANT EXECUTE ON FUNCTION public.ST_Equals(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-324,GRANT EXECUTE ON FUNCTION public.ST_Envelope(geometry) TO dbadmin WITH GRANT OPTION;
-325,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-326,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-327,"GRANT EXECUTE ON FUNCTION public.ST_Difference(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-328,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geography, geography) TO dbadmin WITH GRANT OPTION;"
-329,"GRANT EXECUTE ON FUNCTION public.ST_Contains(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-330,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(Long Varchar) TO dbadmin WITH GRANT OPTION;
-331,GRANT EXECUTE ON FUNCTION public.ST_Area(Long Varchar) TO dbadmin WITH GRANT OPTION;
-332,GRANT EXECUTE ON FUNCTION public.STV_SetExportShapefileDirectory() TO dbadmin WITH GRANT OPTION;
-333,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geography) TO dbadmin WITH GRANT OPTION;"
-334,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
-335,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(Long Varchar) TO dbadmin WITH GRANT OPTION;
-336,GRANT USAGE ON SCHEMA v_txtindex TO public;
-337,GRANT USAGE ON SCHEMA v_func TO public;
-338,GRANT SELECT ON v_monitor.user_sessions TO public;
-339,GRANT SELECT ON v_monitor.truncated_schemata TO public;
-340,GRANT SELECT ON v_monitor.tls_configurations TO public;
-341,GRANT SELECT ON v_monitor.table_recoveries TO public;
-342,GRANT SELECT ON v_monitor.system TO public;
-343,GRANT SELECT ON v_monitor.strata TO public;
-344,GRANT SELECT ON v_monitor.session_parameters TO public;
-345,GRANT SELECT ON v_monitor.resource_rejection_details TO public;
-346,GRANT SELECT ON v_monitor.resource_pool_move TO public;
-347,GRANT SELECT ON v_monitor.query_plan_profiles TO public;
-348,GRANT SELECT ON v_monitor.query_consumption TO public;
-349,GRANT SELECT ON v_monitor.projection_storage TO public;
-350,GRANT SELECT ON v_monitor.output_query_plan_costs TO public;
-351,GRANT SELECT ON v_monitor.output_event_history TO public;
-352,GRANT SELECT ON v_monitor.node_states TO public;
-353,GRANT SELECT ON v_monitor.load_sources TO public;
-354,GRANT SELECT ON v_monitor.hive_custom_partitions_accessed TO public;
-355,GRANT SELECT ON v_monitor.designs TO public;
-356,GRANT SELECT ON v_monitor.design_queries TO public;
-357,GRANT SELECT ON v_monitor.depot_files TO public;
-358,GRANT SELECT ON v_monitor.depot_fetch_queue TO public;
-359,GRANT SELECT ON v_monitor.blob_chunks TO public;
-360,GRANT SELECT ON v_internal.design_segmented_projection_data_distribution_report TO public;
-361,GRANT SELECT ON v_internal.design_output_query_projections_report TO public;
-362,GRANT SELECT ON v_internal.design_output_projection_columns_report TO public;
-363,GRANT SELECT ON v_internal.design_output_event_history_report TO public;
-364,GRANT SELECT ON v_internal.catalog_events TO public;
-365,GRANT SELECT ON v_catalog.views TO public;
-366,GRANT SELECT ON v_catalog.user_functions TO public;
-367,GRANT SELECT ON v_catalog.table_constraints TO public;
-368,GRANT SELECT ON v_catalog.system_columns TO public;
-369,GRANT SELECT ON v_catalog.subclusters TO public;
-370,GRANT SELECT ON v_catalog.roles TO public;
-371,GRANT SELECT ON v_catalog.resource_pools TO public;
-372,GRANT SELECT ON v_catalog.resource_pool_defaults TO public;
-373,GRANT SELECT ON v_catalog.projections TO public;
-374,GRANT SELECT ON v_catalog.projection_columns TO public;
-375,GRANT SELECT ON v_catalog.profile_parameters TO public;
-376,GRANT SELECT ON v_catalog.nodes TO public;
-377,GRANT SELECT ON v_catalog.materialize_flextable_columns_results TO public;
-378,GRANT SELECT ON v_catalog.log_queries TO public;
-379,GRANT SELECT ON v_catalog.log_params TO public;
-380,GRANT SELECT ON v_catalog.licenses TO public;
-381,GRANT SELECT ON v_catalog.license_audits TO public;
-382,GRANT SELECT ON v_catalog.large_cluster_configuration_status TO public;
-383,GRANT SELECT ON v_catalog.hcatalog_table_list TO public;
-384,GRANT SELECT ON v_catalog.constraint_columns TO public;
-385,GRANT SELECT ON v_catalog.cluster_layout TO public;
-386,GRANT SELECT ON v_catalog.audit_managing_users_privileges TO public;
-387,GRANT SELECT ON v_monitor.storage_policies TO public;
-388,GRANT SELECT ON v_monitor.resource_pool_status TO public;
-389,GRANT SELECT ON v_monitor.remote_replication_status TO public;
-390,GRANT SELECT ON v_monitor.query_metrics TO public;
-391,GRANT SELECT ON v_monitor.node_resources TO public;
-392,GRANT SELECT ON v_monitor.locks TO public;
-393,GRANT SELECT ON v_internal.vs_wos_containers TO public;
-394,GRANT SELECT ON v_internal.vs_view_columns TO public;
-395,GRANT SELECT ON v_internal.vs_udfs_statistics TO public;
-396,GRANT SELECT ON v_internal.vs_tombstones TO public;
-397,GRANT SELECT ON v_internal.vs_text_index_arguments TO public;
-398,GRANT SELECT ON v_internal.vs_table_recoveries TO public;
-399,GRANT SELECT ON v_internal.vs_system_views TO public;
-400,GRANT SELECT ON v_internal.vs_session_mars_store TO public;
-401,GRANT SELECT ON v_internal.vs_segments TO public;
-402,GRANT SELECT ON v_internal.vs_schemata TO public;
-403,GRANT SELECT ON v_internal.vs_resource_pools TO public;
-404,GRANT SELECT ON v_internal.vs_projection_recoveries TO public;
-405,GRANT SELECT ON v_internal.vs_projection_column_histogram TO public;
-406,GRANT SELECT ON v_internal.vs_plan_step_output_schema TO public;
-407,GRANT SELECT ON v_internal.vs_plan_resources TO public;
-408,GRANT SELECT ON v_internal.vs_plan_parallel_zones TO public;
-409,GRANT SELECT ON v_internal.vs_plan_activity_resources TO public;
-410,GRANT SELECT ON v_internal.vs_plan_activity_details TO public;
-411,GRANT SELECT ON v_internal.vs_nodes TO public;
-412,GRANT SELECT ON v_internal.vs_node_states TO public;
-413,GRANT SELECT ON v_internal.vs_mergeoutcache_proj TO public;
-414,GRANT SELECT ON v_internal.vs_logicalstats_regular_colstats TO public;
-415,GRANT SELECT ON v_internal.vs_index_tool_progress TO public;
-416,GRANT SELECT ON v_internal.vs_hcatalog_table_list TO public;
-417,GRANT SELECT ON v_internal.vs_fault_groups TO public;
-418,GRANT SELECT ON v_internal.vs_execution_engine_profiles TO public;
-419,GRANT SELECT ON v_internal.vs_epoch_map TO public;
-420,GRANT SELECT ON v_internal.vs_dv_wos_containers TO public;
-421,GRANT SELECT ON v_internal.vs_dv_ros TO public;
-422,GRANT SELECT ON v_internal.vs_designs TO public;
-423,GRANT SELECT ON v_internal.vs_design_tables TO public;
-424,GRANT SELECT ON v_internal.vs_design_output_query_projections TO public;
-425,GRANT SELECT ON v_internal.vs_design_output_projections TO public;
-426,GRANT SELECT ON v_internal.vs_design_output_projection_statements TO public;
-427,GRANT SELECT ON v_internal.vs_design_output_event_history TO public;
-428,GRANT SELECT ON v_internal.vs_depot_pin_policies TO public;
-429,GRANT SELECT ON v_internal.vs_depot_fetch_queue TO public;
-430,GRANT SELECT ON v_internal.vs_deployment_status TO public;
-431,GRANT SELECT ON v_internal.vs_data_channels TO public;
-432,GRANT SELECT ON v_internal.vs_columns TO public;
-433,GRANT SELECT ON v_internal.vs_catalog_sync_state TO public;
-434,GRANT SELECT ON v_internal.vs_catalog_event_swap_partition TO public;
-435,GRANT SELECT ON v_internal.vs_catalog_event_rollback TO public;
-436,GRANT SELECT ON v_internal.vs_catalog_event_replace TO public;
-437,GRANT SELECT ON v_internal.vs_catalog_event_refresh_columns TO public;
-438,GRANT SELECT ON v_internal.vs_catalog_event_drop_partition TO public;
-439,GRANT SELECT ON v_internal.vs_catalog_event_alter_partition TO public;
-440,GRANT SELECT ON v_internal.vs_branches TO public;
-441,GRANT SELECT ON v_internal.vs_blobs TO public;
-442,GRANT SELECT ON v_internal.tombstones TO public;
-443,GRANT SELECT ON v_internal.dc_woses_destroyed TO public;
-444,GRANT SELECT ON v_internal.dc_user_audits TO public;
-445,GRANT SELECT ON v_internal.dc_tuple_mover_events TO public;
-446,GRANT SELECT ON v_internal.dc_transaction_starts TO public;
-447,GRANT SELECT ON v_internal.dc_table_recoveries TO public;
-448,GRANT SELECT ON v_internal.dc_sips_statistics TO public;
-449,GRANT SELECT ON v_internal.dc_session_ends TO public;
-450,GRANT SELECT ON v_internal.dc_roses_committed TO public;
-451,GRANT SELECT ON v_internal.dc_resource_rejections TO public;
-452,GRANT SELECT ON v_internal.dc_resource_pool_history TO public;
-453,GRANT SELECT ON v_internal.dc_renamed_schemata TO public;
-454,GRANT SELECT ON v_internal.dc_rebalanced_operations TO public;
-455,GRANT SELECT ON v_internal.dc_plans TO public;
-456,GRANT SELECT ON v_internal.dc_plan_step_output_schema TO public;
-457,GRANT SELECT ON v_internal.dc_plan_resource_activities TO public;
-458,GRANT SELECT ON v_internal.dc_plan_phases TO public;
-459,GRANT SELECT ON v_internal.dc_plan_activity_details TO public;
-460,GRANT SELECT ON v_internal.dc_optimizer_stats TO public;
-461,GRANT SELECT ON v_internal.dc_optimizer_events TO public;
-462,GRANT SELECT ON v_internal.dc_notifications TO public;
-463,GRANT SELECT ON v_internal.dc_mergeout_requests TO public;
-464,GRANT SELECT ON v_internal.dc_lock_requests TO public;
-465,GRANT SELECT ON v_internal.dc_lock_releases TO public;
-466,GRANT SELECT ON v_internal.dc_library_fetches TO public;
-467,GRANT SELECT ON v_internal.dc_execution_summaries TO public;
-468,GRANT SELECT ON v_internal.dc_execution_engine_events TO public;
-469,GRANT SELECT ON v_internal.dc_errors TO public;
-470,GRANT SELECT ON v_internal.dc_design_status TO public;
-471,GRANT SELECT ON v_internal.dc_design_query_projections TO public;
-472,GRANT SELECT ON v_internal.dc_design_queries TO public;
-473,GRANT SELECT ON v_internal.dc_depot_uploads TO public;
-474,GRANT SELECT ON v_catalog.vs_subcluster_resource_pool_overrides TO public;
-475,GRANT SELECT ON v_catalog.vs_node_subscriptions TO public;
-476,GRANT SELECT ON v_catalog.standard_keywords TO public;
-477,GRANT SELECT ON v_catalog.primary_keys TO public;
-478,GRANT SELECT ON v_catalog.keywords TO public;
-479,GRANT SELECT ON v_catalog.dual TO public;
-480,GRANT SELECT ON v_catalog.cryptographic_keys TO public;
-481,GRANT SELECT ON v_catalog.certificates TO public;
-482,GRANT SELECT ON v_catalog.ca_bundles TO public;
-483,GRANT EXECUTE ON FUNCTION v_txtindex.caseInsensitiveNoStemming(x Long Varchar) TO public;
-484,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.WhitespaceLogTokenizer() TO public;
-485,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.ThreeGrams(Varchar) TO public;
-486,"GRANT EXECUTE ON FUNCTION v_txtindex.SET_TOKENIZER_PARAMETER(Varchar, Varchar) TO public;"
-487,GRANT EXECUTE ON FUNCTION v_txtindex.DELETE_TOKENIZER_CONFIG_FILE() TO public;
-488,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.BasicLogTokenizer() TO public;
-489,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimeTz) TO public;
-490,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Float) TO public;
-491,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Varbinary) TO public;
-492,GRANT EXECUTE ON ANALYTIC FUNCTION v_func.argmax() TO public;
-493,GRANT EXECUTE ON FUNCTION v_func.Soundex(Varchar) TO public;
-494,GRANT EXECUTE ON TRANSFORM FUNCTION public.s3export_partition() TO public;
-495,"GRANT EXECUTE ON TRANSFORM FUNCTION public.rsquared(Float, Float) TO public;"
-496,GRANT EXECUTE ON TRANSFORM FUNCTION public.read_tree() TO public;
-497,GRANT EXECUTE ON FUNCTION public.predict_xgb_classifier() TO public;
-498,GRANT EXECUTE ON FUNCTION public.predict_svm_classifier() TO public;
-499,GRANT EXECUTE ON FUNCTION public.predict_rf_regressor() TO public;
-500,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_autoregressor() TO public;
-501,GRANT EXECUTE ON TRANSFORM FUNCTION public.mode_finder() TO public;
-502,GRANT EXECUTE ON TRANSFORM FUNCTION public.lift_table() TO public;
-503,GRANT EXECUTE ON TRANSFORM FUNCTION public.corr_matrix() TO public;
-504,GRANT EXECUTE ON TRANSFORM FUNCTION public.confusion_matrix() TO public;
-505,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_normalize() TO public;
-506,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_svd() TO public;
-507,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_NumCol() TO public;
-508,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Varchar) TO public;
-509,GRANT EXECUTE ON FUNCTION public.SetMapKeys() TO public;
-510,GRANT EXECUTE ON FUNCTION public.ST_YMin(geography) TO public;
-511,GRANT EXECUTE ON FUNCTION public.ST_YMin(Long Varchar) TO public;
-512,GRANT EXECUTE ON FUNCTION public.ST_YMax(Long Varchar) TO public;
-513,GRANT EXECUTE ON FUNCTION public.ST_Y(Long Varchar) TO public;
-514,GRANT EXECUTE ON FUNCTION public.ST_XMin(Long Varchar) TO public;
-515,GRANT EXECUTE ON FUNCTION public.ST_XMax(geography) TO public;
-516,GRANT EXECUTE ON FUNCTION public.ST_XMax(Long Varchar) TO public;
-517,"GRANT EXECUTE ON FUNCTION public.ST_Within(Long Varchar, Long Varchar) TO public;"
-518,"GRANT EXECUTE ON FUNCTION public.ST_Union(geometry, geometry) TO public;"
-519,GRANT EXECUTE ON FUNCTION public.ST_SRID(geometry) TO public;
-520,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geography, Integer) TO public;"
-521,"GRANT EXECUTE ON FUNCTION public.ST_Overlaps(geometry, geometry) TO public;"
-522,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geography) TO public;
-523,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(Long Varchar) TO public;
-524,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geometry) TO public;
-525,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(Long Varchar) TO public;
-526,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geometry) TO public;
-527,GRANT EXECUTE ON FUNCTION public.ST_Length(Long Varchar) TO public;
-528,GRANT EXECUTE ON FUNCTION public.ST_Length(geometry) TO public;
-529,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geography) TO public;
-530,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(geometry, Integer) TO public;"
-531,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary, Integer) TO public;"
-532,GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar) TO public;
-533,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geometry) TO public;
-534,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geography, geography) TO public;"
-535,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geometry, geometry) TO public;"
-536,"GRANT EXECUTE ON FUNCTION public.ST_Distance(Long Varchar, Long Varchar) TO public;"
-537,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geography, geography) TO public;"
-538,"GRANT EXECUTE ON FUNCTION public.ST_Contains(Long Varchar, Long Varchar) TO public;"
-539,GRANT EXECUTE ON FUNCTION public.ST_Centroid(geometry) TO public;
-540,GRANT EXECUTE ON FUNCTION public.ST_AsText(geometry) TO public;
-541,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(Long Varchar) TO public;
-542,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Rename_Index() TO public;
-543,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(Long Varchar) TO public;
-544,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(geometry) TO public;
-545,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(Long Varchar, Long Varchar, Integer) TO public;"
-546,GRANT EXECUTE ON FUNCTION public.STV_MemSize(geometry) TO public;
-547,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_LineStringPoint(geography) TO public;
-548,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(geometry) TO public;
-549,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, geometry) TO public;"
-550,"GRANT EXECUTE ON FUNCTION public.STV_Intersect(Float, Float) TO public;"
-551,GRANT EXECUTE ON FUNCTION public.STV_GetExportShapefileDirectory() TO public;
-552,"GRANT EXECUTE ON FUNCTION public.STV_GeographyPoint(Float, Float) TO public;"
-553,"GRANT EXECUTE ON FUNCTION public.STV_DWithin(geography, geography, Float) TO public;"
-554,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, Long Varchar) TO public;"
-555,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, geometry) TO public;"
-556,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(geography) TO public;
-557,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(geometry) TO public;
-558,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExportMulti() TO public;
-559,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExport() TO public;
-560,GRANT EXECUTE ON TRANSFORM FUNCTION public.PRC() TO public;
-561,GRANT EXECUTE ON FUNCTION public.MapVersion(Long Varbinary) TO public;
-562,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapValuesOrField(Long Varchar) TO public;
-563,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varbinary) TO public;
-564,GRANT EXECUTE ON FUNCTION public.MapPut() TO public;
-565,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapItems() TO public;
-566,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varbinary, Varchar) TO public;"
-567,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varchar, Varchar) TO public;"
-568,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MSE(Float, Float) TO public;"
-569,GRANT EXECUTE ON PARSER public.FRegexParser() TO public;
-570,GRANT EXECUTE ON PARSER public.FJSONParser() TO public;
-571,GRANT EXECUTE ON PARSER public.FIDXParser() TO public;
-572,GRANT EXECUTE ON PARSER public.FCsvParser() TO public;
-573,GRANT EXECUTE ON TRANSFORM FUNCTION public.Explode() TO public;
-574,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdDataToCount(Integer) TO public;
-575,GRANT EXECUTE ON AGGREGATE FUNCTION public.APPROXIMATE_PERCENTILE(Float) TO public;
-576,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.TwoGrams(Varchar) TO dbadmin WITH GRANT OPTION;
-577,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.StringTokenizer() TO dbadmin WITH GRANT OPTION;
-578,"GRANT EXECUTE ON FUNCTION v_txtindex.SET_TOKENIZER_PARAMETER(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-579,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.READ_CONFIG_FILE() TO dbadmin WITH GRANT OPTION;
-580,GRANT EXECUTE ON FUNCTION v_txtindex.DELETE_TOKENIZER_CONFIG_FILE() TO dbadmin WITH GRANT OPTION;
-581,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Interval Day to Second) TO dbadmin WITH GRANT OPTION;
-582,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimeTz) TO dbadmin WITH GRANT OPTION;
-583,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Boolean) TO dbadmin WITH GRANT OPTION;
-584,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Long Varchar) TO dbadmin WITH GRANT OPTION;
-585,GRANT EXECUTE ON FUNCTION v_func.Soundex(Varchar) TO dbadmin WITH GRANT OPTION;
-586,GRANT EXECUTE ON TRANSFORM FUNCTION public.rf_predictor_importance() TO dbadmin WITH GRANT OPTION;
-587,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_rf_classifier_classes() TO dbadmin WITH GRANT OPTION;
-588,GRANT EXECUTE ON FUNCTION public.predict_pmml() TO dbadmin WITH GRANT OPTION;
-589,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_naive_bayes_classes() TO dbadmin WITH GRANT OPTION;
-590,GRANT EXECUTE ON FUNCTION public.predict_naive_bayes() TO dbadmin WITH GRANT OPTION;
-591,GRANT EXECUTE ON FUNCTION public.predict_linear_reg() TO dbadmin WITH GRANT OPTION;
-592,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_autoregressor() TO dbadmin WITH GRANT OPTION;
-593,"GRANT EXECUTE ON FUNCTION public.isOrContains(map Long Varchar, val Varchar) TO dbadmin WITH GRANT OPTION;"
-594,GRANT EXECUTE ON TRANSFORM FUNCTION public.error_rate() TO dbadmin WITH GRANT OPTION;
-595,"GRANT EXECUTE ON FUNCTION public.aws_set_config(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-596,GRANT EXECUTE ON TRANSFORM FUNCTION public.approximate_quantiles() TO dbadmin WITH GRANT OPTION;
-597,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_svd() TO dbadmin WITH GRANT OPTION;
-598,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_one_hot_encoder() TO dbadmin WITH GRANT OPTION;
-599,GRANT EXECUTE ON FUNCTION public.apply_bisecting_kmeans() TO dbadmin WITH GRANT OPTION;
-600,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_NumCol() TO dbadmin WITH GRANT OPTION;
-601,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Date) TO dbadmin WITH GRANT OPTION;
-602,GRANT EXECUTE ON FUNCTION public.ST_YMin(geometry) TO dbadmin WITH GRANT OPTION;
-603,GRANT EXECUTE ON FUNCTION public.ST_YMax(geometry) TO dbadmin WITH GRANT OPTION;
-604,GRANT EXECUTE ON FUNCTION public.ST_Y(Long Varchar) TO dbadmin WITH GRANT OPTION;
-605,GRANT EXECUTE ON FUNCTION public.ST_XMax(geography) TO dbadmin WITH GRANT OPTION;
-606,GRANT EXECUTE ON FUNCTION public.ST_X(geography) TO dbadmin WITH GRANT OPTION;
-607,GRANT EXECUTE ON FUNCTION public.ST_X(geometry) TO dbadmin WITH GRANT OPTION;
-608,"GRANT EXECUTE ON FUNCTION public.ST_Within(geography, geography) TO dbadmin WITH GRANT OPTION;"
-609,"GRANT EXECUTE ON FUNCTION public.ST_Touches(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-610,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-611,"GRANT EXECUTE ON FUNCTION public.ST_SimplifyPreserveTopology(geometry, Float) TO dbadmin WITH GRANT OPTION;"
-612,"GRANT EXECUTE ON FUNCTION public.ST_Simplify(geometry, Float) TO dbadmin WITH GRANT OPTION;"
-613,GRANT EXECUTE ON FUNCTION public.ST_SRID(geography) TO dbadmin WITH GRANT OPTION;
-614,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geography, Integer) TO dbadmin WITH GRANT OPTION;"
-615,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geometry) TO dbadmin WITH GRANT OPTION;
-616,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geography) TO dbadmin WITH GRANT OPTION;
-617,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(geometry) TO dbadmin WITH GRANT OPTION;
-618,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geometry) TO dbadmin WITH GRANT OPTION;
-619,"GRANT EXECUTE ON FUNCTION public.ST_Intersects(geography, geography) TO dbadmin WITH GRANT OPTION;"
-620,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(Long Varchar) TO dbadmin WITH GRANT OPTION;
-621,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(geometry) TO dbadmin WITH GRANT OPTION;
-622,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
-623,GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary) TO dbadmin WITH GRANT OPTION;
-624,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary, Integer) TO dbadmin WITH GRANT OPTION;"
-625,GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar) TO dbadmin WITH GRANT OPTION;
-626,GRANT EXECUTE ON FUNCTION public.ST_GeographyFromWKB(Long Varbinary) TO dbadmin WITH GRANT OPTION;
-627,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-628,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geography, geography) TO dbadmin WITH GRANT OPTION;"
-629,"GRANT EXECUTE ON FUNCTION public.ST_Distance(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-630,"GRANT EXECUTE ON FUNCTION public.ST_Crosses(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-631,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
-632,GRANT EXECUTE ON FUNCTION public.ST_AsText(geography) TO dbadmin WITH GRANT OPTION;
-633,GRANT EXECUTE ON FUNCTION public.ST_AsText(Long Varchar) TO dbadmin WITH GRANT OPTION;
-634,GRANT EXECUTE ON FUNCTION public.ST_Area(geometry) TO dbadmin WITH GRANT OPTION;
-635,GRANT EXECUTE ON SOURCE public.STV_ShpSource() TO dbadmin WITH GRANT OPTION;
-636,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_ShpCreateTable() TO dbadmin WITH GRANT OPTION;
-637,GRANT EXECUTE ON FUNCTION public.STV_Reverse(geography) TO dbadmin WITH GRANT OPTION;
-638,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Rename_Index() TO dbadmin WITH GRANT OPTION;
-639,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, Long Varchar) TO dbadmin WITH GRANT OPTION;"
-640,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(geography, geography, Integer) TO dbadmin WITH GRANT OPTION;"
-641,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(geometry, geometry, Integer) TO dbadmin WITH GRANT OPTION;"
-642,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_LineStringPoint(Long Varchar) TO dbadmin WITH GRANT OPTION;
-643,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(Long Varchar) TO dbadmin WITH GRANT OPTION;
-644,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(geography) TO dbadmin WITH GRANT OPTION;
-645,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, Float, Float) TO dbadmin WITH GRANT OPTION;"
-646,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
-647,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geography) TO dbadmin WITH GRANT OPTION;
-648,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geometry) TO dbadmin WITH GRANT OPTION;
-649,GRANT EXECUTE ON FUNCTION public.STV_GetExportShapefileDirectory() TO dbadmin WITH GRANT OPTION;
-650,GRANT EXECUTE ON FUNCTION public.STV_Geometry(geography) TO dbadmin WITH GRANT OPTION;
-651,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
-652,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(Long Varchar) TO dbadmin WITH GRANT OPTION;
-653,GRANT EXECUTE ON TRANSFORM FUNCTION public.ROC() TO dbadmin WITH GRANT OPTION;
-654,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExport() TO dbadmin WITH GRANT OPTION;
-655,GRANT EXECUTE ON TRANSFORM FUNCTION public.PRC() TO dbadmin WITH GRANT OPTION;
-656,GRANT EXECUTE ON TRANSFORM FUNCTION public.OrcExportMulti() TO dbadmin WITH GRANT OPTION;
-657,GRANT EXECUTE ON FUNCTION public.MapVersion(Long Varbinary) TO dbadmin WITH GRANT OPTION;
-658,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapValues(Long Varchar) TO dbadmin WITH GRANT OPTION;
-659,GRANT EXECUTE ON FUNCTION public.MapToString(Long Varchar) TO dbadmin WITH GRANT OPTION;
-660,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varbinary) TO dbadmin WITH GRANT OPTION;
-661,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varchar) TO dbadmin WITH GRANT OPTION;
-662,GRANT EXECUTE ON FUNCTION public.MapPut() TO dbadmin WITH GRANT OPTION;
-663,GRANT EXECUTE ON FUNCTION public.MapLookup() TO dbadmin WITH GRANT OPTION;
-664,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varbinary, Varchar) TO dbadmin WITH GRANT OPTION;"
-665,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-666,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapKeysInfo(Long Varchar) TO dbadmin WITH GRANT OPTION;
-667,GRANT EXECUTE ON FUNCTION public.MapDelimitedExtractor(Long Varchar) TO dbadmin WITH GRANT OPTION;
-668,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varbinary, Varchar) TO dbadmin WITH GRANT OPTION;"
-669,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-670,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
-671,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MSE(Float, Float) TO dbadmin WITH GRANT OPTION;"
-672,GRANT EXECUTE ON PARSER public.FDelimitedParser() TO dbadmin WITH GRANT OPTION;
-673,GRANT EXECUTE ON PARSER public.FCefParser() TO dbadmin WITH GRANT OPTION;
-674,GRANT EXECUTE ON TRANSFORM FUNCTION public.DelimitedExport() TO dbadmin WITH GRANT OPTION;
-675,GRANT EXECUTE ON AGGREGATE FUNCTION public.APPROXIMATE_MEDIAN(Float) TO dbadmin WITH GRANT OPTION;
+176,GRANT USAGE ON SCHEMA v_txtindex TO public;
+177,GRANT USAGE ON SCHEMA v_func TO public;
+178,GRANT SELECT ON v_monitor.user_sessions TO public;
+179,GRANT SELECT ON v_monitor.truncated_schemata TO public;
+180,GRANT SELECT ON v_monitor.tls_configurations TO public;
+181,GRANT SELECT ON v_monitor.table_recoveries TO public;
+182,GRANT SELECT ON v_monitor.system TO public;
+183,GRANT SELECT ON v_monitor.strata TO public;
+184,GRANT SELECT ON v_monitor.session_parameters TO public;
+185,GRANT SELECT ON v_monitor.resource_rejection_details TO public;
+186,GRANT SELECT ON v_monitor.resource_pool_move TO public;
+187,GRANT SELECT ON v_monitor.query_plan_profiles TO public;
+188,GRANT SELECT ON v_monitor.query_consumption TO public;
+189,GRANT SELECT ON v_monitor.projection_storage TO public;
+190,GRANT SELECT ON v_monitor.output_query_plan_costs TO public;
+191,GRANT SELECT ON v_monitor.output_event_history TO public;
+192,GRANT SELECT ON v_monitor.node_states TO public;
+193,GRANT SELECT ON v_monitor.load_sources TO public;
+194,GRANT SELECT ON v_monitor.hive_custom_partitions_accessed TO public;
+195,GRANT SELECT ON v_monitor.designs TO public;
+196,GRANT SELECT ON v_monitor.design_queries TO public;
+197,GRANT SELECT ON v_monitor.depot_files TO public;
+198,GRANT SELECT ON v_monitor.depot_fetch_queue TO public;
+199,GRANT SELECT ON v_monitor.blob_chunks TO public;
+200,GRANT SELECT ON v_internal.design_segmented_projection_data_distribution_report TO public;
+201,GRANT SELECT ON v_internal.design_output_query_projections_report TO public;
+202,GRANT SELECT ON v_internal.design_output_projection_columns_report TO public;
+203,GRANT SELECT ON v_internal.design_output_event_history_report TO public;
+204,GRANT SELECT ON v_internal.catalog_events TO public;
+205,GRANT SELECT ON v_catalog.views TO public;
+206,GRANT SELECT ON v_catalog.user_functions TO public;
+207,GRANT SELECT ON v_catalog.table_constraints TO public;
+208,GRANT SELECT ON v_catalog.system_columns TO public;
+209,GRANT SELECT ON v_catalog.subclusters TO public;
+210,GRANT SELECT ON v_catalog.roles TO public;
+211,GRANT SELECT ON v_catalog.resource_pools TO public;
+212,GRANT SELECT ON v_catalog.resource_pool_defaults TO public;
+213,GRANT SELECT ON v_catalog.projections TO public;
+214,GRANT SELECT ON v_catalog.projection_columns TO public;
+215,GRANT SELECT ON v_catalog.profile_parameters TO public;
+216,GRANT SELECT ON v_catalog.nodes TO public;
+217,GRANT SELECT ON v_catalog.materialize_flextable_columns_results TO public;
+218,GRANT SELECT ON v_catalog.log_queries TO public;
+219,GRANT SELECT ON v_catalog.log_params TO public;
+220,GRANT SELECT ON v_catalog.licenses TO public;
+221,GRANT SELECT ON v_catalog.license_audits TO public;
+222,GRANT SELECT ON v_catalog.large_cluster_configuration_status TO public;
+223,GRANT SELECT ON v_catalog.hcatalog_table_list TO public;
+224,GRANT SELECT ON v_catalog.constraint_columns TO public;
+225,GRANT SELECT ON v_catalog.cluster_layout TO public;
+226,GRANT SELECT ON v_catalog.audit_managing_users_privileges TO public;
+227,GRANT SELECT ON v_monitor.storage_policies TO public;
+228,GRANT SELECT ON v_monitor.resource_pool_status TO public;
+229,GRANT SELECT ON v_monitor.remote_replication_status TO public;
+230,GRANT SELECT ON v_monitor.query_metrics TO public;
+231,GRANT SELECT ON v_monitor.node_resources TO public;
+232,GRANT SELECT ON v_monitor.locks TO public;
+233,GRANT SELECT ON v_internal.vs_wos_containers TO public;
+234,GRANT SELECT ON v_internal.vs_view_columns TO public;
+235,GRANT SELECT ON v_internal.vs_udfs_statistics TO public;
+236,GRANT SELECT ON v_internal.vs_tombstones TO public;
+237,GRANT SELECT ON v_internal.vs_text_index_arguments TO public;
+238,GRANT SELECT ON v_internal.vs_table_recoveries TO public;
+239,GRANT SELECT ON v_internal.vs_system_views TO public;
+240,GRANT SELECT ON v_internal.vs_session_mars_store TO public;
+241,GRANT SELECT ON v_internal.vs_segments TO public;
+242,GRANT SELECT ON v_internal.vs_schemata TO public;
+243,GRANT SELECT ON v_internal.vs_resource_pools TO public;
+244,GRANT SELECT ON v_internal.vs_projection_recoveries TO public;
+245,GRANT SELECT ON v_internal.vs_projection_column_histogram TO public;
+246,GRANT SELECT ON v_internal.vs_plan_step_output_schema TO public;
+247,GRANT SELECT ON v_internal.vs_plan_resources TO public;
+248,GRANT SELECT ON v_internal.vs_plan_parallel_zones TO public;
+249,GRANT SELECT ON v_internal.vs_plan_activity_resources TO public;
+250,GRANT SELECT ON v_internal.vs_plan_activity_details TO public;
+251,GRANT SELECT ON v_internal.vs_nodes TO public;
+252,GRANT SELECT ON v_internal.vs_node_states TO public;
+253,GRANT SELECT ON v_internal.vs_mergeoutcache_proj TO public;
+254,GRANT SELECT ON v_internal.vs_logicalstats_regular_colstats TO public;
+255,GRANT SELECT ON v_internal.vs_index_tool_progress TO public;
+256,GRANT SELECT ON v_internal.vs_hcatalog_table_list TO public;
+257,GRANT SELECT ON v_internal.vs_fault_groups TO public;
+258,GRANT SELECT ON v_internal.vs_execution_engine_profiles TO public;
+259,GRANT SELECT ON v_internal.vs_epoch_map TO public;
+260,GRANT SELECT ON v_internal.vs_dv_wos_containers TO public;
+261,GRANT SELECT ON v_internal.vs_dv_ros TO public;
+262,GRANT SELECT ON v_internal.vs_designs TO public;
+263,GRANT SELECT ON v_internal.vs_design_tables TO public;
+264,GRANT SELECT ON v_internal.vs_design_output_query_projections TO public;
+265,GRANT SELECT ON v_internal.vs_design_output_projections TO public;
+266,GRANT SELECT ON v_internal.vs_design_output_projection_statements TO public;
+267,GRANT SELECT ON v_internal.vs_design_output_event_history TO public;
+268,GRANT SELECT ON v_internal.vs_depot_pin_policies TO public;
+269,GRANT SELECT ON v_internal.vs_depot_fetch_queue TO public;
+270,GRANT SELECT ON v_internal.vs_deployment_status TO public;
+271,GRANT SELECT ON v_internal.vs_data_channels TO public;
+272,GRANT SELECT ON v_internal.vs_columns TO public;
+273,GRANT SELECT ON v_internal.vs_catalog_sync_state TO public;
+274,GRANT SELECT ON v_internal.vs_catalog_event_swap_partition TO public;
+275,GRANT SELECT ON v_internal.vs_catalog_event_rollback TO public;
+276,GRANT SELECT ON v_internal.vs_catalog_event_replace TO public;
+277,GRANT SELECT ON v_internal.vs_catalog_event_refresh_columns TO public;
+278,GRANT SELECT ON v_internal.vs_catalog_event_drop_partition TO public;
+279,GRANT SELECT ON v_internal.vs_catalog_event_alter_partition TO public;
+280,GRANT SELECT ON v_internal.vs_branches TO public;
+281,GRANT SELECT ON v_internal.vs_blobs TO public;
+282,GRANT SELECT ON v_internal.tombstones TO public;
+283,GRANT SELECT ON v_internal.dc_woses_destroyed TO public;
+284,GRANT SELECT ON v_internal.dc_user_audits TO public;
+285,GRANT SELECT ON v_internal.dc_tuple_mover_events TO public;
+286,GRANT SELECT ON v_internal.dc_transaction_starts TO public;
+287,GRANT SELECT ON v_internal.dc_table_recoveries TO public;
+288,GRANT SELECT ON v_internal.dc_sips_statistics TO public;
+289,GRANT SELECT ON v_internal.dc_session_ends TO public;
+290,GRANT SELECT ON v_internal.dc_roses_committed TO public;
+291,GRANT SELECT ON v_internal.dc_resource_rejections TO public;
+292,GRANT SELECT ON v_internal.dc_resource_pool_history TO public;
+293,GRANT SELECT ON v_internal.dc_renamed_schemata TO public;
+294,GRANT SELECT ON v_internal.dc_rebalanced_operations TO public;
+295,GRANT SELECT ON v_internal.dc_plans TO public;
+296,GRANT SELECT ON v_internal.dc_plan_step_output_schema TO public;
+297,GRANT SELECT ON v_internal.dc_plan_resource_activities TO public;
+298,GRANT SELECT ON v_internal.dc_plan_phases TO public;
+299,GRANT SELECT ON v_internal.dc_plan_activity_details TO public;
+300,GRANT SELECT ON v_internal.dc_optimizer_stats TO public;
+301,GRANT SELECT ON v_internal.dc_optimizer_events TO public;
+302,GRANT SELECT ON v_internal.dc_notifications TO public;
+303,GRANT SELECT ON v_internal.dc_mergeout_requests TO public;
+304,GRANT SELECT ON v_internal.dc_lock_requests TO public;
+305,GRANT SELECT ON v_internal.dc_lock_releases TO public;
+306,GRANT SELECT ON v_internal.dc_library_fetches TO public;
+307,GRANT SELECT ON v_internal.dc_execution_summaries TO public;
+308,GRANT SELECT ON v_internal.dc_execution_engine_events TO public;
+309,GRANT SELECT ON v_internal.dc_errors TO public;
+310,GRANT SELECT ON v_internal.dc_design_status TO public;
+311,GRANT SELECT ON v_internal.dc_design_query_projections TO public;
+312,GRANT SELECT ON v_internal.dc_design_queries TO public;
+313,GRANT SELECT ON v_internal.dc_depot_uploads TO public;
+314,GRANT SELECT ON v_catalog.vs_subcluster_resource_pool_overrides TO public;
+315,GRANT SELECT ON v_catalog.vs_node_subscriptions TO public;
+316,GRANT SELECT ON v_catalog.standard_keywords TO public;
+317,GRANT SELECT ON v_catalog.primary_keys TO public;
+318,GRANT SELECT ON v_catalog.keywords TO public;
+319,GRANT SELECT ON v_catalog.dual TO public;
+320,GRANT SELECT ON v_catalog.cryptographic_keys TO public;
+321,GRANT SELECT ON v_catalog.certificates TO public;
+322,GRANT SELECT ON v_catalog.ca_bundles TO public;
+323,GRANT EXECUTE ON FUNCTION v_txtindex.caseInsensitiveNoStemming(x Long Varchar) TO public;
+324,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.WhitespaceLogTokenizer() TO public;
+325,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.ThreeGrams(Varchar) TO public;
+326,"GRANT EXECUTE ON FUNCTION v_txtindex.SET_TOKENIZER_PARAMETER(Varchar, Varchar) TO public;"
+327,GRANT EXECUTE ON FUNCTION v_txtindex.DELETE_TOKENIZER_CONFIG_FILE() TO public;
+328,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.BasicLogTokenizer() TO public;
+329,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimeTz) TO public;
+330,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Float) TO public;
+331,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Varbinary) TO public;
+332,GRANT EXECUTE ON ANALYTIC FUNCTION v_func.argmax() TO public;
+333,GRANT EXECUTE ON FUNCTION v_func.Soundex(Varchar) TO public;
+334,GRANT EXECUTE ON TRANSFORM FUNCTION public.s3export_partition() TO public;
+335,"GRANT EXECUTE ON TRANSFORM FUNCTION public.rsquared(Float, Float) TO public;"
+336,GRANT EXECUTE ON TRANSFORM FUNCTION public.read_tree() TO public;
+337,GRANT EXECUTE ON FUNCTION public.predict_xgb_classifier() TO public;
+338,GRANT EXECUTE ON FUNCTION public.predict_svm_classifier() TO public;
+339,GRANT EXECUTE ON FUNCTION public.predict_rf_regressor() TO public;
+340,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_autoregressor() TO public;
+341,GRANT EXECUTE ON TRANSFORM FUNCTION public.mode_finder() TO public;
+342,GRANT EXECUTE ON TRANSFORM FUNCTION public.lift_table() TO public;
+343,GRANT EXECUTE ON TRANSFORM FUNCTION public.corr_matrix() TO public;
+344,GRANT EXECUTE ON TRANSFORM FUNCTION public.confusion_matrix() TO public;
+345,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_normalize() TO public;
+346,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_svd() TO public;
+347,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_NumCol() TO public;
+348,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Varchar) TO public;
+349,GRANT EXECUTE ON FUNCTION public.SetMapKeys() TO public;
+350,GRANT EXECUTE ON FUNCTION public.ST_YMin(geography) TO public;
+351,GRANT EXECUTE ON FUNCTION public.ST_YMin(Long Varchar) TO public;
+352,GRANT EXECUTE ON FUNCTION public.ST_YMax(Long Varchar) TO public;
+353,GRANT EXECUTE ON FUNCTION public.ST_Y(Long Varchar) TO public;
+354,GRANT EXECUTE ON FUNCTION public.ST_XMin(Long Varchar) TO public;
+355,GRANT EXECUTE ON FUNCTION public.ST_XMax(geography) TO public;
+356,GRANT EXECUTE ON FUNCTION public.ST_XMax(Long Varchar) TO public;
+357,"GRANT EXECUTE ON FUNCTION public.ST_Within(Long Varchar, Long Varchar) TO public;"
+358,"GRANT EXECUTE ON FUNCTION public.ST_Union(geometry, geometry) TO public;"
+359,GRANT EXECUTE ON FUNCTION public.ST_SRID(geometry) TO public;
+360,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geography, Integer) TO public;"
+361,"GRANT EXECUTE ON FUNCTION public.ST_Overlaps(geometry, geometry) TO public;"
+362,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geography) TO public;
+363,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(Long Varchar) TO public;
+364,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geometry) TO public;
+365,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(Long Varchar) TO public;
+366,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geometry) TO public;
+367,GRANT EXECUTE ON FUNCTION public.ST_Length(Long Varchar) TO public;
+368,GRANT EXECUTE ON FUNCTION public.ST_Length(geometry) TO public;
+369,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geography) TO public;
+370,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(geometry, Integer) TO public;"
+371,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary, Integer) TO public;"
+372,GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar) TO public;
+373,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geometry) TO public;
+374,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geography, geography) TO public;"
+375,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geometry, geometry) TO public;"
+376,"GRANT EXECUTE ON FUNCTION public.ST_Distance(Long Varchar, Long Varchar) TO public;"
+377,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geography, geography) TO public;"
+378,"GRANT EXECUTE ON FUNCTION public.ST_Contains(Long Varchar, Long Varchar) TO public;"
+379,GRANT EXECUTE ON FUNCTION public.ST_Centroid(geometry) TO public;
+380,GRANT EXECUTE ON FUNCTION public.ST_AsText(geometry) TO public;
+381,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(Long Varchar) TO public;
+382,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Rename_Index() TO public;
+383,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(Long Varchar) TO public;
+384,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(geometry) TO public;
+385,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(Long Varchar, Long Varchar, Integer) TO public;"
+386,GRANT EXECUTE ON FUNCTION public.STV_MemSize(geometry) TO public;
+387,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_LineStringPoint(geography) TO public;
+388,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(geometry) TO public;
+389,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, geometry) TO public;"
+390,"GRANT EXECUTE ON FUNCTION public.STV_Intersect(Float, Float) TO public;"
+391,GRANT EXECUTE ON FUNCTION public.STV_GetExportShapefileDirectory() TO public;
+392,"GRANT EXECUTE ON FUNCTION public.STV_GeographyPoint(Float, Float) TO public;"
+393,"GRANT EXECUTE ON FUNCTION public.STV_DWithin(geography, geography, Float) TO public;"
+394,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, Long Varchar) TO public;"
+395,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, geometry) TO public;"
+396,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(geography) TO public;
+397,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(geometry) TO public;
+398,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExportMulti() TO public;
+399,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExport() TO public;
+400,GRANT EXECUTE ON TRANSFORM FUNCTION public.PRC() TO public;
+401,GRANT EXECUTE ON FUNCTION public.MapVersion(Long Varbinary) TO public;
+402,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapValuesOrField(Long Varchar) TO public;
+403,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varbinary) TO public;
+404,GRANT EXECUTE ON FUNCTION public.MapPut() TO public;
+405,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapItems() TO public;
+406,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varbinary, Varchar) TO public;"
+407,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varchar, Varchar) TO public;"
+408,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MSE(Float, Float) TO public;"
+409,GRANT EXECUTE ON PARSER public.FRegexParser() TO public;
+410,GRANT EXECUTE ON PARSER public.FJSONParser() TO public;
+411,GRANT EXECUTE ON PARSER public.FIDXParser() TO public;
+412,GRANT EXECUTE ON PARSER public.FCsvParser() TO public;
+413,GRANT EXECUTE ON TRANSFORM FUNCTION public.Explode() TO public;
+414,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdDataToCount(Integer) TO public;
+415,GRANT EXECUTE ON AGGREGATE FUNCTION public.APPROXIMATE_PERCENTILE(Float) TO public;
+416,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.TwoGrams(Varchar) TO dbadmin WITH GRANT OPTION;
+417,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.StringTokenizer() TO dbadmin WITH GRANT OPTION;
+418,"GRANT EXECUTE ON FUNCTION v_txtindex.SET_TOKENIZER_PARAMETER(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+419,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.READ_CONFIG_FILE() TO dbadmin WITH GRANT OPTION;
+420,GRANT EXECUTE ON FUNCTION v_txtindex.DELETE_TOKENIZER_CONFIG_FILE() TO dbadmin WITH GRANT OPTION;
+421,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Interval Day to Second) TO dbadmin WITH GRANT OPTION;
+422,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimeTz) TO dbadmin WITH GRANT OPTION;
+423,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Boolean) TO dbadmin WITH GRANT OPTION;
+424,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Long Varchar) TO dbadmin WITH GRANT OPTION;
+425,GRANT EXECUTE ON FUNCTION v_func.Soundex(Varchar) TO dbadmin WITH GRANT OPTION;
+426,GRANT EXECUTE ON TRANSFORM FUNCTION public.rf_predictor_importance() TO dbadmin WITH GRANT OPTION;
+427,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_rf_classifier_classes() TO dbadmin WITH GRANT OPTION;
+428,GRANT EXECUTE ON FUNCTION public.predict_pmml() TO dbadmin WITH GRANT OPTION;
+429,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_naive_bayes_classes() TO dbadmin WITH GRANT OPTION;
+430,GRANT EXECUTE ON FUNCTION public.predict_naive_bayes() TO dbadmin WITH GRANT OPTION;
+431,GRANT EXECUTE ON FUNCTION public.predict_linear_reg() TO dbadmin WITH GRANT OPTION;
+432,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_autoregressor() TO dbadmin WITH GRANT OPTION;
+433,"GRANT EXECUTE ON FUNCTION public.isOrContains(map Long Varchar, val Varchar) TO dbadmin WITH GRANT OPTION;"
+434,GRANT EXECUTE ON TRANSFORM FUNCTION public.error_rate() TO dbadmin WITH GRANT OPTION;
+435,"GRANT EXECUTE ON FUNCTION public.aws_set_config(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+436,GRANT EXECUTE ON TRANSFORM FUNCTION public.approximate_quantiles() TO dbadmin WITH GRANT OPTION;
+437,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_svd() TO dbadmin WITH GRANT OPTION;
+438,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_one_hot_encoder() TO dbadmin WITH GRANT OPTION;
+439,GRANT EXECUTE ON FUNCTION public.apply_bisecting_kmeans() TO dbadmin WITH GRANT OPTION;
+440,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_NumCol() TO dbadmin WITH GRANT OPTION;
+441,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Date) TO dbadmin WITH GRANT OPTION;
+442,GRANT EXECUTE ON FUNCTION public.ST_YMin(geometry) TO dbadmin WITH GRANT OPTION;
+443,GRANT EXECUTE ON FUNCTION public.ST_YMax(geometry) TO dbadmin WITH GRANT OPTION;
+444,GRANT EXECUTE ON FUNCTION public.ST_Y(Long Varchar) TO dbadmin WITH GRANT OPTION;
+445,GRANT EXECUTE ON FUNCTION public.ST_XMax(geography) TO dbadmin WITH GRANT OPTION;
+446,GRANT EXECUTE ON FUNCTION public.ST_X(geography) TO dbadmin WITH GRANT OPTION;
+447,GRANT EXECUTE ON FUNCTION public.ST_X(geometry) TO dbadmin WITH GRANT OPTION;
+448,"GRANT EXECUTE ON FUNCTION public.ST_Within(geography, geography) TO dbadmin WITH GRANT OPTION;"
+449,"GRANT EXECUTE ON FUNCTION public.ST_Touches(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+450,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+451,"GRANT EXECUTE ON FUNCTION public.ST_SimplifyPreserveTopology(geometry, Float) TO dbadmin WITH GRANT OPTION;"
+452,"GRANT EXECUTE ON FUNCTION public.ST_Simplify(geometry, Float) TO dbadmin WITH GRANT OPTION;"
+453,GRANT EXECUTE ON FUNCTION public.ST_SRID(geography) TO dbadmin WITH GRANT OPTION;
+454,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geography, Integer) TO dbadmin WITH GRANT OPTION;"
+455,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(geometry) TO dbadmin WITH GRANT OPTION;
+456,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geography) TO dbadmin WITH GRANT OPTION;
+457,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(geometry) TO dbadmin WITH GRANT OPTION;
+458,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geometry) TO dbadmin WITH GRANT OPTION;
+459,"GRANT EXECUTE ON FUNCTION public.ST_Intersects(geography, geography) TO dbadmin WITH GRANT OPTION;"
+460,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(Long Varchar) TO dbadmin WITH GRANT OPTION;
+461,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(geometry) TO dbadmin WITH GRANT OPTION;
+462,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
+463,GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary) TO dbadmin WITH GRANT OPTION;
+464,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromWKB(Long Varbinary, Integer) TO dbadmin WITH GRANT OPTION;"
+465,GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar) TO dbadmin WITH GRANT OPTION;
+466,GRANT EXECUTE ON FUNCTION public.ST_GeographyFromWKB(Long Varbinary) TO dbadmin WITH GRANT OPTION;
+467,"GRANT EXECUTE ON FUNCTION public.ST_Equals(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+468,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geography, geography) TO dbadmin WITH GRANT OPTION;"
+469,"GRANT EXECUTE ON FUNCTION public.ST_Distance(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+470,"GRANT EXECUTE ON FUNCTION public.ST_Crosses(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+471,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+472,GRANT EXECUTE ON FUNCTION public.ST_AsText(geography) TO dbadmin WITH GRANT OPTION;
+473,GRANT EXECUTE ON FUNCTION public.ST_AsText(Long Varchar) TO dbadmin WITH GRANT OPTION;
+474,GRANT EXECUTE ON FUNCTION public.ST_Area(geometry) TO dbadmin WITH GRANT OPTION;
+475,GRANT EXECUTE ON SOURCE public.STV_ShpSource() TO dbadmin WITH GRANT OPTION;
+476,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_ShpCreateTable() TO dbadmin WITH GRANT OPTION;
+477,GRANT EXECUTE ON FUNCTION public.STV_Reverse(geography) TO dbadmin WITH GRANT OPTION;
+478,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Rename_Index() TO dbadmin WITH GRANT OPTION;
+479,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+480,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(geography, geography, Integer) TO dbadmin WITH GRANT OPTION;"
+481,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_NN(geometry, geometry, Integer) TO dbadmin WITH GRANT OPTION;"
+482,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_LineStringPoint(Long Varchar) TO dbadmin WITH GRANT OPTION;
+483,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(Long Varchar) TO dbadmin WITH GRANT OPTION;
+484,GRANT EXECUTE ON FUNCTION public.STV_IsValidReason(geography) TO dbadmin WITH GRANT OPTION;
+485,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, Float, Float) TO dbadmin WITH GRANT OPTION;"
+486,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
+487,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geography) TO dbadmin WITH GRANT OPTION;
+488,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geometry) TO dbadmin WITH GRANT OPTION;
+489,GRANT EXECUTE ON FUNCTION public.STV_GetExportShapefileDirectory() TO dbadmin WITH GRANT OPTION;
+490,GRANT EXECUTE ON FUNCTION public.STV_Geometry(geography) TO dbadmin WITH GRANT OPTION;
+491,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Create_Index(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
+492,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(Long Varchar) TO dbadmin WITH GRANT OPTION;
+493,GRANT EXECUTE ON TRANSFORM FUNCTION public.ROC() TO dbadmin WITH GRANT OPTION;
+494,GRANT EXECUTE ON TRANSFORM FUNCTION public.ParquetExport() TO dbadmin WITH GRANT OPTION;
+495,GRANT EXECUTE ON TRANSFORM FUNCTION public.PRC() TO dbadmin WITH GRANT OPTION;
+496,GRANT EXECUTE ON TRANSFORM FUNCTION public.OrcExportMulti() TO dbadmin WITH GRANT OPTION;
+497,GRANT EXECUTE ON FUNCTION public.MapVersion(Long Varbinary) TO dbadmin WITH GRANT OPTION;
+498,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapValues(Long Varchar) TO dbadmin WITH GRANT OPTION;
+499,GRANT EXECUTE ON FUNCTION public.MapToString(Long Varchar) TO dbadmin WITH GRANT OPTION;
+500,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varbinary) TO dbadmin WITH GRANT OPTION;
+501,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varchar) TO dbadmin WITH GRANT OPTION;
+502,GRANT EXECUTE ON FUNCTION public.MapPut() TO dbadmin WITH GRANT OPTION;
+503,GRANT EXECUTE ON FUNCTION public.MapLookup() TO dbadmin WITH GRANT OPTION;
+504,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varbinary, Varchar) TO dbadmin WITH GRANT OPTION;"
+505,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+506,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapKeysInfo(Long Varchar) TO dbadmin WITH GRANT OPTION;
+507,GRANT EXECUTE ON FUNCTION public.MapDelimitedExtractor(Long Varchar) TO dbadmin WITH GRANT OPTION;
+508,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varbinary, Varchar) TO dbadmin WITH GRANT OPTION;"
+509,"GRANT EXECUTE ON FUNCTION public.MapContainsValue(Long Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+510,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+511,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MSE(Float, Float) TO dbadmin WITH GRANT OPTION;"
+512,GRANT EXECUTE ON PARSER public.FDelimitedParser() TO dbadmin WITH GRANT OPTION;
+513,GRANT EXECUTE ON PARSER public.FCefParser() TO dbadmin WITH GRANT OPTION;
+514,GRANT EXECUTE ON TRANSFORM FUNCTION public.DelimitedExport() TO dbadmin WITH GRANT OPTION;
+515,GRANT EXECUTE ON AGGREGATE FUNCTION public.APPROXIMATE_MEDIAN(Float) TO dbadmin WITH GRANT OPTION;
+516,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_xgb_classifier_classes() TO public;
+517,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_rf_classifier_classes() TO public;
+518,GRANT EXECUTE ON FUNCTION public.predict_pmml() TO public;
+519,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_naive_bayes_classes() TO public;
+520,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_moving_average() TO public;
+521,"GRANT EXECUTE ON FUNCTION public.isOrContains(map Long Varchar, val Varchar) TO public;"
+522,GRANT EXECUTE ON TRANSFORM FUNCTION public.get_model_attribute() TO public;
+523,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_svd() TO public;
+524,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_pca() TO public;
+525,GRANT EXECUTE ON FUNCTION public.apply_bisecting_kmeans() TO public;
+526,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Char) TO public;
+527,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Date) TO public;
+528,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Integer) TO public;
+529,GRANT EXECUTE ON FUNCTION public.ST_YMax(geometry) TO public;
+530,GRANT EXECUTE ON FUNCTION public.ST_Y(geography) TO public;
+531,GRANT EXECUTE ON FUNCTION public.ST_XMin(geography) TO public;
+532,GRANT EXECUTE ON FUNCTION public.ST_X(geography) TO public;
+533,GRANT EXECUTE ON FUNCTION public.ST_X(geometry) TO public;
+534,"GRANT EXECUTE ON FUNCTION public.ST_Within(geometry, geometry) TO public;"
+535,"GRANT EXECUTE ON FUNCTION public.ST_Transform(geometry, Integer) TO public;"
+536,"GRANT EXECUTE ON FUNCTION public.ST_Touches(Long Varchar, Long Varchar) TO public;"
+537,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geography, geography) TO public;"
+538,"GRANT EXECUTE ON FUNCTION public.ST_SymDifference(geometry, geometry) TO public;"
+539,"GRANT EXECUTE ON FUNCTION public.ST_SimplifyPreserveTopology(geometry, Float) TO public;"
+540,"GRANT EXECUTE ON FUNCTION public.ST_Simplify(geometry, Float) TO public;"
+541,GRANT EXECUTE ON FUNCTION public.ST_SRID(geography) TO public;
+542,GRANT EXECUTE ON FUNCTION public.ST_SRID(Long Varchar) TO public;
+543,"GRANT EXECUTE ON FUNCTION public.ST_PointN(Long Varchar, Integer) TO public;"
+544,GRANT EXECUTE ON FUNCTION public.ST_Length(geography) TO public;
+545,GRANT EXECUTE ON FUNCTION public.ST_IsValid(geography) TO public;
+546,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(Long Varchar) TO public;
+547,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(geometry) TO public;
+548,"GRANT EXECUTE ON FUNCTION public.ST_Intersects(geography, geography) TO public;"
+549,"GRANT EXECUTE ON FUNCTION public.ST_Intersection(geometry, geometry) TO public;"
+550,GRANT EXECUTE ON FUNCTION public.ST_GeometryType(geography) TO public;
+551,"GRANT EXECUTE ON FUNCTION public.ST_GeometryN(Long Varchar, Integer) TO public;"
+552,GRANT EXECUTE ON FUNCTION public.ST_GeographyFromWKB(Long Varbinary) TO public;
+553,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(Long Varchar) TO public;
+554,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geography) TO public;
+555,GRANT EXECUTE ON FUNCTION public.ST_Envelope(geometry) TO public;
+556,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geography, geography) TO public;"
+557,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geometry, geometry) TO public;"
+558,GRANT EXECUTE ON FUNCTION public.ST_ConvexHull(geometry) TO public;
+559,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geometry, geometry) TO public;"
+560,GRANT EXECUTE ON FUNCTION public.ST_Boundary(geometry) TO public;
+561,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(geography) TO public;
+562,GRANT EXECUTE ON FUNCTION public.ST_Area(geography) TO public;
+563,GRANT EXECUTE ON FUNCTION public.ST_Area(Long Varchar) TO public;
+564,GRANT EXECUTE ON FUNCTION public.ST_Area(geometry) TO public;
+565,GRANT EXECUTE ON SOURCE public.STV_ShpSource() TO public;
+566,GRANT EXECUTE ON PARSER public.STV_ShpParser() TO public;
+567,GRANT EXECUTE ON FUNCTION public.STV_Reverse(geography) TO public;
+568,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geometry) TO public;"
+569,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(geography) TO public;
+570,GRANT EXECUTE ON FUNCTION public.STV_MemSize(geography) TO public;
+571,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Intersect(Integer, Float, Float) TO public;"
+572,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geography) TO public;
+573,GRANT EXECUTE ON FUNCTION public.STV_Intersect(geometry) TO public;
+574,"GRANT EXECUTE ON FUNCTION public.STV_GeometryPoint(Float, Float, Integer) TO public;"
+575,GRANT EXECUTE ON FUNCTION public.STV_Geometry(Long Varchar) TO public;
+576,GRANT EXECUTE ON FUNCTION public.STV_Geometry(geography) TO public;
+577,GRANT EXECUTE ON FUNCTION public.STV_Geography(Long Varchar) TO public;
+578,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Extent(Long Varchar) TO public;
+579,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Drop_Index() TO public;
+580,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Describe_Index() TO public;
+581,"GRANT EXECUTE ON FUNCTION public.STV_DWithin(Long Varchar, Long Varchar, Float) TO public;"
+582,GRANT EXECUTE ON FUNCTION public.STV_AsGeoJSON(Long Varchar) TO public;
+583,GRANT EXECUTE ON FUNCTION public.MapSize(Long Varchar) TO public;
+584,GRANT EXECUTE ON FUNCTION public.MapRegexExtractor(Long Varchar) TO public;
+585,"GRANT EXECUTE ON FUNCTION public.MapLookup(Long Varbinary, Varchar) TO public;"
+586,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapKeys(Long Varchar) TO public;
+587,GRANT EXECUTE ON TRANSFORM FUNCTION public.MapItems(Long Varbinary) TO public;
+588,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Long Varchar, Long Varchar) TO public;"
+589,"GRANT EXECUTE ON TRANSFORM FUNCTION public.MapAggregate(Varchar, Varchar) TO public;"
+590,GRANT EXECUTE ON TRANSFORM FUNCTION public.FlexTokenizer() TO public;
+591,GRANT EXECUTE ON PARSER public.FCefParser() TO public;
+592,GRANT EXECUTE ON PARSER public.FAvroParser() TO public;
+593,GRANT EXECUTE ON FUNCTION public.EmptyMap() TO public;
+594,GRANT EXECUTE ON TRANSFORM FUNCTION public.DelimitedExportMulti() TO public;
+595,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdSynToSyn(Long Varbinary) TO public;
+596,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdSynToCount(Long Varbinary) TO public;
+597,GRANT EXECUTE ON AGGREGATE FUNCTION public.AcdDataToLongSyn(Integer) TO public;
+598,
+599,
+600,GRANT TRUNCATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+601,GRANT CREATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+602,GRANT DROP ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+603,GRANT REFERENCES ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+604,GRANT ALTER ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+605,GRANT DELETE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+606,GRANT UPDATE ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+607,GRANT SELECT ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+608,GRANT INSERT ON SCHEMA v_func TO dbadmin WITH GRANT OPTION;
+609,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.WhitespaceLogTokenizer() TO dbadmin WITH GRANT OPTION;
+610,"GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.StringTokenizerDelim(Varchar, Varchar) TO dbadmin WITH GRANT OPTION;"
+611,GRANT EXECUTE ON FUNCTION v_txtindex.StemmerCaseInsensitive(v Long Varchar) TO dbadmin WITH GRANT OPTION;
+612,GRANT EXECUTE ON FUNCTION v_txtindex.Stemmer(v Long Varchar) TO dbadmin WITH GRANT OPTION;
+613,GRANT EXECUTE ON TRANSFORM FUNCTION v_txtindex.AdvancedLogTokenizer() TO dbadmin WITH GRANT OPTION;
+614,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Interval Year to Month) TO dbadmin WITH GRANT OPTION;
+615,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(TimestampTz) TO dbadmin WITH GRANT OPTION;
+616,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Timestamp) TO dbadmin WITH GRANT OPTION;
+617,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Time) TO dbadmin WITH GRANT OPTION;
+618,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Float) TO dbadmin WITH GRANT OPTION;
+619,GRANT EXECUTE ON AGGREGATE FUNCTION v_func.listagg(Varchar) TO dbadmin WITH GRANT OPTION;
+620,GRANT EXECUTE ON ANALYTIC FUNCTION v_func.argmax() TO dbadmin WITH GRANT OPTION;
+621,GRANT EXECUTE ON TRANSFORM FUNCTION public.s3export() TO dbadmin WITH GRANT OPTION;
+622,GRANT EXECUTE ON TRANSFORM FUNCTION public.reverse_normalize() TO dbadmin WITH GRANT OPTION;
+623,GRANT EXECUTE ON TRANSFORM FUNCTION public.read_tree() TO dbadmin WITH GRANT OPTION;
+624,GRANT EXECUTE ON TRANSFORM FUNCTION public.predict_xgb_classifier_classes() TO dbadmin WITH GRANT OPTION;
+625,GRANT EXECUTE ON FUNCTION public.predict_svm_regressor() TO dbadmin WITH GRANT OPTION;
+626,GRANT EXECUTE ON FUNCTION public.predict_svm_classifier() TO dbadmin WITH GRANT OPTION;
+627,GRANT EXECUTE ON FUNCTION public.predict_rf_classifier() TO dbadmin WITH GRANT OPTION;
+628,GRANT EXECUTE ON FUNCTION public.predict_logistic_reg() TO dbadmin WITH GRANT OPTION;
+629,GRANT EXECUTE ON TRANSFORM FUNCTION public.get_model_attribute() TO dbadmin WITH GRANT OPTION;
+630,GRANT EXECUTE ON TRANSFORM FUNCTION public.corr_matrix() TO dbadmin WITH GRANT OPTION;
+631,GRANT EXECUTE ON FUNCTION public.aws_get_config(Varchar) TO dbadmin WITH GRANT OPTION;
+632,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_pca() TO dbadmin WITH GRANT OPTION;
+633,GRANT EXECUTE ON FUNCTION public.apply_kmeans() TO dbadmin WITH GRANT OPTION;
+634,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_svd() TO dbadmin WITH GRANT OPTION;
+635,GRANT EXECUTE ON TRANSFORM FUNCTION public.apply_inverse_pca() TO dbadmin WITH GRANT OPTION;
+636,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Varchar) TO dbadmin WITH GRANT OPTION;
+637,GRANT EXECUTE ON TRANSFORM FUNCTION public.Summarize_CatCol(Char) TO dbadmin WITH GRANT OPTION;
+638,GRANT EXECUTE ON FUNCTION public.SetMapKeys() TO dbadmin WITH GRANT OPTION;
+639,GRANT EXECUTE ON FUNCTION public.ST_YMin(geography) TO dbadmin WITH GRANT OPTION;
+640,GRANT EXECUTE ON FUNCTION public.ST_YMin(Long Varchar) TO dbadmin WITH GRANT OPTION;
+641,GRANT EXECUTE ON FUNCTION public.ST_YMax(geography) TO dbadmin WITH GRANT OPTION;
+642,GRANT EXECUTE ON FUNCTION public.ST_YMax(Long Varchar) TO dbadmin WITH GRANT OPTION;
+643,GRANT EXECUTE ON FUNCTION public.ST_Y(geography) TO dbadmin WITH GRANT OPTION;
+644,GRANT EXECUTE ON FUNCTION public.ST_XMin(Long Varchar) TO dbadmin WITH GRANT OPTION;
+645,GRANT EXECUTE ON FUNCTION public.ST_XMin(geometry) TO dbadmin WITH GRANT OPTION;
+646,GRANT EXECUTE ON FUNCTION public.ST_XMax(geometry) TO dbadmin WITH GRANT OPTION;
+647,"GRANT EXECUTE ON FUNCTION public.ST_Within(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+648,"GRANT EXECUTE ON FUNCTION public.ST_Within(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+649,"GRANT EXECUTE ON FUNCTION public.ST_Touches(geography, geography) TO dbadmin WITH GRANT OPTION;"
+650,GRANT EXECUTE ON FUNCTION public.ST_SRID(Long Varchar) TO dbadmin WITH GRANT OPTION;
+651,"GRANT EXECUTE ON FUNCTION public.ST_PointN(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
+652,"GRANT EXECUTE ON FUNCTION public.ST_PointN(geometry, Integer) TO dbadmin WITH GRANT OPTION;"
+653,GRANT EXECUTE ON FUNCTION public.ST_NumPoints(Long Varchar) TO dbadmin WITH GRANT OPTION;
+654,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(Long Varchar) TO dbadmin WITH GRANT OPTION;
+655,GRANT EXECUTE ON FUNCTION public.ST_NumGeometries(geometry) TO dbadmin WITH GRANT OPTION;
+656,GRANT EXECUTE ON FUNCTION public.ST_Length(geography) TO dbadmin WITH GRANT OPTION;
+657,GRANT EXECUTE ON FUNCTION public.ST_IsSimple(Long Varchar) TO dbadmin WITH GRANT OPTION;
+658,GRANT EXECUTE ON FUNCTION public.ST_IsEmpty(Long Varchar) TO dbadmin WITH GRANT OPTION;
+659,"GRANT EXECUTE ON FUNCTION public.ST_GeomFromText(Long Varchar, Integer) TO dbadmin WITH GRANT OPTION;"
+660,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(Long Varchar) TO dbadmin WITH GRANT OPTION;
+661,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geometry) TO dbadmin WITH GRANT OPTION;
+662,GRANT EXECUTE ON FUNCTION public.ST_GeoHash(geography) TO dbadmin WITH GRANT OPTION;
+663,"GRANT EXECUTE ON FUNCTION public.ST_Equals(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+664,GRANT EXECUTE ON FUNCTION public.ST_Envelope(geometry) TO dbadmin WITH GRANT OPTION;
+665,"GRANT EXECUTE ON FUNCTION public.ST_Distance(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+666,"GRANT EXECUTE ON FUNCTION public.ST_Disjoint(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+667,"GRANT EXECUTE ON FUNCTION public.ST_Difference(geometry, geometry) TO dbadmin WITH GRANT OPTION;"
+668,"GRANT EXECUTE ON FUNCTION public.ST_Contains(geography, geography) TO dbadmin WITH GRANT OPTION;"
+669,"GRANT EXECUTE ON FUNCTION public.ST_Contains(Long Varchar, Long Varchar) TO dbadmin WITH GRANT OPTION;"
+670,GRANT EXECUTE ON FUNCTION public.ST_AsBinary(Long Varchar) TO dbadmin WITH GRANT OPTION;
+671,GRANT EXECUTE ON FUNCTION public.ST_Area(Long Varchar) TO dbadmin WITH GRANT OPTION;
+672,GRANT EXECUTE ON FUNCTION public.STV_SetExportShapefileDirectory() TO dbadmin WITH GRANT OPTION;
+673,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geography) TO dbadmin WITH GRANT OPTION;"
+674,"GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_Refresh_Index(Integer, geometry) TO dbadmin WITH GRANT OPTION;"
+675,GRANT EXECUTE ON TRANSFORM FUNCTION public.STV_PolygonPoint(Long Varchar) TO dbadmin WITH GRANT OPTION;
 676,GRANT USAGE ON SCHEMA v_monitor TO public;
 677,GRANT USAGE ON SCHEMA v_catalog TO public;
 678,GRANT USAGE ON SCHEMA public TO public;
@@ -1131,170 +1132,184 @@
 1130,ALTER SCHEMA cortex DEFAULT EXCLUDE PRIVILEGES;
 1131,ALTER SCHEMA migration DEFAULT EXCLUDE PRIVILEGES;
 1132,ALTER SCHEMA raw DEFAULT EXCLUDE PRIVILEGES;
-1133,ALTER DATABASE vaasdemo SET disableinheritedprivileges = 0;
-1134,ALTER DATABASE vaasdemo SET disableinheritedprivileges = 0;
+1133,ALTER SCHEMA cyclist DEFAULT EXCLUDE PRIVILEGES;
+1134,ALTER SCHEMA segment DEFAULT EXCLUDE PRIVILEGES;
 1135,ALTER DATABASE vaasdemo SET disableinheritedprivileges = 0;
-1136,ALTER TABLE ehr.accounts_src EXCLUDE PRIVILEGES;
-1137,ALTER TABLE ehr.departments_src EXCLUDE PRIVILEGES;
-1138,ALTER TABLE ehr.encounters_src EXCLUDE PRIVILEGES;
-1139,ALTER TABLE ehr.patients_src EXCLUDE PRIVILEGES;
-1140,ALTER TABLE ehr.hospitals_src EXCLUDE PRIVILEGES;
-1141,ALTER TABLE ehr.drugs EXCLUDE PRIVILEGES;
-1142,ALTER TABLE ehr.icd_nine_lkp_src EXCLUDE PRIVILEGES;
-1143,ALTER TABLE survey.opioid_src EXCLUDE PRIVILEGES;
-1144,ALTER TABLE survey.hcahps_src EXCLUDE PRIVILEGES;
-1145,ALTER TABLE survey.general_info_src EXCLUDE PRIVILEGES;
-1146,ALTER TABLE masterdata.places_src EXCLUDE PRIVILEGES;
-1147,ALTER TABLE masterdata.names_01_src EXCLUDE PRIVILEGES;
-1148,ALTER TABLE masterdata.alphabet_lkp EXCLUDE PRIVILEGES;
-1149,ALTER TABLE masterdata.lsad_lkp EXCLUDE PRIVILEGES;
-1150,ALTER TABLE masterdata.funcstat_lkp EXCLUDE PRIVILEGES;
-1151,ALTER TABLE beer.events EXCLUDE PRIVILEGES;
-1152,ALTER TABLE beer.adj_drinkers EXCLUDE PRIVILEGES;
-1153,ALTER TABLE beer.drinkers EXCLUDE PRIVILEGES;
-1154,ALTER TABLE beer.beer_type EXCLUDE PRIVILEGES;
-1155,ALTER TABLE beer.beer_hours EXCLUDE PRIVILEGES;
-1156,ALTER TABLE beer.zipcode EXCLUDE PRIVILEGES;
-1157,ALTER TABLE beer.zsharp EXCLUDE PRIVILEGES;
-1158,ALTER TABLE atlas.mock_dealer EXCLUDE PRIVILEGES;
-1159,ALTER TABLE atlas.arrivals_src EXCLUDE PRIVILEGES;
-1160,ALTER TABLE atlas.control EXCLUDE PRIVILEGES;
-1161,ALTER TABLE atlas.cust_dim_src EXCLUDE PRIVILEGES;
-1162,ALTER TABLE atlas.cust_dim EXCLUDE PRIVILEGES;
-1163,ALTER TABLE atlas.cust_sales_src EXCLUDE PRIVILEGES;
-1164,ALTER TABLE atlas.date_dim_src EXCLUDE PRIVILEGES;
-1165,ALTER TABLE atlas.dealer_dim_src EXCLUDE PRIVILEGES;
-1166,ALTER TABLE atlas.big_report EXCLUDE PRIVILEGES;
-1167,ALTER TABLE atlas.date_dim EXCLUDE PRIVILEGES;
-1168,ALTER TABLE atlas.port_dim EXCLUDE PRIVILEGES;
-1169,ALTER TABLE atlas.region_dim EXCLUDE PRIVILEGES;
-1170,ALTER TABLE atlas.sales EXCLUDE PRIVILEGES;
-1171,ALTER TABLE atlas.sales_fact EXCLUDE PRIVILEGES;
-1172,ALTER TABLE atlas.vehicle_config EXCLUDE PRIVILEGES;
-1173,ALTER TABLE atlas.zip_code_lkp EXCLUDE PRIVILEGES;
-1174,ALTER TABLE brdbeer.user_agent EXCLUDE PRIVILEGES;
-1175,ALTER TABLE brdbeer.page_dimension EXCLUDE PRIVILEGES;
-1176,ALTER TABLE brdbeer.session_dim EXCLUDE PRIVILEGES;
-1177,ALTER TABLE aetna.provider_base EXCLUDE PRIVILEGES;
-1178,ALTER TABLE aetna.specialty EXCLUDE PRIVILEGES;
-1179,ALTER TABLE aetna.address EXCLUDE PRIVILEGES;
-1180,ALTER TABLE aetna.provider_base_src EXCLUDE PRIVILEGES;
-1181,ALTER TABLE aetna.specialty_int EXCLUDE PRIVILEGES;
-1182,ALTER TABLE aetna.address_int EXCLUDE PRIVILEGES;
-1183,ALTER TABLE aetna.provider_base_dup EXCLUDE PRIVILEGES;
-1184,ALTER TABLE aetna.provider_loc_sql_src EXCLUDE PRIVILEGES;
-1185,ALTER TABLE aetna.provider_specialty_sql_src EXCLUDE PRIVILEGES;
-1186,ALTER TABLE aetna.provider_specialty_db2_src EXCLUDE PRIVILEGES;
-1187,ALTER TABLE aetna.provider_base_db2_src EXCLUDE PRIVILEGES;
-1188,ALTER TABLE aetna.provider_base_sql_src EXCLUDE PRIVILEGES;
-1189,ALTER TABLE masterdata.alteryx_input EXCLUDE PRIVILEGES;
-1190,ALTER TABLE click.main_fact EXCLUDE PRIVILEGES;
-1191,ALTER TABLE drug.blah EXCLUDE PRIVILEGES;
-1192,ALTER TABLE drug.ctrx2_src EXCLUDE PRIVILEGES;
-1193,ALTER TABLE cops.event_flx EXCLUDE PRIVILEGES;
-1194,ALTER TABLE cops.event_flx_keys EXCLUDE PRIVILEGES;
-1195,ALTER TABLE public.cop_events EXCLUDE PRIVILEGES;
-1196,ALTER TABLE public.cop_events_keys EXCLUDE PRIVILEGES;
-1197,ALTER TABLE commodity.daily_futures EXCLUDE PRIVILEGES;
-1198,ALTER TABLE commodity.daily_futures_src EXCLUDE PRIVILEGES;
-1199,ALTER TABLE logistics.test EXCLUDE PRIVILEGES;
-1200,ALTER TABLE logistics.timetable EXCLUDE PRIVILEGES;
-1201,ALTER TABLE cortex.flight EXCLUDE PRIVILEGES;
-1202,ALTER TABLE cortex.og_flight EXCLUDE PRIVILEGES;
-1203,ALTER TABLE cortex.for_mike EXCLUDE PRIVILEGES;
-1204,ALTER TABLE cortex.iata_xref EXCLUDE PRIVILEGES;
-1205,ALTER TABLE cortex.new_flight EXCLUDE PRIVILEGES;
-1206,ALTER TABLE atlas.cust_dim_vpy_src EXCLUDE PRIVILEGES;
-1207,ALTER TABLE migration.target_grants EXCLUDE PRIVILEGES;
-1208,ALTER TABLE migration.grants_rejects EXCLUDE PRIVILEGES;
-1209,ALTER TABLE migration.target_grants_src EXCLUDE PRIVILEGES;
-1210,ALTER TABLE migration.source_schemas EXCLUDE PRIVILEGES;
-1211,ALTER TABLE beer.events_by_user EXCLUDE PRIVILEGES;
-1212,ALTER VIEW ehr.admission_vw EXCLUDE PRIVILEGES; 
-1213,ALTER VIEW survey.opioid_vw EXCLUDE PRIVILEGES; 
-1214,ALTER VIEW public.cop_events_view EXCLUDE PRIVILEGES; 
-1215,ALTER VIEW atlas.main_report EXCLUDE PRIVILEGES; 
-1216,ALTER VIEW cops.event_flx_view EXCLUDE PRIVILEGES; 
-1217,ALTER VIEW cortex.short_vw EXCLUDE PRIVILEGES; 
-1218,ALTER TABLE ehr.accounts_src OWNER TO dbadmin;
-1219,ALTER TABLE ehr.departments_src OWNER TO dbadmin;
-1220,ALTER TABLE ehr.encounters_src OWNER TO dbadmin;
-1221,ALTER TABLE ehr.patients_src OWNER TO dbadmin;
-1222,ALTER TABLE ehr.hospitals_src OWNER TO dbadmin;
-1223,ALTER TABLE ehr.drugs OWNER TO dbadmin;
-1224,ALTER TABLE ehr.icd_nine_lkp_src OWNER TO dbadmin;
-1225,ALTER TABLE survey.opioid_src OWNER TO dbadmin;
-1226,ALTER TABLE survey.hcahps_src OWNER TO dbadmin;
-1227,ALTER TABLE survey.general_info_src OWNER TO dbadmin;
-1228,ALTER TABLE masterdata.places_src OWNER TO dbadmin;
-1229,ALTER TABLE masterdata.names_01_src OWNER TO dbadmin;
-1230,ALTER TABLE masterdata.alphabet_lkp OWNER TO dbadmin;
-1231,ALTER TABLE masterdata.lsad_lkp OWNER TO dbadmin;
-1232,ALTER TABLE masterdata.funcstat_lkp OWNER TO dbadmin;
-1233,ALTER TABLE beer.events OWNER TO dbadmin;
-1234,ALTER TABLE beer.adj_drinkers OWNER TO dbadmin;
-1235,ALTER TABLE beer.drinkers OWNER TO dbadmin;
-1236,ALTER TABLE beer.beer_type OWNER TO dbadmin;
-1237,ALTER TABLE beer.beer_hours OWNER TO dbadmin;
-1238,ALTER TABLE beer.zipcode OWNER TO dbadmin;
-1239,ALTER TABLE beer.zsharp OWNER TO dbadmin;
-1240,ALTER TABLE atlas.mock_dealer OWNER TO dbadmin;
-1241,ALTER TABLE atlas.arrivals_src OWNER TO dbadmin;
-1242,ALTER TABLE atlas.control OWNER TO dbadmin;
-1243,ALTER TABLE atlas.cust_dim_src OWNER TO dbadmin;
-1244,ALTER TABLE atlas.cust_dim OWNER TO dbadmin;
-1245,ALTER TABLE atlas.cust_sales_src OWNER TO dbadmin;
-1246,ALTER TABLE atlas.date_dim_src OWNER TO dbadmin;
-1247,ALTER TABLE atlas.dealer_dim_src OWNER TO dbadmin;
-1248,ALTER TABLE atlas.big_report OWNER TO dbadmin;
-1249,ALTER TABLE atlas.date_dim OWNER TO dbadmin;
-1250,ALTER TABLE atlas.port_dim OWNER TO dbadmin;
-1251,ALTER TABLE atlas.region_dim OWNER TO dbadmin;
-1252,ALTER TABLE atlas.sales OWNER TO dbadmin;
-1253,ALTER TABLE atlas.sales_fact OWNER TO dbadmin;
-1254,ALTER TABLE atlas.vehicle_config OWNER TO dbadmin;
-1255,ALTER TABLE atlas.zip_code_lkp OWNER TO dbadmin;
-1256,ALTER TABLE brdbeer.user_agent OWNER TO dbadmin;
-1257,ALTER TABLE brdbeer.page_dimension OWNER TO dbadmin;
-1258,ALTER TABLE brdbeer.session_dim OWNER TO dbadmin;
-1259,ALTER TABLE aetna.provider_base OWNER TO dbadmin;
-1260,ALTER TABLE aetna.specialty OWNER TO dbadmin;
-1261,ALTER TABLE aetna.address OWNER TO dbadmin;
-1262,ALTER TABLE aetna.provider_base_src OWNER TO dbadmin;
-1263,ALTER TABLE aetna.specialty_int OWNER TO dbadmin;
-1264,ALTER TABLE aetna.address_int OWNER TO dbadmin;
-1265,ALTER TABLE aetna.provider_base_dup OWNER TO dbadmin;
-1266,ALTER TABLE aetna.provider_loc_sql_src OWNER TO dbadmin;
-1267,ALTER TABLE aetna.provider_specialty_sql_src OWNER TO dbadmin;
-1268,ALTER TABLE aetna.provider_specialty_db2_src OWNER TO dbadmin;
-1269,ALTER TABLE aetna.provider_base_db2_src OWNER TO dbadmin;
-1270,ALTER TABLE aetna.provider_base_sql_src OWNER TO dbadmin;
-1271,ALTER TABLE masterdata.alteryx_input OWNER TO dbadmin;
-1272,ALTER TABLE click.main_fact OWNER TO dbadmin;
-1273,ALTER TABLE drug.blah OWNER TO dbadmin;
-1274,ALTER TABLE drug.ctrx2_src OWNER TO dbadmin;
-1275,ALTER TABLE cops.event_flx OWNER TO dbadmin;
-1276,ALTER TABLE cops.event_flx_keys OWNER TO dbadmin;
-1277,ALTER TABLE public.cop_events OWNER TO dbadmin;
-1278,ALTER TABLE public.cop_events_keys OWNER TO dbadmin;
-1279,ALTER TABLE commodity.daily_futures OWNER TO dbadmin;
-1280,ALTER TABLE commodity.daily_futures_src OWNER TO dbadmin;
-1281,ALTER TABLE logistics.test OWNER TO dbadmin;
-1282,ALTER TABLE logistics.timetable OWNER TO dbadmin;
-1283,ALTER TABLE cortex.flight OWNER TO dbadmin;
-1284,ALTER TABLE cortex.og_flight OWNER TO dbadmin;
-1285,ALTER TABLE cortex.for_mike OWNER TO dbadmin;
-1286,ALTER TABLE cortex.iata_xref OWNER TO dbadmin;
-1287,ALTER TABLE cortex.new_flight OWNER TO dbadmin;
-1288,ALTER TABLE atlas.cust_dim_vpy_src OWNER TO dbadmin;
-1289,ALTER TABLE migration.target_grants OWNER TO dbadmin;
-1290,ALTER TABLE migration.grants_rejects OWNER TO dbadmin;
-1291,ALTER TABLE migration.target_grants_src OWNER TO dbadmin;
-1292,ALTER TABLE migration.source_schemas OWNER TO dbadmin;
-1293,ALTER TABLE beer.events_by_user OWNER TO dbadmin;
-1294,ALTER VIEW ehr.admission_vw OWNER TO dbadmin;
-1295,ALTER VIEW survey.opioid_vw OWNER TO dbadmin;
-1296,ALTER VIEW public.cop_events_view OWNER TO dbadmin;
-1297,ALTER VIEW atlas.main_report OWNER TO dbadmin;
-1298,ALTER VIEW cops.event_flx_view OWNER TO dbadmin;
-1299,ALTER VIEW cortex.short_vw OWNER TO dbadmin;
+1136,ALTER DATABASE vaasdemo SET disableinheritedprivileges = 0;
+1137,ALTER DATABASE vaasdemo SET disableinheritedprivileges = 0;
+1138,ALTER TABLE ehr.accounts_src EXCLUDE PRIVILEGES;
+1139,ALTER TABLE ehr.departments_src EXCLUDE PRIVILEGES;
+1140,ALTER TABLE ehr.encounters_src EXCLUDE PRIVILEGES;
+1141,ALTER TABLE ehr.patients_src EXCLUDE PRIVILEGES;
+1142,ALTER TABLE ehr.hospitals_src EXCLUDE PRIVILEGES;
+1143,ALTER TABLE ehr.drugs EXCLUDE PRIVILEGES;
+1144,ALTER TABLE ehr.icd_nine_lkp_src EXCLUDE PRIVILEGES;
+1145,ALTER TABLE survey.opioid_src EXCLUDE PRIVILEGES;
+1146,ALTER TABLE survey.hcahps_src EXCLUDE PRIVILEGES;
+1147,ALTER TABLE survey.general_info_src EXCLUDE PRIVILEGES;
+1148,ALTER TABLE masterdata.places_src EXCLUDE PRIVILEGES;
+1149,ALTER TABLE masterdata.names_01_src EXCLUDE PRIVILEGES;
+1150,ALTER TABLE masterdata.alphabet_lkp EXCLUDE PRIVILEGES;
+1151,ALTER TABLE masterdata.lsad_lkp EXCLUDE PRIVILEGES;
+1152,ALTER TABLE masterdata.funcstat_lkp EXCLUDE PRIVILEGES;
+1153,ALTER TABLE beer.events EXCLUDE PRIVILEGES;
+1154,ALTER TABLE beer.adj_drinkers EXCLUDE PRIVILEGES;
+1155,ALTER TABLE beer.drinkers EXCLUDE PRIVILEGES;
+1156,ALTER TABLE beer.beer_type EXCLUDE PRIVILEGES;
+1157,ALTER TABLE beer.beer_hours EXCLUDE PRIVILEGES;
+1158,ALTER TABLE beer.zipcode EXCLUDE PRIVILEGES;
+1159,ALTER TABLE beer.zsharp EXCLUDE PRIVILEGES;
+1160,ALTER TABLE atlas.mock_dealer EXCLUDE PRIVILEGES;
+1161,ALTER TABLE atlas.arrivals_src EXCLUDE PRIVILEGES;
+1162,ALTER TABLE atlas.control EXCLUDE PRIVILEGES;
+1163,ALTER TABLE atlas.cust_dim_src EXCLUDE PRIVILEGES;
+1164,ALTER TABLE atlas.cust_dim EXCLUDE PRIVILEGES;
+1165,ALTER TABLE atlas.cust_sales_src EXCLUDE PRIVILEGES;
+1166,ALTER TABLE atlas.date_dim_src EXCLUDE PRIVILEGES;
+1167,ALTER TABLE atlas.dealer_dim_src EXCLUDE PRIVILEGES;
+1168,ALTER TABLE atlas.big_report EXCLUDE PRIVILEGES;
+1169,ALTER TABLE atlas.date_dim EXCLUDE PRIVILEGES;
+1170,ALTER TABLE atlas.port_dim EXCLUDE PRIVILEGES;
+1171,ALTER TABLE atlas.region_dim EXCLUDE PRIVILEGES;
+1172,ALTER TABLE atlas.sales EXCLUDE PRIVILEGES;
+1173,ALTER TABLE atlas.sales_fact EXCLUDE PRIVILEGES;
+1174,ALTER TABLE atlas.vehicle_config EXCLUDE PRIVILEGES;
+1175,ALTER TABLE atlas.zip_code_lkp EXCLUDE PRIVILEGES;
+1176,ALTER TABLE brdbeer.user_agent EXCLUDE PRIVILEGES;
+1177,ALTER TABLE brdbeer.page_dimension EXCLUDE PRIVILEGES;
+1178,ALTER TABLE brdbeer.session_dim EXCLUDE PRIVILEGES;
+1179,ALTER TABLE aetna.provider_base EXCLUDE PRIVILEGES;
+1180,ALTER TABLE aetna.specialty EXCLUDE PRIVILEGES;
+1181,ALTER TABLE aetna.address EXCLUDE PRIVILEGES;
+1182,ALTER TABLE aetna.provider_base_src EXCLUDE PRIVILEGES;
+1183,ALTER TABLE aetna.specialty_int EXCLUDE PRIVILEGES;
+1184,ALTER TABLE aetna.address_int EXCLUDE PRIVILEGES;
+1185,ALTER TABLE aetna.provider_base_dup EXCLUDE PRIVILEGES;
+1186,ALTER TABLE aetna.provider_loc_sql_src EXCLUDE PRIVILEGES;
+1187,ALTER TABLE aetna.provider_specialty_sql_src EXCLUDE PRIVILEGES;
+1188,ALTER TABLE aetna.provider_specialty_db2_src EXCLUDE PRIVILEGES;
+1189,ALTER TABLE aetna.provider_base_db2_src EXCLUDE PRIVILEGES;
+1190,ALTER TABLE aetna.provider_base_sql_src EXCLUDE PRIVILEGES;
+1191,ALTER TABLE masterdata.alteryx_input EXCLUDE PRIVILEGES;
+1192,ALTER TABLE click.main_fact EXCLUDE PRIVILEGES;
+1193,ALTER TABLE drug.blah EXCLUDE PRIVILEGES;
+1194,ALTER TABLE drug.ctrx2_src EXCLUDE PRIVILEGES;
+1195,ALTER TABLE cops.event_flx EXCLUDE PRIVILEGES;
+1196,ALTER TABLE cops.event_flx_keys EXCLUDE PRIVILEGES;
+1197,ALTER TABLE public.cop_events EXCLUDE PRIVILEGES;
+1198,ALTER TABLE public.cop_events_keys EXCLUDE PRIVILEGES;
+1199,ALTER TABLE commodity.daily_futures EXCLUDE PRIVILEGES;
+1200,ALTER TABLE commodity.daily_futures_src EXCLUDE PRIVILEGES;
+1201,ALTER TABLE logistics.test EXCLUDE PRIVILEGES;
+1202,ALTER TABLE logistics.timetable EXCLUDE PRIVILEGES;
+1203,ALTER TABLE cortex.flight EXCLUDE PRIVILEGES;
+1204,ALTER TABLE cortex.og_flight EXCLUDE PRIVILEGES;
+1205,ALTER TABLE cortex.for_mike EXCLUDE PRIVILEGES;
+1206,ALTER TABLE cortex.iata_xref EXCLUDE PRIVILEGES;
+1207,ALTER TABLE cortex.new_flight EXCLUDE PRIVILEGES;
+1208,ALTER TABLE atlas.cust_dim_vpy_src EXCLUDE PRIVILEGES;
+1209,ALTER TABLE migration.target_grants EXCLUDE PRIVILEGES;
+1210,ALTER TABLE migration.grants_rejects EXCLUDE PRIVILEGES;
+1211,ALTER TABLE migration.target_grants_src EXCLUDE PRIVILEGES;
+1212,ALTER TABLE migration.source_schemas EXCLUDE PRIVILEGES;
+1213,ALTER TABLE beer.events_by_user EXCLUDE PRIVILEGES;
+1214,ALTER TABLE cyclist.trip_data_2021_src EXCLUDE PRIVILEGES;
+1215,ALTER TABLE segment.online_sales EXCLUDE PRIVILEGES;
+1216,ALTER TABLE public.iris EXCLUDE PRIVILEGES;
+1217,ALTER TABLE public.online_retail EXCLUDE PRIVILEGES;
+1218,ALTER TABLE segment.retail EXCLUDE PRIVILEGES;
+1219,ALTER TABLE migration.data_exports EXCLUDE PRIVILEGES;
+1220,ALTER VIEW ehr.admission_vw EXCLUDE PRIVILEGES; 
+1221,ALTER VIEW survey.opioid_vw EXCLUDE PRIVILEGES; 
+1222,ALTER VIEW public.cop_events_view EXCLUDE PRIVILEGES; 
+1223,ALTER VIEW atlas.main_report EXCLUDE PRIVILEGES; 
+1224,ALTER VIEW cops.event_flx_view EXCLUDE PRIVILEGES; 
+1225,ALTER VIEW cortex.short_vw EXCLUDE PRIVILEGES; 
+1226,ALTER TABLE ehr.accounts_src OWNER TO dbadmin;
+1227,ALTER TABLE ehr.departments_src OWNER TO dbadmin;
+1228,ALTER TABLE ehr.encounters_src OWNER TO dbadmin;
+1229,ALTER TABLE ehr.patients_src OWNER TO dbadmin;
+1230,ALTER TABLE ehr.hospitals_src OWNER TO dbadmin;
+1231,ALTER TABLE ehr.drugs OWNER TO dbadmin;
+1232,ALTER TABLE ehr.icd_nine_lkp_src OWNER TO dbadmin;
+1233,ALTER TABLE survey.opioid_src OWNER TO dbadmin;
+1234,ALTER TABLE survey.hcahps_src OWNER TO dbadmin;
+1235,ALTER TABLE survey.general_info_src OWNER TO dbadmin;
+1236,ALTER TABLE masterdata.places_src OWNER TO dbadmin;
+1237,ALTER TABLE masterdata.names_01_src OWNER TO dbadmin;
+1238,ALTER TABLE masterdata.alphabet_lkp OWNER TO dbadmin;
+1239,ALTER TABLE masterdata.lsad_lkp OWNER TO dbadmin;
+1240,ALTER TABLE masterdata.funcstat_lkp OWNER TO dbadmin;
+1241,ALTER TABLE beer.events OWNER TO dbadmin;
+1242,ALTER TABLE beer.adj_drinkers OWNER TO dbadmin;
+1243,ALTER TABLE beer.drinkers OWNER TO dbadmin;
+1244,ALTER TABLE beer.beer_type OWNER TO dbadmin;
+1245,ALTER TABLE beer.beer_hours OWNER TO dbadmin;
+1246,ALTER TABLE beer.zipcode OWNER TO dbadmin;
+1247,ALTER TABLE beer.zsharp OWNER TO dbadmin;
+1248,ALTER TABLE atlas.mock_dealer OWNER TO dbadmin;
+1249,ALTER TABLE atlas.arrivals_src OWNER TO dbadmin;
+1250,ALTER TABLE atlas.control OWNER TO dbadmin;
+1251,ALTER TABLE atlas.cust_dim_src OWNER TO dbadmin;
+1252,ALTER TABLE atlas.cust_dim OWNER TO dbadmin;
+1253,ALTER TABLE atlas.cust_sales_src OWNER TO dbadmin;
+1254,ALTER TABLE atlas.date_dim_src OWNER TO dbadmin;
+1255,ALTER TABLE atlas.dealer_dim_src OWNER TO dbadmin;
+1256,ALTER TABLE atlas.big_report OWNER TO dbadmin;
+1257,ALTER TABLE atlas.date_dim OWNER TO dbadmin;
+1258,ALTER TABLE atlas.port_dim OWNER TO dbadmin;
+1259,ALTER TABLE atlas.region_dim OWNER TO dbadmin;
+1260,ALTER TABLE atlas.sales OWNER TO dbadmin;
+1261,ALTER TABLE atlas.sales_fact OWNER TO dbadmin;
+1262,ALTER TABLE atlas.vehicle_config OWNER TO dbadmin;
+1263,ALTER TABLE atlas.zip_code_lkp OWNER TO dbadmin;
+1264,ALTER TABLE brdbeer.user_agent OWNER TO dbadmin;
+1265,ALTER TABLE brdbeer.page_dimension OWNER TO dbadmin;
+1266,ALTER TABLE brdbeer.session_dim OWNER TO dbadmin;
+1267,ALTER TABLE aetna.provider_base OWNER TO dbadmin;
+1268,ALTER TABLE aetna.specialty OWNER TO dbadmin;
+1269,ALTER TABLE aetna.address OWNER TO dbadmin;
+1270,ALTER TABLE aetna.provider_base_src OWNER TO dbadmin;
+1271,ALTER TABLE aetna.specialty_int OWNER TO dbadmin;
+1272,ALTER TABLE aetna.address_int OWNER TO dbadmin;
+1273,ALTER TABLE aetna.provider_base_dup OWNER TO dbadmin;
+1274,ALTER TABLE aetna.provider_loc_sql_src OWNER TO dbadmin;
+1275,ALTER TABLE aetna.provider_specialty_sql_src OWNER TO dbadmin;
+1276,ALTER TABLE aetna.provider_specialty_db2_src OWNER TO dbadmin;
+1277,ALTER TABLE aetna.provider_base_db2_src OWNER TO dbadmin;
+1278,ALTER TABLE aetna.provider_base_sql_src OWNER TO dbadmin;
+1279,ALTER TABLE masterdata.alteryx_input OWNER TO dbadmin;
+1280,ALTER TABLE click.main_fact OWNER TO dbadmin;
+1281,ALTER TABLE drug.blah OWNER TO dbadmin;
+1282,ALTER TABLE drug.ctrx2_src OWNER TO dbadmin;
+1283,ALTER TABLE cops.event_flx OWNER TO dbadmin;
+1284,ALTER TABLE cops.event_flx_keys OWNER TO dbadmin;
+1285,ALTER TABLE public.cop_events OWNER TO dbadmin;
+1286,ALTER TABLE public.cop_events_keys OWNER TO dbadmin;
+1287,ALTER TABLE commodity.daily_futures OWNER TO dbadmin;
+1288,ALTER TABLE commodity.daily_futures_src OWNER TO dbadmin;
+1289,ALTER TABLE logistics.test OWNER TO dbadmin;
+1290,ALTER TABLE logistics.timetable OWNER TO dbadmin;
+1291,ALTER TABLE cortex.flight OWNER TO dbadmin;
+1292,ALTER TABLE cortex.og_flight OWNER TO dbadmin;
+1293,ALTER TABLE cortex.for_mike OWNER TO dbadmin;
+1294,ALTER TABLE cortex.iata_xref OWNER TO dbadmin;
+1295,ALTER TABLE cortex.new_flight OWNER TO dbadmin;
+1296,ALTER TABLE atlas.cust_dim_vpy_src OWNER TO dbadmin;
+1297,ALTER TABLE migration.target_grants OWNER TO dbadmin;
+1298,ALTER TABLE migration.grants_rejects OWNER TO dbadmin;
+1299,ALTER TABLE migration.target_grants_src OWNER TO dbadmin;
+1300,ALTER TABLE migration.source_schemas OWNER TO dbadmin;
+1301,ALTER TABLE beer.events_by_user OWNER TO dbadmin;
+1302,ALTER TABLE cyclist.trip_data_2021_src OWNER TO dbadmin;
+1303,ALTER TABLE segment.online_sales OWNER TO dbadmin;
+1304,ALTER TABLE public.iris OWNER TO dbadmin;
+1305,ALTER TABLE public.online_retail OWNER TO dbadmin;
+1306,ALTER TABLE segment.retail OWNER TO dbadmin;
+1307,ALTER TABLE migration.data_exports OWNER TO dbadmin;
+1308,ALTER VIEW ehr.admission_vw OWNER TO dbadmin;
+1309,ALTER VIEW survey.opioid_vw OWNER TO dbadmin;
+1310,ALTER VIEW public.cop_events_view OWNER TO dbadmin;
+1311,ALTER VIEW atlas.main_report OWNER TO dbadmin;
+1312,ALTER VIEW cops.event_flx_view OWNER TO dbadmin;
+1313,ALTER VIEW cortex.short_vw OWNER TO dbadmin;
