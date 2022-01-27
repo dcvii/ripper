@@ -33,11 +33,11 @@ def parse_file(fname):
 def run_sql(cset,bucket_key):
  
     print('writing source data exports')
-    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
-        'port': os.getenv("SRC_DB_PORT"), 
-        'user': os.getenv("SRC_DB_USERNAME"), 
-        'password': os.getenv("SRC_DB_PASSWORD"), 
-        'database': os.getenv("SRC_DB_DATABASE"),
+    conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
+        'port': os.getenv("TARGET_DB_PORT"), 
+        'user': os.getenv("TARGET_DB_USERNAME"), 
+        'password': os.getenv("TARGET_DB_PASSWORD"), 
+        'database': os.getenv("TARGET_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
 
@@ -68,6 +68,7 @@ def run_sql(cset,bucket_key):
                 finally:
                     logging.info('-----')
                     logging.info(cmd)
+                    #rcnt = results
                     logging.info("records: %s", rcnt)
             
         cur.close()
@@ -78,7 +79,7 @@ def run_sql(cset,bucket_key):
 
    
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("SRC_BUCKET_KEY")
+bucket_key = os.getenv("TARGET_BUCKET_KEY")
 
 lname = "log/put_"+bucket_key+"_v2v_export.log"
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
