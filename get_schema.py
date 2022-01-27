@@ -7,15 +7,71 @@ import csv
 import numpy as np
 
 
-def loader(config):
+def get_vv_string():
+
+    sql = ''
+    password = os.getenv("SRC_DB_PASSWORD")
+    username = os.getenv("SRC_DB_USERNAME")
+    port = os.getenv("SRC_DB_PORT")
+    db = os.getenv("SRC_DB_DATABASE")
+    host = os.getenv("SRC_DB_HOST")
+    #expiration = token['Credentials']['Expiration']
+
+    sql = "CONNECT TO VERTICA "+db+" USER "+username+" PASSWORD "+"'"+password+"' ON '"+host+"' , "+port+";\n"
+
+    return sql
+
+
+# def loader(config):
+
+#     conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+#     'port': os.getenv("SRC_DB_PORT"), 
+#     'user': os.getenv("SRC_DB_USERNAME"), 
+#     'password': os.getenv("SRC_DB_PASSWORD"), 
+#     'database': os.getenv("SRC_DB_DATABASE"),
+#     'log_level': logging.INFO,
+#     'log_path': ''}
+
+#     print("connection:", conn_info['host'])
+
+#     with vertica_python.connect(**conn_info) as conn:
+#         cur = conn.cursor()
+
+#         # multiline single sql statement
+#         sql = open(config['in_fspec'], 'r')
+#         cmd = ''
+#         for line in sql:
+#             cmd += line
+        
+#         try:
+#             cur.execute(cmd)
+#         except:
+#             print('FAIL')
+#             logging.error("SQL Query Failure")
+#             rcnt = 0
+
+#         else:
+#             results = cur.fetchall()
+#             df = pd.DataFrame(results)
+#             rcnt = df.shape[0]
+            
+#         finally:
+#             logging.info('-----')
+#             logging.info("records: %s", rcnt)
+        
+#     cur.close()
+
+
+def run_v2v(config):
+ 
 
     conn_info = {'host': os.getenv("SRC_DB_HOST"), 
-    'port': os.getenv("SRC_DB_PORT"), 
-    'user': os.getenv("SRC_DB_USERNAME"), 
-    'password': os.getenv("SRC_DB_PASSWORD"), 
-    'database': os.getenv("SRC_DB_DATABASE"),
-    'log_level': logging.INFO,
-    'log_path': ''}
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
+        'log_level': logging.INFO,
+        'log_path': ''}
 
     print("connection:", conn_info['host'])
 
@@ -45,6 +101,32 @@ def loader(config):
             logging.info("records: %s", rcnt)
         
     cur.close()
+
+    ## create script for running directly
+
+    bucket = os.getenv("SRC_S3_BUCKET")
+    bucket_key = os.getenv("SRC_BUCKET_KEY")
+    database = os.getenv("SRC_DB_DATABASE")
+    # what are the results.
+    fspec = "scripts/"+bucket_key+"_v2v.sql"
+    f = open(fspec, 'w')
+
+    f.write(config['connection'])
+
+    for row in results:
+        schema, table, ct = row
+
+        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
+        outstring = "COPY "+schema+"."+table+" FROM VERTICA "+database+"."+schema+"."+table+";"
+        #print(outstring)
+        outstring+="\n"
+        f.write(outstring)
+
+    sql = "DISCONNECT "+database+";\n"
+    f.write(sql)
+    f.close()
+    print("vertica to vertica export file written")
+
 
 
 def run_getter(config):
@@ -173,7 +255,7 @@ def get_catalog(config):
     print("catalog file written")
 
 
-   
+  
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
 bucket_key = os.getenv("SRC_BUCKET_KEY")
 
@@ -186,6 +268,10 @@ run_getter(h)
 h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'export_dest': 'local'}
 run_getter(h)
 
+h = {'in_fspec': 'sql/get_all_tables.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'connection': get_vv_string(), 'export_dest': 'local'}
+run_v2v(h)
+
 h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
 get_catalog(h)
 
+h = {}
