@@ -12,21 +12,25 @@ import re
 def parse_file(fname):
     print('parsing source catalog file')
     ct = 0
+    cmds = 0
     with open(fname) as file:
         lines = file.read()
         chunks = []
         cmd = ''
 
         for this_line in lines:
+            ct += 1
             cmd += this_line
             m0 = re.search(r';',this_line)
             if m0 != None:                
                 chunks.append(cmd)
-                ct += 1
                 cmd = ''
+            else:
+                cmds += 1
      
            
-        print(ct,'commands found')
+        print(ct,'lines found')
+        print(cmds, 'commands found')
         return chunks
 
 
@@ -54,22 +58,26 @@ def run_sql(cset,bucket_key):
             for cmd in cset:
 
                 try:
-                    cur.execute(cmd)
-                except:
-                    print('FAIL')
                     print(cmd)
+                    cur.execute(cmd)
+                    
+                except:
+                    print('FAILED')
                     logging.error("SQL Query Failure")
                     punt_file.write(cmd)
 
                 else:
+                    print('PASSED')
                     results = cur.fetchall()
                     df = pd.DataFrame(results)
-                    rcnt = df.shape[0]
+                    forkrcnt = df.shape[0]
+                    print(results)
                 finally:
                     logging.info('-----')
                     logging.info(cmd)
                     #rcnt = results
-                    logging.info("records: %s", rcnt)
+                    #logging.info("records: %s", rcnt)
+                    logging.info(results)
             
         cur.close()
     punt_file.close()

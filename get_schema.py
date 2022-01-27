@@ -22,46 +22,6 @@ def get_vv_string():
     return sql
 
 
-# def loader(config):
-
-#     conn_info = {'host': os.getenv("SRC_DB_HOST"), 
-#     'port': os.getenv("SRC_DB_PORT"), 
-#     'user': os.getenv("SRC_DB_USERNAME"), 
-#     'password': os.getenv("SRC_DB_PASSWORD"), 
-#     'database': os.getenv("SRC_DB_DATABASE"),
-#     'log_level': logging.INFO,
-#     'log_path': ''}
-
-#     print("connection:", conn_info['host'])
-
-#     with vertica_python.connect(**conn_info) as conn:
-#         cur = conn.cursor()
-
-#         # multiline single sql statement
-#         sql = open(config['in_fspec'], 'r')
-#         cmd = ''
-#         for line in sql:
-#             cmd += line
-        
-#         try:
-#             cur.execute(cmd)
-#         except:
-#             print('FAIL')
-#             logging.error("SQL Query Failure")
-#             rcnt = 0
-
-#         else:
-#             results = cur.fetchall()
-#             df = pd.DataFrame(results)
-#             rcnt = df.shape[0]
-            
-#         finally:
-#             logging.info('-----')
-#             logging.info("records: %s", rcnt)
-        
-#     cur.close()
-
-
 def run_v2v(config):
  
 
@@ -274,4 +234,5 @@ run_v2v(h)
 h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
 get_catalog(h)
 
-h = {}
+print("Rembemboer to edit ",h['out_fspec'])
+print("Next run put_schema")

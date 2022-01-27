@@ -55,13 +55,15 @@ def run_sql(cset,bucket_key):
 
                 try:
                     cur.execute(cmd)
+                    print(cmd)
                 except:
-                    print('FAIL')
+                    print('FAILED')
                     print(cmd)
                     logging.error("SQL Query Failure")
                     punt_file.write(cmd)
 
                 else:
+                    print('PASSED')
                     results = cur.fetchall()
                     df = pd.DataFrame(results)
                     rcnt = df.shape[0]
@@ -89,3 +91,6 @@ f = 'scripts/vaasdemo_catalog.sql'
 #f = 'scripts/tevaQA_catalog.sql'
 cmd_set = parse_file(f)
 run_sql(cmd_set,bucket_key)
+
+print('Next check for rejects')
+print('Run put_v2v or put_export')
