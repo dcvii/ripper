@@ -76,7 +76,7 @@ natural join
 	from 
 		v_catalog.columns 
 	where
-		data_type in ('time', 'timetz', 'interval')
+		data_type in ('time', 'timetz', 'interval', 'row','set')
 		OR
 		numeric_precision > 38
 	group by 
@@ -123,7 +123,7 @@ select
  is_partitioned,
  row_count,
  partition_expression,
-'DELIMITED'::varchar(20) as export_type
+'CSV'::varchar(20) as export_type
 from
 (
 	select 
@@ -147,7 +147,7 @@ natural join
 	from 
 		v_catalog.columns 
 	where
-		data_type in ('time', 'timetz', 'interval')
+		data_type in ('time', 'timetz', 'interval','set','row')
 		OR
 	        numeric_precision > 38
 	group by 
@@ -188,9 +188,9 @@ WHERE row_count > 0
 order by 4,1,2,3;
 
 
-update migration.source_schemas
-set export_type = 'DELIMITED'
-where export_type = 'CSV';
+-- update migration.source_schemas
+-- set export_type = 'DELIMITED'
+-- where export_type = 'CSV';
 
 
 

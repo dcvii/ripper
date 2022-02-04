@@ -34,23 +34,36 @@ def run_getter(fspec):
 
         else:
             results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
+            # df = pd.DataFrame(results)
+            # rcnt = df.shape[0]
         finally:
             logging.info('-----')
             #logging.info(sql.rstrip())
-            logging.info("records: %s", rcnt)
+            #logging.info("records: %s", rcnt)
         
     cur.close()
 
-    df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
-    df.infer_objects()
+    fspec = 'sql/raw.sql'
+    open(fspec, 'w')
+    x_id = 0
+    for row in results:
+        sort_id, cmd = row
+     
+       
+        script = sort_id+","+cmd+";\n"
+        f.write(script)
+    f.close()
+
+
+    # df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
+    # df.infer_objects()
    # df = df.astype(str)
 
     #print(df.info)
     print('writing grant script for target')
-    d2 = df.pop(2)
-    d2.to_csv('scripts/target_grants.csv')
+    # d2 = df.pop(2)
+    # d2.to_csv('scripts/target_grants.csv')
+
 
 
 
@@ -59,6 +72,6 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 
 
 run_getter('sql/grants.sql')
-run_getter('scripts/load_grants.sql')
+#run_getter('scripts/load_grants.sql')
 
 
