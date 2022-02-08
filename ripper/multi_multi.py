@@ -11,7 +11,7 @@ import re
 
 
 def vert_conn(cfg):
-    if cfg['connect_to'] == 'tgt':
+    if cfg == 'tgt':
         conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
         'port': os.getenv("TARGET_DB_PORT"), 
         'user': os.getenv("TARGET_DB_USERNAME"), 
@@ -27,6 +27,7 @@ def vert_conn(cfg):
         'database': os.getenv("SRC_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
+    return conn_info
 
 
 def chunkify(fname):
@@ -50,9 +51,9 @@ def chunkify(fname):
         return chunks
 
 
-def run_sql(cset,bucket_key):
+def run_sql(cset,config):
  
-    print('writing source data exports')
+    print('running multi')
 
 
     print("connection:", conn_info['host'])
@@ -86,6 +87,8 @@ def run_sql(cset,bucket_key):
             
         cur.close()
     punt_file.close()
+    return results
+
 
    
 home = "/Users/mbowen/devcode/PYDEV/ripper/"
@@ -96,5 +99,7 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 
 f = 'scripts/vaasdemo_out_parquet.sql'
 #f = 'scripts/tevaQA_catalog.sql'
+
+h = h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'conn_type': 'target'}
 cmd_set = chunkify(f)
-run_sql(cmd_set,bucket_key)
+run_sql(cmd_set,config)
