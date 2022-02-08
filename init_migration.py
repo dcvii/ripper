@@ -4,6 +4,8 @@ import sys
 import logging
 import pandas as pd
 
+from ripper.multi_multi import chunkify
+
 
 def run_getter(fspec):
  
@@ -43,36 +45,14 @@ def run_getter(fspec):
         
     cur.close()
 
-    fspec = 'sql/raw.sql'
-    f = open(fspec, 'w')
-    x_id = 0
-    for row in results:
-        order_id, area, cmd, object_type, opbject_name = row
-     
-       
-        #script = str(order_id)+","+cmd+";\n"
-        script = cmd+";\n"
-        f.write(script)
-    f.close()
+    
 
 
-    # df.rename(columns = {0: "index", 1: "rank", 2: "sqltxt"})
-    # df.infer_objects()
-   # df = df.astype(str)
-
-    #print(df.info)
-    print('writing grant script for target')
-    # d2 = df.pop(2)
-    # d2.to_csv('scripts/target_grants.csv')
-
-
-
-
-lname = 'log/get_grants.log'
+lname = 'log/init_migration.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-run_getter('sql/grants.sql')
+cmd_set = chunkify('sql/migration_ddl.sql')
 #run_getter('scripts/load_grants.sql')
 
 
