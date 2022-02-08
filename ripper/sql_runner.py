@@ -1,4 +1,3 @@
-import cmd
 import vertica_python
 import os
 import sys
@@ -31,7 +30,7 @@ def vert_conn(cfg):
 
 
 def chunkify(fname):
-    print('parsing source catalog file')
+    print('chunking multi sql into command set')
     ct = 0
     with open(fname) as file:
         lines = file.read()
@@ -53,10 +52,12 @@ def chunkify(fname):
 
 def run_multi_sql(cset,config):
  
-    print('running multi')
 
+    conn_info = vert_conn(config['conn_type'])
+    print('running multi sql')
 
     print("connection:", conn_info['host'])
+    bucket_key = config['bucket_key']
 
     fspec = "scripts/failed_"+bucket_key+"_export.sql"
     with open(fspec,'w') as punt_file:
@@ -90,16 +91,40 @@ def run_multi_sql(cset,config):
     return results
 
 
-   
-home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("TARGET_BUCKET_KEY")
+def run_single_file_sql(config):
+ 
+    conn_info = vert_conn(config['conn_type'])
+    print('running single file sql')
 
-lname = "log/put_"+bucket_key+"_export.log"
-logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
+    print("connection:", conn_info['host'])
+   # bucket_key = config['bucket_key']
+  
 
-f = 'scripts/vaasdemo_out_parquet.sql'
-#f = 'scripts/tevaQA_catalog.sql'
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
 
-h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'conn_type': 'target'}
-cmd_set = chunkify(f)
-run_multi_sql(cmd_set,h)
+        # multiline single sql statement
+        sql = open(config['in_fspec'], 'r')
+        cmd = ''
+        for line in sql:
+            cmd += line
+        
+        try:
+            cur.execute(cmd)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+            rcnt = 0
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = df.shape[0]
+            
+        finally:
+            logging.info('-----')
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
+    return results
+
