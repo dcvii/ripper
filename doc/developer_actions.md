@@ -5,7 +5,7 @@
 num| Date|By |Module|Purpose|Notes|Release|Effort|Priority|Status
 ---|-----|---|------|-------|-----|-------|---------|------|--------|-------
 001|0112|MB|sql_runner||Create inner and outer loops for sql runner where cmd_set_count > 1000|||C|Open
-002|0112|MB|get_grants||Fix bad grant syntax exported by geg_grants.py|||A|In Dev
+002|0112|MB|get_grants||Fix bad grant syntax exported by get_grants.py|||A|In Dev
 003|0112|MB|sql_runner||Categorize all sql run types|||C|In Dev
 005|0112|MB|get_grants||Make it easier to get through errors, for re-run retain exceptional queries that fail in any case|||A|Coded
 006|0112|MB|Docs||document manual process for establishing AWS access|||B|Open

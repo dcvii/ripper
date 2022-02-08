@@ -44,13 +44,14 @@ def run_getter(fspec):
     cur.close()
 
     fspec = 'sql/raw.sql'
-    open(fspec, 'w')
+    f = open(fspec, 'w')
     x_id = 0
     for row in results:
-        sort_id, cmd = row
+        order_id, area, cmd, object_type, opbject_name = row
      
        
-        script = sort_id+","+cmd+";\n"
+        #script = str(order_id)+","+cmd+";\n"
+        script = cmd+";\n"
         f.write(script)
     f.close()
 
