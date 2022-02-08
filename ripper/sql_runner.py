@@ -32,8 +32,8 @@ def vert_conn(cfg):
 def chunkify(fname):
     print('chunking multi sql into command set')
     ct = 0
-    with open(fname) as file:
-        lines = file.read()
+    with open(fname) as f:
+        lines = f.read()
         chunks = []
         cmd = ''
 
@@ -47,7 +47,8 @@ def chunkify(fname):
      
            
         print(ct,'commands found')
-        return chunks
+        f.close()
+    return chunks
 
 
 def run_multi_sql(cset,config):

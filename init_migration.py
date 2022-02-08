@@ -17,4 +17,4 @@ result_set = run_multi_sql(cmd_set,config)
 
 
 config = {'in_fspec': 'sql/insert_grants.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': os.getenv('SRC_BUCKET_KEY')}
-result_set = run_single_file_sql(cmd_set,config)
+result_set = run_single_file_sql(config)
