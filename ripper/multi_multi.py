@@ -51,7 +51,7 @@ def chunkify(fname):
         return chunks
 
 
-def run_sql(cset,config):
+def run_multi_sql(cset,config):
  
     print('running multi')
 
@@ -100,6 +100,6 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 f = 'scripts/vaasdemo_out_parquet.sql'
 #f = 'scripts/tevaQA_catalog.sql'
 
-h = h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'conn_type': 'target'}
+h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'conn_type': 'target'}
 cmd_set = chunkify(f)
-run_sql(cmd_set,config)
+run_multi_sql(cmd_set,h)
