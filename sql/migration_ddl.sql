@@ -202,3 +202,8 @@ CREATE TABLE if not exists migration.grants_src
 );
 
 truncate table migration.grants_src;
+
+create or replace view migration.grants
+
+as select "sql" from migration.grants_src
+order by grant_order, principal_name asc;
