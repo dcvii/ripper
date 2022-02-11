@@ -39,7 +39,12 @@ COPY masterdata.lsad_lkp FROM 's3://demo-data.full360.com/vaasdemo/masterdata/ls
 COPY masterdata.alteryx_input FROM 's3://demo-data.full360.com/vaasdemo/masterdata/alteryx_input/*' PARQUET;
 COPY masterdata.places_src FROM 's3://demo-data.full360.com/vaasdemo/masterdata/places_src/*' PARQUET;
 COPY masterdata.names_01_src FROM 's3://demo-data.full360.com/vaasdemo/masterdata/names_01_src/*' PARQUET;
+COPY migration.target_grants FROM 's3://demo-data.full360.com/vaasdemo/migration/target_grants/*' PARQUET;
+COPY migration.grants_src FROM 's3://demo-data.full360.com/vaasdemo/migration/grants_src/*' PARQUET;
 COPY migration.target_grants_src FROM 's3://demo-data.full360.com/vaasdemo/migration/target_grants_src/*' PARQUET;
+COPY public.iris FROM 's3://demo-data.full360.com/vaasdemo/public/iris/*' PARQUET;
+COPY segment.retail FROM 's3://demo-data.full360.com/vaasdemo/segment/retail/*' PARQUET;
+COPY segment.online_sales FROM 's3://demo-data.full360.com/vaasdemo/segment/online_sales/*' PARQUET;
 COPY survey.opioid_src FROM 's3://demo-data.full360.com/vaasdemo/survey/opioid_src/*' PARQUET;
 COPY survey.hcahps_src FROM 's3://demo-data.full360.com/vaasdemo/survey/hcahps_src/*' PARQUET;
 COPY survey.general_info_src FROM 's3://demo-data.full360.com/vaasdemo/survey/general_info_src/*' PARQUET;

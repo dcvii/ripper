@@ -28,7 +28,7 @@ natural join
 	from 
 		v_catalog.columns 
 	where
-		data_type in ('time', 'timetz', 'interval')
+		data_type in ('time', 'timetz', 'interval', 'set', 'row')
 		OR
 	        numeric_precision > 38
 	group by 

@@ -3,7 +3,7 @@
 ## the setup
 - poetry
 - direnv
-- token.sh
+- token.sh (optional)
 - init_migration
 
 ### poetry
@@ -13,13 +13,13 @@
 **direnv** is a tool that establishes environment variables and can run bash items as the end user navigates to the directory where the application lives. 
 
 ### token.sh
-**token.sh** will make, if necessary, the call to `aws sts get-session-token` and set environment variables needed to 
+**token.sh** will make, if necessary, the call to `aws sts get-session-token` and set environment variables needed to provide access to S3 as a source or target for exported data.
 
 ## The getters
 The job of the getters are to 
 - get_grants
 - get_schema
-- get_token
+- get_token (optional)
 
 
 ## The putters
