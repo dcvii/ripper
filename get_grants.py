@@ -20,11 +20,10 @@ result_set = run_multi_sql(cmd_set,config)
 fspec = "scripts/"+bucket_key+"_out_grants.sql"
 f = open(fspec, 'w')
 
-x_id = 0
 for row in result_set:
     cmd = row
     
-    script = cmd[0]+";\n"
+    script = cmd[0]+"\n"
     f.write(script)
 
 f.close()
