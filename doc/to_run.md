@@ -1,14 +1,15 @@
 # running instructions
 
 
-make sure your database is up and running. 
+make sure your source database is up and running. 
 
 ### environment
 
 - navigate to proper subdirectory
 - run `poetry shell` to establish environment
 - setup the config. (.envrc)
-- run the *idempotent* `migration_ddl.sql` to create the migration metadata on the source database. 
+- optionally run the token.sh to grant 24 hour access to S3
+- run the *idempotent* `python init_migration.py` to create the migration metadata on the source database. 
 
 
 
@@ -16,12 +17,12 @@ make sure your database is up and running.
 ```
 # ## VAASDEMO
 # export EXPORT_FORMAT='parquet'
-# export DB_USERNAME='dbadmin'
-# export DB_PASSWORD='Alabama7878!'
-# export DB_DATABASE='vaasdemo'
-# export DB_HOST='35.166.171.38'
-# export DB_PORT='5433'
-# export DB_CLUSTER='vertica-qa-krdz19ca4oe7'
+# export SRC_DB_USERNAME='dbadmin'
+# export SRC_DB_PASSWORD='Alabama7878!'
+# export SRC_DB_DATABASE='vaasdemo'
+# export SRC_DB_HOST='35.166.171.38'
+# export SRC_DB_PORT='5433'
+# export SRC_DB_CLUSTER='vertica-qa-krdz19ca4oe7'
 
 # export S3_BUCKET='s3://demo-data.full360.com'
 # export BUCKET_KEY='vaasdemo'
@@ -32,7 +33,7 @@ make sure your database is up and running.
 The default export format is parquet. The migration app will attempt to export the maxiumum number of tables to the parquet format according the limits in Vertica's support of parquet. All tables that fall out of these rules will be exported in CSV. 
 You should expect 90+% of tables to be exported into parquet. The default delimiter for CSV should be vertical bar `|`.
 
-#### DB_CLUSTER 
+#### SRC_DB_CLUSTER 
 This environment variable is not used.
 
 #### S3_BUCKET
@@ -60,8 +61,8 @@ Other exceptional matters:
 - It is best to manually recreate any projections. Reload only the bare DDL.
 
 
-### step two - create target schema: put_schema.py
-This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of statements it makes sense to run it automatically with the put_schema.py. This is because there may be exceptions. 
+### step two - create target schema: run_schema.py
+This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of statements it makes sense to run it automatically with the put_schema.py. This is because there may be exceptions owing to dependencies. 
 
 
 ### step three - export source data
@@ -72,7 +73,7 @@ This step can be processed manually by simply running the file generated in step
 
 ### step six - import target data
 
-###
+### step seven - import user & role information
 
 ## scenario B
 
