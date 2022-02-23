@@ -15,7 +15,7 @@ rpalter.sql. | resource pools  | odd
 locations.sql | storage locations | odd
 authentications.sql | ? |?
 redo\_user_ddls.sql | ? |
-ap.sql |access policies | odd
+ap.sql |access policies | oddping p
 ldaplink.sql | ? | ?
 profile | ?
 
