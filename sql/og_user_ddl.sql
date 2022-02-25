@@ -1,6 +1,4 @@
--- user ddl
-
-CREATE OR REPLACE VIEW migration.user_ddl AS
+CREATE OR REPLACE VIEW user_ddl AS
 (
 SELECT 0 as grant_order,
        name principal_name,

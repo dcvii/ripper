@@ -46,7 +46,7 @@ def chunkify(fname):
                 cmd = ''
      
            
-        print(ct,'commands found')
+        print(ct,'commands found:',fname)
         f.close()
     return chunks
 
@@ -95,7 +95,7 @@ def run_multi_sql(cset,config):
 def run_single_file_sql(config):
  
     conn_info = vert_conn(config['conn_type'])
-    print('running single file sql')
+    print('running single file sql:', config['in_fspec'])
 
     print("connection:", conn_info['host'])
    # bucket_key = config['bucket_key']
@@ -120,7 +120,7 @@ def run_single_file_sql(config):
         else:
             results = cur.fetchall()
             df = pd.DataFrame(results)
-            rcnt = df.shape[0]
+            rcnt = 0 or df.shape[0]
             
         finally:
             logging.info('-----')
@@ -129,3 +129,42 @@ def run_single_file_sql(config):
     cur.close()
     return results
 
+
+def run_single_file_commit_sql(config):
+ 
+    conn_info = vert_conn(config['conn_type'])
+    print('running single file sql:', config['in_fspec'])
+
+    print("connection:", conn_info['host'])
+   # bucket_key = config['bucket_key']
+  
+
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
+
+        # multiline single sql statement
+        sql = open(config['in_fspec'], 'r')
+        cmd = ''
+        for line in sql:
+            cmd += line
+        
+        cmd += 'commit;'
+        
+        try:
+            cur.execute(cmd)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+            rcnt = 0
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = 0 or df.shape[0]
+            
+        finally:
+            logging.info('-----')
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
+    return results
