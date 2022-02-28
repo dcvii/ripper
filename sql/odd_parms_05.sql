@@ -1,4 +1,4 @@
--- rpalter
+-- alter resource pools step two
 
 insert into migration.odd_parms_src 
 SELECT 5, 'ALTER RESOURCE POOL ' || rp.name ||

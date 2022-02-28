@@ -1,3 +1,5 @@
+-- modify resource pools
+
 insert into migration.odd_parms_src 
 SELECT 4, 'ALTER RESOURCE pool ' || name || ' CASCADE TO ' || cascadeto || ';',
 'Resource Pools', null

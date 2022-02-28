@@ -46,5 +46,3 @@ result_set = run_single_file_commit_sql(config)
 config = {'in_fspec': 'sql/odd_parms_08.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': os.getenv('SRC_BUCKET_KEY')}
 result_set = run_single_file_commit_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_10.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': os.getenv('SRC_BUCKET_KEY')}
-result_set = run_single_file_commit_sql(config)
