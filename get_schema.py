@@ -85,7 +85,7 @@ def run_v2v(config):
     sql = "DISCONNECT "+database+";\n"
     f.write(sql)
     f.close()
-    print("vertica to vertica export file written")
+    print("vertica to vertica export file written: ",fspec)
 
 
 
@@ -147,7 +147,7 @@ def run_getter(config):
         f.write(outstring)
 
     f.close()
-    print(config['export_type']+" export file written")
+    print(config['export_type']+" export file written:",fspec)
 
     ## create input for data_exports table
 
@@ -168,7 +168,7 @@ def run_getter(config):
         f.write(script)
     
     f.close()
-    print(config['export_type'],"ingest file written")
+    print(config['export_type'],"ingest file written:",fspec)
 
    
 
@@ -212,7 +212,7 @@ def get_catalog(config):
     cur.close()
 
     df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
-    print("catalog file written")
+    print("catalog file written:",config['out_fspec'])
 
 
   
@@ -234,5 +234,5 @@ run_v2v(h)
 h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
 get_catalog(h)
 
-print("Rembemboer to edit ",h['out_fspec'])
+print("Rembember to edit the catalog file")
 print("Next run put_schema")

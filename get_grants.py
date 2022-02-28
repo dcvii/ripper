@@ -27,6 +27,6 @@ for row in result_set:
     f.write(script)
 
 f.close()
-print("grant file written")
+print("grant file written:",fspec)
 
 
