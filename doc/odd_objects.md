@@ -18,6 +18,10 @@ redo\_user_ddls.sql | ? |
 ap.sql |access policies | odd_params
 ldaplink.sql | ? | ?
 profile | ?
+? | user defined functions | udx_src | ?
+? | user procedures | udx_src |?
+? | user transforms | udx_src |?
+? | user function parameters | udx_src |?
 
 
 

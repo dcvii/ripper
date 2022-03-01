@@ -13,7 +13,8 @@ num| Date|By |Module|Purpose|Notes|Release|Effort|Priority|Status
 008|0118|MB|doc||write a config check|||B|In Dev
 009|0124|MB|get_schema||Write Vertica 2 Vertica export|||A|Done
 010|0207|MB|sql_runner| |Build generic SQL runner for grants, catalog(?), export|||B|In Dev
-
+011|0228|MB|get_udx | |Build getter for user defined functions, etc |||B|Open
+012|0228|MB|get_schema || Build alternative getter for grabbing projections only , projections + tables, tables only|||B|Open
 
 
 ---
