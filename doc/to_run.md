@@ -33,7 +33,7 @@ make sure your source database is up and running.
 The default export format is parquet. The migration app will attempt to export the maxiumum number of tables to the parquet format according the limits in Vertica's support of parquet. All tables that fall out of these rules will be exported in CSV. 
 You should expect 90+% of tables to be exported into parquet. The default delimiter for CSV should be vertical bar `|`.
 
-#### SRC_DB_CLUSTER 
+#### SRC\_DB_CLUSTER 
 This environment variable is not used.
 
 #### S3_BUCKET

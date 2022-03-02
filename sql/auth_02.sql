@@ -1,0 +1,1 @@
+SELECT 'GRANT AUTHENTICATION ' || object_name || ' TO ' || grantee || ';' FROM grants WHERE object_type = 'CLIENTAUTHENTICATION';
