@@ -168,3 +168,37 @@ def run_single_file_commit_sql(config):
         
     cur.close()
     return results
+
+def run_migration_table(config):
+ 
+    conn_info = vert_conn(config['conn_type'])
+    print('running migration table:', config['src_table'])
+
+    print("connection:", conn_info['host'])
+   # bucket_key = config['bucket_key']
+  
+
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
+
+        # multiline single sql statement
+        cmd = 'SELECT sql from '+config['src_table']+';'
+        
+        try:
+            cur.execute(cmd)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+            rcnt = 0
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = 0 or df.shape[0]
+            
+        finally:
+            logging.info('-----')
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
+    return results
