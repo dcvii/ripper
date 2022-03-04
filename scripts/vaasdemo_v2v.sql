@@ -41,6 +41,7 @@ COPY masterdata.lsad_lkp FROM VERTICA vaasdemo.masterdata.lsad_lkp;
 COPY masterdata.alteryx_input FROM VERTICA vaasdemo.masterdata.alteryx_input;
 COPY masterdata.places_src FROM VERTICA vaasdemo.masterdata.places_src;
 COPY masterdata.names_01_src FROM VERTICA vaasdemo.masterdata.names_01_src;
+COPY migration.odd_parms_src FROM VERTICA vaasdemo.migration.odd_parms_src;
 COPY migration.target_grants FROM VERTICA vaasdemo.migration.target_grants;
 COPY migration.grants_src FROM VERTICA vaasdemo.migration.grants_src;
 COPY migration.target_grants_src FROM VERTICA vaasdemo.migration.target_grants_src;
