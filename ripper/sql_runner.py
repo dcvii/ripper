@@ -77,11 +77,12 @@ def run_multi_sql(cset,config):
                     print(cmd)
                     logging.error("SQL Query Failure")
                     punt_file.write(cmd)
+                    rcnt = 0
 
                 else:
                     results = cur.fetchall()
                     df = pd.DataFrame(results)
-                    rcnt = df.shape[0]
+                    rcnt = 0 or df.shape[0]
                 finally:
                     logging.info('-----')
                     logging.info(cmd)
