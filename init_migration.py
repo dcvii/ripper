@@ -15,6 +15,9 @@ cmd_set = chunkify('sql/migration_ddl.sql')
 config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function':'ddl','function':'ddl', 'bucket_key': bucket_key}
 result_set = run_multi_sql(cmd_set,config)
 
+config = {'in_fspec': 'sql/get_users_only.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src','function':'users', 'bucket_key': bucket_key}
+result_set = run_single_file_sql(config)
+
 config = {'in_fspec': 'sql/insert_grants.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src','function':'grants', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 

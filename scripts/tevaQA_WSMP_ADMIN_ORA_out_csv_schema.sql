@@ -1,1 +1,0 @@
-select table_schema, table_name, row_count from migration.source_schemas where table_schema = 'WSMP_ADMIN_ORA' order by 1,3;
