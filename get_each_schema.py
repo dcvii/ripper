@@ -25,9 +25,8 @@ def run_each_getter(config):
 
         # multiline single sql statement
         sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
+        cmd = config['cmd']
+    
         
         try:
             cur.execute(cmd)
@@ -99,7 +98,7 @@ result_set = run_single_file_sql(config)
 
 #print(result_set)
 
-cset = ''
+
 for row in result_set:
     s = row
     schema = s[0]
@@ -109,29 +108,7 @@ for row in result_set:
     f = open(fspec,'w')
     f.write(cmd)
     f.close
-    h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql',
+    h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
              'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
     run_each_getter(h)
 
-
-    #results = run_single_file_sql
-
-    
-# fspec = "scripts/"+bucket_key+"_in_"+config['export_type']+"_data_ingest.sql"
-# if config['export_type']=='parquet':
-#     param = 'PARQUET'
-# else:
-#     param = ''
-
-# f = open(fspec, 'w')
-
-# x_id = 0
-# for row in results:
-#     schema, table, ct = row
-    
-#     s3_source = "'"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"/*'"
-#     script = "COPY "+schema+"."+table+" FROM "+s3_source+" "+param+";\n"
-#     f.write(script)
-
-# f.close()
-# print(config['export_type'],"ingest file written:",fspec)

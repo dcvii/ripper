@@ -1,0 +1,14 @@
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_med_spec') AS SELECT * FROM sfa_history.s_med_spec;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_prod_int') AS SELECT * FROM sfa_history.s_prod_int;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_postn') AS SELECT * FROM sfa_history.s_postn;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_org_ext') AS SELECT * FROM sfa_history.s_org_ext;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_contact_fnx') AS SELECT * FROM sfa_history.s_contact_fnx;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_contact_x') AS SELECT * FROM sfa_history.s_contact_x;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_contact') AS SELECT * FROM sfa_history.s_contact;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_state_lic_ls') AS SELECT * FROM sfa_history.s_state_lic_ls;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_postn_con') AS SELECT * FROM sfa_history.s_postn_con;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_addr_per') AS SELECT * FROM sfa_history.s_addr_per;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_con_addr') AS SELECT * FROM sfa_history.s_con_addr;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_act_prdint') AS SELECT * FROM sfa_history.s_act_prdint;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_evt_act') AS SELECT * FROM sfa_history.s_evt_act;
+EXPORT TO CSV (directory='s3://teva-export-buckt/tevaQA/sfa_history/s_act_prod_appl') AS SELECT * FROM sfa_history.s_act_prod_appl;
