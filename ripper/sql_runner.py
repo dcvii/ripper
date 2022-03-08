@@ -204,3 +204,25 @@ def run_migration_table(config):
         
     cur.close()
     return results
+
+
+# def script_writer(cset, config)
+
+#     fspec = config['out_fspec']
+#     bucket = os.getenv("SRC_S3_BUCKET")
+#     bucket_key = os.getenv("SRC_BUCKET_KEY")
+#     # what are the results.
+    
+#     f = open(fspec, 'w')
+
+#     for row in cset:
+#         schema, table, ct = row
+
+#         target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
+#         outstring = "EXPORT TO "+config['export_type'].upper()+target+" AS SELECT * FROM "+schema+"."+table+";"
+#         #print(outstring)
+#         outstring+="\n"
+#         f.write(outstring)
+
+#     f.close()
+#     print(config['export_type']+" export file written:",fspec)
