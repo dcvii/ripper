@@ -96259,4 +96259,4 @@ ALTER TABLE metadata.workflow_command ADD CONSTRAINT C_FOREIGN FOREIGN KEY (proc
 -- begin projections
 
 
-SELECT MARK_DESIGN_KSAFE(1);
+

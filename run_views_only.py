@@ -13,7 +13,7 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 
 
 cmd_set = chunkify('scripts/tevaQA_views_only_catalog.sql')
-config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'bucket_key': bucket_key}
+config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'function': 'views_only', 'bucket_key': bucket_key}
 result_set = run_multi_sql(cmd_set,config)
 
 

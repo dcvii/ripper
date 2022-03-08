@@ -59,8 +59,9 @@ def run_multi_sql(cset,config):
 
     print("connection:", conn_info['host'])
     bucket_key = config['bucket_key']
+    function = config['function']
 
-    fspec = "scripts/failed_"+bucket_key+"_export.sql"
+    fspec = "scripts/failed_"+bucket_key+"_"+function+"_export.sql"
     with open(fspec,'w') as punt_file:
 
         #multi multi

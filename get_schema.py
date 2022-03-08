@@ -199,6 +199,7 @@ def get_catalog(config):
         except:
             print('FAIL')
             logging.error("SQL Query Failure")
+            rcnt = 0
 
         else:
             results = cur.fetchall()
