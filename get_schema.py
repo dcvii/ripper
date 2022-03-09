@@ -204,7 +204,7 @@ def get_catalog(config):
 
 
   
-home = "/Users/mbowen/devcode/PYDEV/ripper/"
+home = "/Users/mbowen/devcode/PYDEV/migrator/"
 bucket_key = os.getenv("SRC_BUCKET_KEY")
 
 lname = 'log/get_full_schemas.log'

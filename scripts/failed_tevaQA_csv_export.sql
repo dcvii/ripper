@@ -1,0 +1,19 @@
+
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/sessions') AS SELECT * FROM sandbox.sessions;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/IMS ID ISSUE_AUSTEDO_10262020') AS SELECT * FROM sandbox.IMS ID ISSUE_AUSTEDO_10262020;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/SYNEOS TERRs MISSING IMS IDs') AS SELECT * FROM sandbox.SYNEOS TERRs MISSING IMS IDs;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/IQVIA OPTUM OUTLETS11032020') AS SELECT * FROM sandbox.IQVIA OPTUM OUTLETS11032020;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/SYNEOS MISSING IMSIDs') AS SELECT * FROM sandbox.SYNEOS MISSING IMSIDs;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/TN Mising HCPS for TN IC') AS SELECT * FROM sandbox.TN Mising HCPS for TN IC;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/MA Missing STATE') AS SELECT * FROM sandbox.MA Missing STATE;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/IMS ID ISSUES_AJOVY10262020') AS SELECT * FROM sandbox.IMS ID ISSUES_AJOVY10262020;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/SYNEOS TARGET FILE') AS SELECT * FROM sandbox.SYNEOS TARGET FILE;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/KNIPPER QVARs IDs1033') AS SELECT * FROM sandbox.KNIPPER QVARs IDs1033;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/J_CHUNG_HCP DEA-2') AS SELECT * FROM sandbox.J_CHUNG_HCP DEA-2;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/Returns_IQVIA ') AS SELECT * FROM sandbox.Returns_IQVIA ;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/comparison_ftf_health_plan_fid') AS SELECT * FROM sandbox.comparison_ftf_health_plan_fid;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/MediCal HCPs') AS SELECT * FROM sandbox.MediCal HCPs;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/QNASL_MRKT IMSID_ALL') AS SELECT * FROM sandbox.QNASL_MRKT IMSID_ALL;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/digital-affinity') AS SELECT * FROM sandbox.digital-affinity;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/comparison_payer_spine_detailed_kcf') AS SELECT * FROM sandbox.comparison_payer_spine_detailed_kcf;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/sandbox/comparison_iqvia_fid_plans') AS SELECT * FROM sandbox.comparison_iqvia_fid_plans;
