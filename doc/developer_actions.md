@@ -15,6 +15,9 @@ num| Date|By |Module|Purpose|Notes|Release|Effort|Priority|Status
 010|0207|MB|sql_runner| |Build generic SQL runner for grants, catalog(?), export|||B|Done
 011|0228|MB|get_udx | |Build getter for user defined functions, etc |||B|Open
 012|0228|MB|get_schema || Build alternative getter for grabbing projections only , projections + tables, tables only|||B|Open
+013|0308|MB|get_schemata||Fix script generation for v2v|||B|Open
+014|0306|MB|odd_parms||Breakout resource pool from odd_parms|||A|In Dev
+015|0306|MB|odd_parms||Breakout all from odd_parms|||A|In Dev
 
 
 ---

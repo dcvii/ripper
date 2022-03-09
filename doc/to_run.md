@@ -45,6 +45,7 @@ This is the bucket address. Exports will go to subfolders of this top level buck
 This is the top level folder of the bucket. It should generally be the same as the database name, but if you run multiple exports, you can add other identifying information. The bucket_key should identify the database and the environment as well as source vs destination.  
 
 
+
 ## scenario A - all schemas
 
 ### step one - get source schema: get_schema.py
@@ -68,10 +69,12 @@ This step can be processed manually by simply running the file generated in step
 
 
 ### step three - export source data: run\_data_s3
-This proc will 
+This proc will take a single argument and and validate that it is a porpoer schema. Upon verification, it will copy data from each table in the schema to an appropriately labled s3 bucket. 
 
 
 ### step four - export grant information
+This is broken down into several processes that 
+
 
 ### step five - import grant information
 
@@ -81,5 +84,5 @@ This proc will
 
 ## scenario B - schema selection
 
-### step one - get\_each_schema.py
-This proc will take a single argument and 
+### step one - get\_schemata.py
+This proc will run similarly to get_schema above but will generate separate scripts for each of the  

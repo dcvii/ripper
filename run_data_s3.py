@@ -1,4 +1,3 @@
-import vertica_python
 import os
 import sys
 import logging
