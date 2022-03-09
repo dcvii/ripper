@@ -75,5 +75,7 @@ This step can be processed manually by simply running the file generated in step
 
 ### step seven - import user & role information
 
-## scenario B
+## scenario B - schema selection
+
+### step one - get\_each_schema.py
 

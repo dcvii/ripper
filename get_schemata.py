@@ -3,26 +3,11 @@ import os
 import sys
 import logging
 import pandas as pd
-import csv
-import numpy as np
+
+from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql, run_migration_table
 
 
-def get_vv_string():
-
-    sql = ''
-    password = os.getenv("SRC_DB_PASSWORD")
-    username = os.getenv("SRC_DB_USERNAME")
-    port = os.getenv("SRC_DB_PORT")
-    db = os.getenv("SRC_DB_DATABASE")
-    host = os.getenv("SRC_DB_HOST")
-    #expiration = token['Credentials']['Expiration']
-
-    sql = "CONNECT TO VERTICA "+db+" USER "+username+" PASSWORD "+"'"+password+"' ON '"+host+"' , "+port+";\n"
-
-    return sql
-
-
-def run_v2v(config):
+def run_each_getter(config):
  
 
     conn_info = {'host': os.getenv("SRC_DB_HOST"), 
@@ -40,76 +25,8 @@ def run_v2v(config):
 
         # multiline single sql statement
         sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
-        
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-            rcnt = 0
-
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
-            
-        finally:
-            logging.info('-----')
-            logging.info("records: %s", rcnt)
-        
-    cur.close()
-
-    ## create script for running directly
-
-    bucket = os.getenv("SRC_S3_BUCKET")
-    bucket_key = os.getenv("SRC_BUCKET_KEY")
-    database = os.getenv("SRC_DB_DATABASE")
-    # what are the results.
-    fspec = "scripts/"+bucket_key+"_v2v.sql"
-    f = open(fspec, 'w')
-
-    f.write(config['connection'])
-
-    for row in results:
-        schema, table, ct = row
-
-        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        outstring = "COPY "+schema+"."+table+" FROM VERTICA "+database+"."+schema+"."+table+";"
-        #print(outstring)
-        outstring+="\n"
-        f.write(outstring)
-
-    sql = "DISCONNECT "+database+";\n"
-    f.write(sql)
-    f.close()
-    print("vertica to vertica export file written: ",fspec)
-
-
-
-def run_getter(config):
- 
-
-    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
-        'port': os.getenv("SRC_DB_PORT"), 
-        'user': os.getenv("SRC_DB_USERNAME"), 
-        'password': os.getenv("SRC_DB_PASSWORD"), 
-        'database': os.getenv("SRC_DB_DATABASE"),
-        'log_level': logging.INFO,
-        'log_path': ''}
-
-    print("connection:", conn_info['host'])
-
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
-
-        # multiline single sql statement
-        sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
+        cmd = config['cmd']
+    
         
         try:
             cur.execute(cmd)
@@ -134,7 +51,7 @@ def run_getter(config):
     bucket = os.getenv("SRC_S3_BUCKET")
     bucket_key = os.getenv("SRC_BUCKET_KEY")
     # what are the results.
-    fspec = "scripts/"+bucket_key+"_out_"+config['export_type']+".sql"
+    fspec = "scripts/"+bucket_key+"_out_"+config['function']+"_"+config['export_type']+".sql"
     f = open(fspec, 'w')
 
     for row in results:
@@ -151,7 +68,7 @@ def run_getter(config):
 
     ## create input for data_exports table
 
-    fspec = "scripts/"+bucket_key+"_in_"+config['export_type']+"_data_ingest.sql"
+    fspec = "scripts/"+bucket_key+"_in_"+config['function']+"_"+config['export_type']+"_data_ingest.sql"
     if config['export_type']=='parquet':
         param = 'PARQUET'
     else:
@@ -170,69 +87,28 @@ def run_getter(config):
     f.close()
     print(config['export_type'],"ingest file written:",fspec)
 
-   
 
-
-def get_catalog(config):
- 
-
-    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
-        'port': os.getenv("SRC_DB_PORT"), 
-        'user': os.getenv("SRC_DB_USERNAME"), 
-        'password': os.getenv("SRC_DB_PASSWORD"), 
-        'database': os.getenv("SRC_DB_DATABASE"),
-        'log_level': logging.INFO,
-        'log_path': ''}
-
-    print("connection:", conn_info['host'])
-
-    with vertica_python.connect(**conn_info) as conn:
-        cur = conn.cursor()
-
-        sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
-        #print(sql.rstrip())
-        try:
-            cur.execute(cmd)
-        except:
-            print('FAIL')
-            logging.error("SQL Query Failure")
-
-        else:
-            results = cur.fetchall()
-            df = pd.DataFrame(results)
-            rcnt = df.shape[0]
-        finally:
-            logging.info('-----')
-            #logging.info(sql.rstrip())
-            logging.info("records: %s", rcnt)
-        
-    cur.close()
-
-    df.to_csv(config['out_fspec'], header=None, index=None, sep=' ', mode='a')
-    print("catalog file written:",config['out_fspec'])
-
-
-  
-home = "/Users/mbowen/devcode/PYDEV/ripper/"
-bucket_key = os.getenv("SRC_BUCKET_KEY")
-
-lname = 'log/get_full_schemas.log'
+lname = 'log/get_each_schema.log'
+bucket_key = os.getenv('TARGET_BUCKET_KEY')
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-h = {'in_fspec': 'sql/get_all_parquet.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'parquet', 'export_dest': 'local'}
-run_getter(h)
+config = {'in_fspec': 'sql/schemata.sql', 'out_fspec': 'sql/blah.sql',
+         'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function': 'csv', 'bucket_key': bucket_key}
+result_set = run_single_file_sql(config)
 
-h = {'in_fspec': 'sql/get_all_csv.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'export_type': 'csv', 'export_dest': 'local'}
-run_getter(h)
+#print(result_set)
 
-h = {'in_fspec': 'sql/get_all_tables.sql', 'out_fspec': 'sql/get_all_schemas.sql', 'connection': get_vv_string(), 'export_dest': 'local'}
-run_v2v(h)
 
-h = {'in_fspec': 'sql/catalog.sql', 'out_fspec': home+"scripts/"+bucket_key+"_catalog.sql", 'export_type': 'parquet', 'export_dest': 'local'}
-get_catalog(h)
+for row in result_set:
+    s = row
+    schema = s[0]
+    cmd = "select table_schema, table_name, row_count from migration.source_schemas where table_schema = '"+schema+"' order by 1,3;\n" 
+    
+    fspec = "scripts/"+bucket_key+"_"+schema+"_out_"+config['export_type']+"_"+"schema.sql"
+    f = open(fspec,'w')
+    f.write(cmd)
+    f.close
+    h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
+             'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
+    run_each_getter(h)
 
-print("Rembember to edit the catalog file")
-print("Next run put_schema")
