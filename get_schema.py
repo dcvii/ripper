@@ -5,21 +5,8 @@ import logging
 import pandas as pd
 import csv
 import numpy as np
+from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql, run_migration_table, get_vv_string
 
-
-def get_vv_string():
-
-    sql = ''
-    password = os.getenv("SRC_DB_PASSWORD")
-    username = os.getenv("SRC_DB_USERNAME")
-    port = os.getenv("SRC_DB_PORT")
-    db = os.getenv("SRC_DB_DATABASE")
-    host = os.getenv("SRC_DB_HOST")
-    #expiration = token['Credentials']['Expiration']
-
-    sql = "CONNECT TO VERTICA "+db+" USER "+username+" PASSWORD "+"'"+password+"' ON '"+host+"' , "+port+";\n"
-
-    return sql
 
 
 def run_v2v(config):
