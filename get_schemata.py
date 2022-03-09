@@ -160,7 +160,7 @@ bucket_key = os.getenv('TARGET_BUCKET_KEY')
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 config = {'in_fspec': 'sql/schemata.sql', 'out_fspec': 'sql/blah.sql',
-         'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function': 'csv', 'bucket_key': bucket_key}
+         'log': lname, 'export_type': 'parquet', 'conn_type': 'src', 'function': 'csv', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
 #print(result_set)
@@ -176,7 +176,7 @@ for row in result_set:
     f.write(cmd)
     f.close
     h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
-             'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
+             'log': lname, 'export_type': 'parquet', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
     run_each_getter(h)
 
     fspec = "scripts/"+bucket_key+"_"+schema+"_out_v2v_"+"schema.sql"

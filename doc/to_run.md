@@ -33,6 +33,8 @@ make sure your source database is up and running.
 The default export format is parquet. The migration app will attempt to export the maxiumum number of tables to the parquet format according the limits in Vertica's support of parquet. All tables that fall out of these rules will be exported in CSV. 
 You should expect 90+% of tables to be exported into parquet. The default delimiter for CSV should be vertical bar `|`.
 
+**Note** Vertica 10 does not support exports to delimited. 
+
 #### SRC\_DB_CLUSTER 
 This environment variable is not used.
 
@@ -65,7 +67,9 @@ Other exceptional matters:
 This step can be processed manually by simply running the file generated in step one with vsql. However if there are a large number of statements it makes sense to run it automatically with the put_schema.py. This is because there may be exceptions owing to dependencies. 
 
 
-### step three - export source data
+### step three - export source data: run\_data_s3
+This proc will 
+
 
 ### step four - export grant information
 
@@ -78,4 +82,4 @@ This step can be processed manually by simply running the file generated in step
 ## scenario B - schema selection
 
 ### step one - get\_each_schema.py
-
+This proc will take a single argument and 

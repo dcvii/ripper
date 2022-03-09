@@ -8,6 +8,8 @@ import numpy as np
 import re
 
 
+
+
 def get_vv_string():
 
     sql = ''
@@ -73,8 +75,9 @@ def run_multi_sql(cset,config):
     print("connection:", conn_info['host'])
     bucket_key = config['bucket_key']
     function = config['function']
+    schema = config['schema']
 
-    fspec = "scripts/failed_"+bucket_key+"_"+function+"_export.sql"
+    fspec = "scripts/failed_"+bucket_key+"_"+schema+"_"+function+"_export.sql"
     with open(fspec,'w') as punt_file:
 
         #multi multi
@@ -219,3 +222,9 @@ def run_migration_table(config):
     return results
 
 
+def is_valid_teva_schema(s):
+
+    v =['fia',  'sfa_history',  'customer_master', 'migration',  'teva_staging',  'reference',  'raw',  'metadata',  'teva_transform', 
+        'archive',  'v_dbd_SRM_20160816',  'payerspine',  'v_dbd_SRM_20160816_SRM_20160816',  'hcos',  'WSMP_ADMIN_ORA',  'integration',  'tableau',  
+        'product',  'reporting',  'mdm',  'CUSTOMER_ORA',  'cleansed',  'datamart',  'sandbox',  'teva_ingestion',  'outbound',  'ingestion_reference',  'veeva',  'public' ]
+    return s in v

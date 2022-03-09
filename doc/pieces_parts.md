@@ -41,6 +41,10 @@ The export tasks push sql commands to the target cluster and run them individual
 - catalog / schema
 - data
 - grants
+- users
+- pools
+- database settings
+- sequences
 
 
 

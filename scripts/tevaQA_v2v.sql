@@ -1,2 +1,0 @@
-CONNECT TO VERTICA teva USER vertica_admin PASSWORD '360teva360' ON '10.5.10.42' , 5433;
-DISCONNECT teva;

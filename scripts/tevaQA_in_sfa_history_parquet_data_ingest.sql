@@ -1,0 +1,14 @@
+COPY sfa_history.s_med_spec FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_med_spec/*' PARQUET;
+COPY sfa_history.s_prod_int FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_prod_int/*' PARQUET;
+COPY sfa_history.s_postn FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_postn/*' PARQUET;
+COPY sfa_history.s_org_ext FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_org_ext/*' PARQUET;
+COPY sfa_history.s_contact_fnx FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_contact_fnx/*' PARQUET;
+COPY sfa_history.s_contact_x FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_contact_x/*' PARQUET;
+COPY sfa_history.s_contact FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_contact/*' PARQUET;
+COPY sfa_history.s_state_lic_ls FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_state_lic_ls/*' PARQUET;
+COPY sfa_history.s_postn_con FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_postn_con/*' PARQUET;
+COPY sfa_history.s_addr_per FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_addr_per/*' PARQUET;
+COPY sfa_history.s_con_addr FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_con_addr/*' PARQUET;
+COPY sfa_history.s_act_prdint FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_act_prdint/*' PARQUET;
+COPY sfa_history.s_evt_act FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_evt_act/*' PARQUET;
+COPY sfa_history.s_act_prod_appl FROM 's3://teva-export-buckt/tevaQA/sfa_history/s_act_prod_appl/*' PARQUET;
