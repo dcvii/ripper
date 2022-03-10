@@ -1,7 +1,35 @@
 # runner guide
+march 2022
+
+--
 
 
 
+
+
+## order of runners
+
+It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate.
+
+
+order  | runner 
+------ | ----
+01  | run_users    
+02  | run_roles
+03  | run_sequences
+04  | run_pools
+05  | run_schema / schemata
+06  | run_database
+07  | run_access
+08  | run_auth
+09  | run_grants   
+10  | run_locations
+11  |
+
+
+
+
+## runners
 
 ### sequences
 
@@ -16,4 +44,9 @@ This is a combination of creation and alteration of sequences. You should expect
 It is presumed that the existence of an `identity_table_name` indicates that a sequence is defined by table ddl. These will therefore not be processed by this runner. 
 
 Therefore it is up to the user to identify those tables which create sequences by their definition and manually synchronize the latest indicies and then write the appropriate alter sequence statement so that new indices will generate properly.
+
+### locations
+
+Before the location runner is kicked off, you should eyeball the `out_locations.sql` file. That is because the locations have to be matched to the target nodes. So this requires a manual editing. 
+
 

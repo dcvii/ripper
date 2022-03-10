@@ -134,7 +134,7 @@ def run_single_file_sql(config):
             print('FAIL')
             logging.error("SQL Query Failure")
             rcnt = 0
-
+            
         else:
             results = cur.fetchall()
             df = pd.DataFrame(results)
@@ -145,7 +145,9 @@ def run_single_file_sql(config):
             logging.info("records: %s", rcnt)
         
     cur.close()
-    return results
+    if rcnt == 0:
+        results = []
+    return results 
 
 
 def run_single_file_commit_sql(config):
