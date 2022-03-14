@@ -14,9 +14,9 @@ It is very important that these runners be executed in the proper order such tha
 
 order  | runner 
 ------ | ----
-01  | run_users    
-02  | run_roles
-03  | run_sequences
+02  | run_users    
+01  | run_roles
+03  | run_schemas
 04  | run_pools
 05  | run_schema / schemata
 06  | run_database

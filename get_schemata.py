@@ -24,10 +24,11 @@ def run_each_v2v(config):
         cur = conn.cursor()
 
         # multiline single sql statement
-        sql = open(config['in_fspec'], 'r')
-        cmd = ''
-        for line in sql:
-            cmd += line
+        # sql = open(config['in_fspec'], 'r')
+        # cmd = ''
+        # for line in sql:
+        #     cmd += line
+        cmd = config['cmd']
         
         try:
             cur.execute(cmd)
@@ -60,10 +61,9 @@ def run_each_v2v(config):
     f.write(config['connection'])
 
     for row in results:
-        schema, table, ct = row
+        item = row[0]
 
-        target = " (directory='"+bucket+"/"+bucket_key+"/"+schema+"/"+table+"')"
-        outstring = "COPY "+schema+"."+table+" FROM VERTICA "+database+"."+schema+"."+table+";"
+        outstring = item
         #print(outstring)
         outstring+="\n"
         f.write(outstring)
@@ -155,8 +155,10 @@ def run_each_getter(config):
     print(config['export_type'],"ingest file written:",fspec)
 
 
+
 lname = 'log/get_each_schema.log'
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
+database = os.getenv('SRC_DB_DATABASE')
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 config = {'in_fspec': 'sql/schemata.sql', 'out_fspec': 'sql/blah.sql',
@@ -178,6 +180,11 @@ for row in result_set:
     h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
              'log': lname, 'export_type': 'parquet', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
     run_each_getter(h)
+
+    # freaking interpolation! so i hard coded the source database
+    # cmd = "select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA ' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = '"+schema+"' order by row_count;\n"
+    # cmd = "select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA '"+database+"||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = '"+schema+"' order by row_count;\n"
+    cmd = "select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA teva.' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = '"+schema+"' order by row_count;\n"
 
     fspec = "scripts/"+bucket_key+"_"+schema+"_out_v2v_"+"schema.sql"
     f = open(fspec,'w')

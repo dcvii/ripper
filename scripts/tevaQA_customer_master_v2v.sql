@@ -1,2 +1,13 @@
-CONNECT TO VERTICA teva USER vertica_admin PASSWORD '360teva360' ON '10.5.10.42' , 5433;
+CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
+COPY customer_master.teva_flag FROM VERTICA teva.customer_master.teva_flag;
+COPY customer_master.customer_flags FROM VERTICA teva.customer_master.customer_flags;
+COPY customer_master.hco_demo FROM VERTICA teva.customer_master.hco_demo;
+COPY customer_master.raw_dea FROM VERTICA teva.customer_master.raw_dea;
+COPY customer_master.hcp_demo FROM VERTICA teva.customer_master.hcp_demo;
+COPY customer_master.hcp_detail FROM VERTICA teva.customer_master.hcp_detail;
+COPY customer_master.tvcmid_merges FROM VERTICA teva.customer_master.tvcmid_merges;
+COPY customer_master.sample_eligibility FROM VERTICA teva.customer_master.sample_eligibility;
+COPY customer_master.ims_flag FROM VERTICA teva.customer_master.ims_flag;
+COPY customer_master.alternate_identifier FROM VERTICA teva.customer_master.alternate_identifier;
+COPY customer_master.tvcmid_xref FROM VERTICA teva.customer_master.tvcmid_xref;
 DISCONNECT teva;

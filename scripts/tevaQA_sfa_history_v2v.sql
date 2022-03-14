@@ -1,2 +1,16 @@
-CONNECT TO VERTICA teva USER vertica_admin PASSWORD '360teva360' ON '10.5.10.42' , 5433;
+CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
+COPY sfa_history.s_med_spec FROM VERTICA teva.sfa_history.s_med_spec;
+COPY sfa_history.s_prod_int FROM VERTICA teva.sfa_history.s_prod_int;
+COPY sfa_history.s_postn FROM VERTICA teva.sfa_history.s_postn;
+COPY sfa_history.s_org_ext FROM VERTICA teva.sfa_history.s_org_ext;
+COPY sfa_history.s_contact_fnx FROM VERTICA teva.sfa_history.s_contact_fnx;
+COPY sfa_history.s_contact_x FROM VERTICA teva.sfa_history.s_contact_x;
+COPY sfa_history.s_contact FROM VERTICA teva.sfa_history.s_contact;
+COPY sfa_history.s_state_lic_ls FROM VERTICA teva.sfa_history.s_state_lic_ls;
+COPY sfa_history.s_postn_con FROM VERTICA teva.sfa_history.s_postn_con;
+COPY sfa_history.s_addr_per FROM VERTICA teva.sfa_history.s_addr_per;
+COPY sfa_history.s_con_addr FROM VERTICA teva.sfa_history.s_con_addr;
+COPY sfa_history.s_act_prdint FROM VERTICA teva.sfa_history.s_act_prdint;
+COPY sfa_history.s_evt_act FROM VERTICA teva.sfa_history.s_evt_act;
+COPY sfa_history.s_act_prod_appl FROM VERTICA teva.sfa_history.s_act_prod_appl;
 DISCONNECT teva;

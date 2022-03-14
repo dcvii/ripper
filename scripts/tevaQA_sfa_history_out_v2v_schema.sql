@@ -1,1 +1,1 @@
-select table_schema, table_name, row_count from migration.source_schemas where table_schema = 'sfa_history' order by 1,3;
+select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA teva.' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = 'sfa_history' order by row_count;

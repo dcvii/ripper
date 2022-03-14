@@ -13,11 +13,11 @@ import re
 def get_vv_string():
 
     sql = ''
-    password = os.getenv("TARGET_DB_PASSWORD")
-    username = os.getenv("TARGET_DB_USERNAME")
-    port = os.getenv("TARGET_DB_PORT")
-    db = os.getenv("TARGET_DB_DATABASE")
-    host = os.getenv("TARGET_DB_HOST")
+    password = os.getenv("SRC_DB_PASSWORD")
+    username = os.getenv("SRC_DB_USERNAME")
+    port = os.getenv("SRC_DB_PORT")
+    db = os.getenv("SRC_DB_DATABASE")
+    host = os.getenv("SRC_DB_HOST")
     #expiration = token['Credentials']['Expiration']
 
     sql = "CONNECT TO VERTICA "+db+" USER "+username+" PASSWORD "+"'"+password+"' ON '"+host+"' , "+port+";\n"
