@@ -1,1 +1,1 @@
-select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA teva.' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = 'payerspine' order by row_count;
+select 'COPY /*'||row_count||'*/ '||table_schema||'.'||table_name||' FROM VERTICA teva.' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = 'payerspine' order by row_count;
