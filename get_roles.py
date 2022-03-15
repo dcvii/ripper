@@ -1,4 +1,4 @@
-import vertica_python
+
 import os
 import sys
 import logging
@@ -6,18 +6,17 @@ import pandas as pd
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql
 
-
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
-lname = 'log/get_'+bucket_key+'_db_settings.log'
+lname = 'log/get_'+bucket_key+'_roles.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-config = {'in_fspec': 'sql/'+bucket_key+'_db_settings.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
+config = {'in_fspec': 'sql/'+bucket_key+'_roles.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
 
 
-fspec = "scripts/"+bucket_key+"_out_db_settings.sql"
+fspec = "scripts/"+bucket_key+"_out_roles.sql"
 f = open(fspec, 'w')
 
 for row in result_set:
@@ -27,6 +26,6 @@ for row in result_set:
     f.write(script)
 
 f.close()
-print("db settings file written:",fspec)
+print("access policy file written:",fspec)
 
 

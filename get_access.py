@@ -6,13 +6,12 @@ import pandas as pd
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql
 
-
-lname = 'log/get_access_policy.log'
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
+lname = 'log/get_'+bucket_key+'access_policy.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-config = {'in_fspec': 'sql/ap.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
+config = {'in_fspec': 'sql/'+bucket_key+'ap.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
 
