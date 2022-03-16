@@ -11,7 +11,7 @@ lname = 'log/get_'+bucket_key+'_roles.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-config = {'in_fspec': 'sql/'+bucket_key+'_roles.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
+config = {'in_fspec': 'sql/roles.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
 
@@ -20,9 +20,11 @@ fspec = "scripts/"+bucket_key+"_out_roles.sql"
 f = open(fspec, 'w')
 
 for row in result_set:
-    cmd = row
+    cmd = row[2]
+    #print(row)
+    print(cmd)
     
-    script = cmd[0]+"\n"
+    script = cmd+"\n"
     f.write(script)
 
 f.close()

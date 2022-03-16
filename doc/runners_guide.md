@@ -49,4 +49,17 @@ Therefore it is up to the user to identify those tables which create sequences b
 
 Before the location runner is kicked off, you should eyeball the `out_locations.sql` file. That is because the locations have to be matched to the target nodes. So this requires a manual editing. 
 
+### roles
+Note that these roles are created from the invisible schema v_internal. The query that lets us get these is:
+```
+SELECT 0 as grant_order,
+       name principal_name,
+       'CREATE ROLE "' || name || '"' ||    ';' AS sql,
+       'NONE' AS object_type,
+       'NONE' AS object_name
+  FROM v_internal.vs_roles vr
+ WHERE NOT vr.predefined_role -- Exclude system roles
+   AND ldapdn = '' ;           -- Limit to NON-LDAP created roles
+```
 
+So it should exclude system and LDAP roles. This may or may not be sufficient and may have to be manually added to as part of the migration. 

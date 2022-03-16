@@ -71,6 +71,7 @@ def run_multi_sql(cset,config):
 
     conn_info = vert_conn(config['conn_type'])
     print('running multi sql')
+    results = []
 
     print("connection:", conn_info['host'])
     bucket_key = config['bucket_key']
@@ -95,7 +96,7 @@ def run_multi_sql(cset,config):
                     logging.error("SQL Query Failure")
                     punt_file.write(cmd)
                     rcnt = 0
-
+                    
                 else:
                     results = cur.fetchall()
                     df = pd.DataFrame(results)
@@ -114,6 +115,7 @@ def run_single_file_sql(config):
  
     conn_info = vert_conn(config['conn_type'])
     print('running single file sql:', config['in_fspec'])
+    results = []
 
     print("connection:", conn_info['host'])
    # bucket_key = config['bucket_key']
@@ -145,8 +147,6 @@ def run_single_file_sql(config):
             logging.info("records: %s", rcnt)
         
     cur.close()
-    if rcnt == 0:
-        results = []
     return results 
 
 
@@ -154,6 +154,7 @@ def run_single_file_commit_sql(config):
  
     conn_info = vert_conn(config['conn_type'])
     print('running single file sql:', config['in_fspec'])
+    results = []
 
     print("connection:", conn_info['host'])
    # bucket_key = config['bucket_key']

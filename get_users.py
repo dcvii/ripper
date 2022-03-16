@@ -7,8 +7,8 @@ import pandas as pd
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql
 
 
-lname = 'log/get_users.log'
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
+lname = 'log/'+bucket_key+'get_users.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 

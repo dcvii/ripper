@@ -5,4 +5,4 @@ SELECT 0 as grant_order,
        'NONE' AS object_name
   FROM v_internal.vs_roles vr
  WHERE NOT vr.predefined_role -- Exclude system roles
-   AND ldapdn = '' ;           -- Limit to NON-LDAP created roles
+   AND ldapdn = ''  ;           -- Limit to NON-LDAP created roles
