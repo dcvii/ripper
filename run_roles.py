@@ -12,7 +12,7 @@ lname = 'log/'+bucket_key+'run_roles.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 cset = chunkify('scripts/'+bucket_key+'_out_roles.sql')
-config = {'in_fspec': 'nil', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'function': 'pools', 'bucket_key': bucket_key, 'schema': 'all_schemas'}
+config = {'in_fspec': 'nil', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'function': 'roles', 'bucket_key': bucket_key, 'schema': 'all_schemas'}
 result_set = run_multi_sql(cset, config)
 
 

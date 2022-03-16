@@ -14,15 +14,16 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 config = {'in_fspec': 'sql/roles.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
+config = {'in_fspec': 'sql/role_grants.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
+result_set += run_single_file_sql(config)
+
 
 
 fspec = "scripts/"+bucket_key+"_out_roles.sql"
 f = open(fspec, 'w')
 
 for row in result_set:
-    cmd = row[2]
-    #print(row)
-    print(cmd)
+    cmd = row[0]
     
     script = cmd+"\n"
     f.write(script)

@@ -1,4 +1,4 @@
--- user ddl
+-- user ddl 
 
 CREATE OR REPLACE VIEW migration.users_only_vw AS
 (

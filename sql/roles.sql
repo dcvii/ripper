@@ -1,8 +1,5 @@
-SELECT 0 as grant_order,
-       name principal_name,
-       'CREATE ROLE "' || name || '"' ||    ';' AS sql,
-       'NONE' AS object_type,
-       'NONE' AS object_name
+SELECT 
+       'CREATE ROLE "' || name || '"' ||    ';' AS sql
   FROM v_internal.vs_roles vr
  WHERE NOT vr.predefined_role -- Exclude system roles
    AND ldapdn = ''  ;           -- Limit to NON-LDAP created roles

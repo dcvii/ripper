@@ -194,6 +194,7 @@ def run_migration_table(config):
  
     conn_info = vert_conn(config['conn_type'])
     print('running migration table:', config['src_table'])
+    results = []
 
     print("connection:", conn_info['host'])
    # bucket_key = config['bucket_key']
