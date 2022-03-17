@@ -12,6 +12,9 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 config = {'in_fspec': 'sql/db_settings.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'schema': 'all_schemas','bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
+config = {'in_fspec': 'sql/ldaplink.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'schema': 'all_schemas','bucket_key': bucket_key}
+result_set += run_single_file_sql(config)
+
 
 
 fspec = "scripts/"+bucket_key+"_out_db_settings.sql"

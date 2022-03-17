@@ -9,17 +9,17 @@ march 2022
 
 ## order of runners
 
-It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate.
+It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate. The order of the grants follows. As the getters can be run in any order, each set of runners will handle a unique set of objects from the source databa
 
 
 order  | runner 
 ------ | ----
-02  | run_users    
-01  | run_roles
+01  | run_roles    
+02  | run_users
 03  | run_schemas
 04  | run_pools
 05  | run_schema / schemata
-06  | run_database
+06  | run_db
 07  | run_access
 08  | run_auth
 09  | run_grants   
@@ -63,3 +63,6 @@ SELECT 0 as grant_order,
 ```
 
 So it should exclude system and LDAP roles. This may or may not be sufficient and may have to be manually added to as part of the migration. 
+
+### database
+This will be a small set of instructions from the `configuration\_parameters` system table. These are not primarily database parameters and the general getter query could potentially be expanded to the entire set. Note that the qualification on the query compares the default to the current setting. Some of the parameters do not have default settings.
