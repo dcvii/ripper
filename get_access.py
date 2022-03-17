@@ -1,4 +1,4 @@
-import vertica_python
+
 import os
 import sys
 import logging
@@ -13,8 +13,6 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 
 config = {'in_fspec': 'sql/'+bucket_key+'ap.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
-
-
 
 fspec = "scripts/"+bucket_key+"_out_access_policy.sql"
 f = open(fspec, 'w')

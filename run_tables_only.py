@@ -6,9 +6,8 @@ import pandas as pd
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql, run_migration_table
 
-
-lname = 'log/migrate_tevaQA_table_only.log'
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
+lname = 'log/migrate_'+bucket_key+'_table_only.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 

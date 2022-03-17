@@ -1,0 +1,1 @@
+ALTER DATABASE DEFAULT SET MergeOutInterval = 300;

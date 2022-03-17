@@ -3,10 +3,8 @@ import os
 import sys
 import logging
 import pandas as pd
-import csv
 import numpy as np
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql, run_migration_table, get_vv_string
-
 
 
 def run_v2v(config):
