@@ -1,1 +1,1 @@
-grant 'alter user '||user_name||'  RESOURCE POOL general;' from users where resource_pool ilike 'general';
+select 'grant usage on RESOURCE POOL small_pool to ' ||user_name|| ';' from users where resource_pool ilike 'general';

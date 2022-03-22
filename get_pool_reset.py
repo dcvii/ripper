@@ -12,8 +12,13 @@ bucket_key = os.getenv('TARGET_BUCKET_KEY')
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-config = {'in_fspec': 'sql/pool_reset.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'bucket_key': bucket_key}
+## WATCH YOUR TARGETS
+
+config = {'in_fspec': 'sql/pool_reset_01.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
+
+config = {'in_fspec': 'sql/pool_reset_02.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'bucket_key': bucket_key}
+result_set += run_single_file_sql(config)
 
 
 
@@ -27,6 +32,6 @@ for row in result_set:
     f.write(script)
 
 f.close()
-print("authentication file written:",fspec)
+print("pool reset file written:",fspec)
 
 
