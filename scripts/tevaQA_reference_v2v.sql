@@ -45,7 +45,7 @@ COPY /*60*/ reference.mb_ref_sales_force_headcnts_01312020 FROM VERTICA teva.ref
 COPY /*60*/ reference.ref_rptng_salesforce_headcnts_05132020 FROM VERTICA teva.reference.ref_rptng_salesforce_headcnts_05132020;
 COPY /*66*/ reference.mb_pcd_sales_force FROM VERTICA teva.reference.mb_pcd_sales_force;
 COPY /*66*/ reference.pcd_sales_force FROM VERTICA teva.reference.pcd_sales_force;
-COPY /*71*/ reference.customer_level_flags_control FROM VERTICA teva.reference.customer_level_flags_control;
+COPY /*73*/ reference.customer_level_flags_control FROM VERTICA teva.reference.customer_level_flags_control;
 COPY /*98*/ reference.CERTIFIED_FIELD_TRAINER_XREF FROM VERTICA teva.reference.CERTIFIED_FIELD_TRAINER_XREF;
 COPY /*104*/ reference.excluded_specialty FROM VERTICA teva.reference.excluded_specialty;
 COPY /*108*/ reference.ddd_subcategory FROM VERTICA teva.reference.ddd_subcategory;

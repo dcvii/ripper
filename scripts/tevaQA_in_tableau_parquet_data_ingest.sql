@@ -1,5 +1,5 @@
-COPY tableau.drop_audience_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_audience_dim/*' PARQUET;
 COPY tableau.drop_device_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_device_dim/*' PARQUET;
+COPY tableau.drop_audience_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_audience_dim/*' PARQUET;
 COPY tableau.drop_cost_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_cost_dim/*' PARQUET;
 COPY tableau.drop_engine_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_engine_dim/*' PARQUET;
 COPY tableau.drop_brand_dim FROM 's3://teva-export-buckt/tevaQA/tableau/drop_brand_dim/*' PARQUET;

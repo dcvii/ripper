@@ -10,6 +10,7 @@ COPY datamart.roster FROM 's3://teva-export-buckt/tevaQA/datamart/roster/*' PARQ
 COPY datamart.oncology_fcr FROM 's3://teva-export-buckt/tevaQA/datamart/oncology_fcr/*' PARQUET;
 COPY datamart.oncology_sales_quotas FROM 's3://teva-export-buckt/tevaQA/datamart/oncology_sales_quotas/*' PARQUET;
 COPY datamart.mm_ram_to_rsm FROM 's3://teva-export-buckt/tevaQA/datamart/mm_ram_to_rsm/*' PARQUET;
+COPY datamart.titration_dosage FROM 's3://teva-export-buckt/tevaQA/datamart/titration_dosage/*' PARQUET;
 COPY datamart.specialty_pharmacy_rx FROM 's3://teva-export-buckt/tevaQA/datamart/specialty_pharmacy_rx/*' PARQUET;
 COPY datamart.oncology_sales_adjustments FROM 's3://teva-export-buckt/tevaQA/datamart/oncology_sales_adjustments/*' PARQUET;
 COPY datamart.product_basket FROM 's3://teva-export-buckt/tevaQA/datamart/product_basket/*' PARQUET;
@@ -23,16 +24,16 @@ COPY datamart.chargeback_demographics FROM 's3://teva-export-buckt/tevaQA/datama
 COPY datamart.ahm_interactions FROM 's3://teva-export-buckt/tevaQA/datamart/ahm_interactions/*' PARQUET;
 COPY datamart.ahm_unnamedparticipant FROM 's3://teva-export-buckt/tevaQA/datamart/ahm_unnamedparticipant/*' PARQUET;
 COPY datamart.rems_prescriber FROM 's3://teva-export-buckt/tevaQA/datamart/rems_prescriber/*' PARQUET;
+COPY datamart.plantrak_workbook FROM 's3://teva-export-buckt/tevaQA/datamart/plantrak_workbook/*' PARQUET;
 COPY datamart.time_off_territory FROM 's3://teva-export-buckt/tevaQA/datamart/time_off_territory/*' PARQUET;
 COPY datamart.event FROM 's3://teva-export-buckt/tevaQA/datamart/event/*' PARQUET;
-COPY datamart.direct_sales FROM 's3://teva-export-buckt/tevaQA/datamart/direct_sales/*' PARQUET;
-COPY datamart.sfa_survey FROM 's3://teva-export-buckt/tevaQA/datamart/sfa_survey/*' PARQUET;
-COPY datamart.plantrak_workbook FROM 's3://teva-export-buckt/tevaQA/datamart/plantrak_workbook/*' PARQUET;
 COPY datamart.select_brand_sales FROM 's3://teva-export-buckt/tevaQA/datamart/select_brand_sales/*' PARQUET;
 COPY datamart.dx_claims FROM 's3://teva-export-buckt/tevaQA/datamart/dx_claims/*' PARQUET;
 COPY datamart.rems_pharmacy FROM 's3://teva-export-buckt/tevaQA/datamart/rems_pharmacy/*' PARQUET;
+COPY datamart.direct_sales FROM 's3://teva-export-buckt/tevaQA/datamart/direct_sales/*' PARQUET;
 COPY datamart.call_plan FROM 's3://teva-export-buckt/tevaQA/datamart/call_plan/*' PARQUET;
 COPY datamart.ahm_expense FROM 's3://teva-export-buckt/tevaQA/datamart/ahm_expense/*' PARQUET;
+COPY datamart.sfa_survey FROM 's3://teva-export-buckt/tevaQA/datamart/sfa_survey/*' PARQUET;
 COPY datamart.event_expense FROM 's3://teva-export-buckt/tevaQA/datamart/event_expense/*' PARQUET;
 COPY datamart.event_attendee_count FROM 's3://teva-export-buckt/tevaQA/datamart/event_attendee_count/*' PARQUET;
 COPY datamart.chargebacks FROM 's3://teva-export-buckt/tevaQA/datamart/chargebacks/*' PARQUET;
@@ -70,7 +71,6 @@ COPY datamart.digital_sales_aid_analysis FROM 's3://teva-export-buckt/tevaQA/dat
 COPY datamart.customer_hcp_demographics FROM 's3://teva-export-buckt/tevaQA/datamart/customer_hcp_demographics/*' PARQUET;
 COPY datamart.alternate_alignments FROM 's3://teva-export-buckt/tevaQA/datamart/alternate_alignments/*' PARQUET;
 COPY datamart.specialty_pharmacy_shipment FROM 's3://teva-export-buckt/tevaQA/datamart/specialty_pharmacy_shipment/*' PARQUET;
-COPY datamart.sfa_call FROM 's3://teva-export-buckt/tevaQA/datamart/sfa_call/*' PARQUET;
 COPY datamart.affiliations FROM 's3://teva-export-buckt/tevaQA/datamart/affiliations/*' PARQUET;
 COPY datamart.xpd_demographics_respiratory FROM 's3://teva-export-buckt/tevaQA/datamart/xpd_demographics_respiratory/*' PARQUET;
 COPY datamart.copay FROM 's3://teva-export-buckt/tevaQA/datamart/copay/*' PARQUET;

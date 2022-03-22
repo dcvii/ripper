@@ -1,6 +1,6 @@
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_aco_type') AS SELECT * FROM hcos.ims_hcos_aco_type;
-EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_type') AS SELECT * FROM hcos.ims_hcos_identifier_type;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_bed_cluster_type') AS SELECT * FROM hcos.ims_hcos_bed_cluster_type;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_type') AS SELECT * FROM hcos.ims_hcos_identifier_type;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_affiliation_type') AS SELECT * FROM hcos.ims_hcos_affiliation_type;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_bed_type') AS SELECT * FROM hcos.ims_hcos_bed_type;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_term_type') AS SELECT * FROM hcos.ims_hcos_identifier_term_type;

@@ -1,6 +1,6 @@
 COPY hcos.ims_hcos_aco_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_aco_type/*' PARQUET;
-COPY hcos.ims_hcos_identifier_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_type/*' PARQUET;
 COPY hcos.ims_hcos_bed_cluster_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_bed_cluster_type/*' PARQUET;
+COPY hcos.ims_hcos_identifier_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_type/*' PARQUET;
 COPY hcos.ims_hcos_affiliation_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_affiliation_type/*' PARQUET;
 COPY hcos.ims_hcos_bed_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_bed_type/*' PARQUET;
 COPY hcos.ims_hcos_identifier_term_type FROM 's3://teva-export-buckt/tevaQA/hcos/ims_hcos_identifier_term_type/*' PARQUET;

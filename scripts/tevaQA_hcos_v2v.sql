@@ -1,7 +1,7 @@
 CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
 COPY /*7*/ hcos.ims_hcos_aco_type FROM VERTICA teva.hcos.ims_hcos_aco_type;
-COPY /*8*/ hcos.ims_hcos_identifier_type FROM VERTICA teva.hcos.ims_hcos_identifier_type;
 COPY /*8*/ hcos.ims_hcos_bed_cluster_type FROM VERTICA teva.hcos.ims_hcos_bed_cluster_type;
+COPY /*8*/ hcos.ims_hcos_identifier_type FROM VERTICA teva.hcos.ims_hcos_identifier_type;
 COPY /*8*/ hcos.ims_hcos_affiliation_type FROM VERTICA teva.hcos.ims_hcos_affiliation_type;
 COPY /*22*/ hcos.ims_hcos_bed_type FROM VERTICA teva.hcos.ims_hcos_bed_type;
 COPY /*26*/ hcos.ims_hcos_identifier_term_type FROM VERTICA teva.hcos.ims_hcos_identifier_term_type;

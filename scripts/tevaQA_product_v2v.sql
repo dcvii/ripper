@@ -1,7 +1,7 @@
 CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
-COPY /*32*/ product.source FROM VERTICA teva.product.source;
-COPY /*163*/ product.basket_price FROM VERTICA teva.product.basket_price;
+COPY /*64*/ product.source FROM VERTICA teva.product.source;
 COPY /*253*/ product.normalization_factor FROM VERTICA teva.product.normalization_factor;
+COPY /*326*/ product.basket_price FROM VERTICA teva.product.basket_price;
 COPY /*374*/ product.promotional_item FROM VERTICA teva.product.promotional_item;
 COPY /*7015*/ product.basket_item FROM VERTICA teva.product.basket_item;
 COPY /*10233*/ product.basket FROM VERTICA teva.product.basket;

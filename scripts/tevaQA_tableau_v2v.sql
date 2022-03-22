@@ -1,6 +1,6 @@
 CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
-COPY /*3*/ tableau.drop_audience_dim FROM VERTICA teva.tableau.drop_audience_dim;
 COPY /*6*/ tableau.drop_device_dim FROM VERTICA teva.tableau.drop_device_dim;
+COPY /*6*/ tableau.drop_audience_dim FROM VERTICA teva.tableau.drop_audience_dim;
 COPY /*6*/ tableau.drop_cost_dim FROM VERTICA teva.tableau.drop_cost_dim;
 COPY /*18*/ tableau.drop_engine_dim FROM VERTICA teva.tableau.drop_engine_dim;
 COPY /*26*/ tableau.drop_brand_dim FROM VERTICA teva.tableau.drop_brand_dim;

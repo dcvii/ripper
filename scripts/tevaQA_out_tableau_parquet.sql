@@ -1,5 +1,5 @@
-EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_audience_dim') AS SELECT * FROM tableau.drop_audience_dim;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_device_dim') AS SELECT * FROM tableau.drop_device_dim;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_audience_dim') AS SELECT * FROM tableau.drop_audience_dim;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_cost_dim') AS SELECT * FROM tableau.drop_cost_dim;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_engine_dim') AS SELECT * FROM tableau.drop_engine_dim;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA/tableau/drop_brand_dim') AS SELECT * FROM tableau.drop_brand_dim;

@@ -21,6 +21,7 @@ COPY reporting.sp_monthly_geography_summary FROM 's3://teva-export-buckt/tevaQA/
 COPY reporting.quota FROM 's3://teva-export-buckt/tevaQA/reporting/quota/*' PARQUET;
 COPY reporting.sp_weekly_geography_summary FROM 's3://teva-export-buckt/tevaQA/reporting/sp_weekly_geography_summary/*' PARQUET;
 COPY reporting.specialty_mapping FROM 's3://teva-export-buckt/tevaQA/reporting/specialty_mapping/*' PARQUET;
+COPY reporting.austedo_titration_dosage FROM 's3://teva-export-buckt/tevaQA/reporting/austedo_titration_dosage/*' PARQUET;
 COPY reporting.monthly_workdays FROM 's3://teva-export-buckt/tevaQA/reporting/monthly_workdays/*' PARQUET;
 COPY reporting.par_calls FROM 's3://teva-export-buckt/tevaQA/reporting/par_calls/*' PARQUET;
 COPY reporting.teva_plantrak_workbook FROM 's3://teva-export-buckt/tevaQA/reporting/teva_plantrak_workbook/*' PARQUET;
@@ -36,8 +37,10 @@ COPY reporting.activity_plan FROM 's3://teva-export-buckt/tevaQA/reporting/activ
 COPY reporting.tmp_call_key_messages FROM 's3://teva-export-buckt/tevaQA/reporting/tmp_call_key_messages/*' PARQUET;
 COPY reporting.user_access_table_transaction FROM 's3://teva-export-buckt/tevaQA/reporting/user_access_table_transaction/*' PARQUET;
 COPY reporting.user_access_table FROM 's3://teva-export-buckt/tevaQA/reporting/user_access_table/*' PARQUET;
+COPY reporting.tp_anti_psych_weekly_new_prescriber FROM 's3://teva-export-buckt/tevaQA/reporting/tp_anti_psych_weekly_new_prescriber/*' PARQUET;
 COPY reporting.call_key_messages_hist FROM 's3://teva-export-buckt/tevaQA/reporting/call_key_messages_hist/*' PARQUET;
 COPY reporting.sp_weekly_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/sp_weekly_prescriber_summary/*' PARQUET;
+COPY reporting.par_rnf FROM 's3://teva-export-buckt/tevaQA/reporting/par_rnf/*' PARQUET;
 COPY reporting.ts_weekly_geography_summary FROM 's3://teva-export-buckt/tevaQA/reporting/ts_weekly_geography_summary/*' PARQUET;
 COPY reporting.sp_monthly_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/sp_monthly_prescriber_summary/*' PARQUET;
 COPY reporting.LAI_monthly_geography_summary FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_monthly_geography_summary/*' PARQUET;
@@ -89,7 +92,6 @@ COPY reporting.LAI_weekly_payer_prescriber_summary FROM 's3://teva-export-buckt/
 COPY reporting.weekly_prescriber_sales FROM 's3://teva-export-buckt/tevaQA/reporting/weekly_prescriber_sales/*' PARQUET;
 COPY reporting.LAI_monthly_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_monthly_prescriber_summary/*' PARQUET;
 COPY reporting.LAI_weekly_prescriber_sales FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_weekly_prescriber_sales/*' PARQUET;
-COPY reporting.par_rnf FROM 's3://teva-export-buckt/tevaQA/reporting/par_rnf/*' PARQUET;
 COPY reporting.ts_pre_call_summary FROM 's3://teva-export-buckt/tevaQA/reporting/ts_pre_call_summary/*' PARQUET;
 COPY reporting.LAI_weekly_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_weekly_prescriber_summary/*' PARQUET;
 COPY reporting.LAI_monthly_payer_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_monthly_payer_prescriber_summary/*' PARQUET;
@@ -105,10 +107,13 @@ COPY reporting.tn_monthly_payer_prescriber_summary FROM 's3://teva-export-buckt/
 COPY reporting.LAI_monthly_prescriber_sales_summary FROM 's3://teva-export-buckt/tevaQA/reporting/LAI_monthly_prescriber_sales_summary/*' PARQUET;
 COPY reporting.digihaler_reverse_geo_payer FROM 's3://teva-export-buckt/tevaQA/reporting/digihaler_reverse_geo_payer/*' PARQUET;
 COPY reporting.rs_pre_call_summary FROM 's3://teva-export-buckt/tevaQA/reporting/rs_pre_call_summary/*' PARQUET;
+COPY reporting.tp_anti_psych_weekly_prescriber_sales FROM 's3://teva-export-buckt/tevaQA/reporting/tp_anti_psych_weekly_prescriber_sales/*' PARQUET;
+COPY reporting.tp_anti_psych_weekly_payer_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/tp_anti_psych_weekly_payer_prescriber_summary/*' PARQUET;
 COPY reporting.reverse_geo_payer FROM 's3://teva-export-buckt/tevaQA/reporting/reverse_geo_payer/*' PARQUET;
 COPY reporting.monthly_prescriber_sales FROM 's3://teva-export-buckt/tevaQA/reporting/monthly_prescriber_sales/*' PARQUET;
 COPY reporting.rs_pre_call_summary_tmp FROM 's3://teva-export-buckt/tevaQA/reporting/rs_pre_call_summary_tmp/*' PARQUET;
 COPY reporting.weekly_prescriber_sales_summary FROM 's3://teva-export-buckt/tevaQA/reporting/weekly_prescriber_sales_summary/*' PARQUET;
+COPY reporting.tp_anti_psych_weekly_prescriber_sales_summary FROM 's3://teva-export-buckt/tevaQA/reporting/tp_anti_psych_weekly_prescriber_sales_summary/*' PARQUET;
 COPY reporting.rs_monthly_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/rs_monthly_prescriber_summary/*' PARQUET;
 COPY reporting.rs_mnthly_pyr_pres_summ FROM 's3://teva-export-buckt/tevaQA/reporting/rs_mnthly_pyr_pres_summ/*' PARQUET;
 COPY reporting.rs_monthly_payer_prescriber_summary FROM 's3://teva-export-buckt/tevaQA/reporting/rs_monthly_payer_prescriber_summary/*' PARQUET;

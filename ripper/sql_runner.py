@@ -1,6 +1,5 @@
 import vertica_python
 import os
-import sys
 import logging
 import pandas as pd
 import csv
@@ -33,6 +32,25 @@ def vert_conn(cfg):
         'database': os.getenv("TARGET_DB_DATABASE"),
         'log_level': logging.INFO,
         'log_path': ''}
+    elif cfg == 'tgt_commit':
+        conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
+        'port': os.getenv("TARGET_DB_PORT"), 
+        'user': os.getenv("TARGET_DB_USERNAME"), 
+        'password': os.getenv("TARGET_DB_PASSWORD"), 
+        'database': os.getenv("TARGET_DB_DATABASE"),
+        'log_level': logging.INFO,
+        'autocommit': True,
+        'log_path': ''}
+    elif cfg == 'src_commit':
+        conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
+        'log_level': logging.INFO,
+        'autocommit': True,
+        'log_path': ''}
+
     else:
         conn_info = {'host': os.getenv("SRC_DB_HOST"), 
         'port': os.getenv("SRC_DB_PORT"), 
@@ -109,6 +127,8 @@ def run_multi_sql(cset,config):
         cur.close()
     punt_file.close()
     return results
+
+
 
 
 def run_single_file_sql(config):
