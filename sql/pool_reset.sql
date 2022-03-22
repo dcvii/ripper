@@ -1,0 +1,1 @@
+select 'alter user '||user_name||'  RESOURCE POOL general;' from users where resource_pool ilike 'general';
