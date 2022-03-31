@@ -2,7 +2,7 @@
 import os
 import sys
 import logging
-import pandas as pd
+
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql
 
