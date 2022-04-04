@@ -73,6 +73,69 @@ def run_each_v2v(config):
     f.close()
     print("vertica to vertica export file written: ",fspec)
 
+def run_each_ddl(config):
+ 
+
+    conn_info = {'host': os.getenv("SRC_DB_HOST"), 
+        'port': os.getenv("SRC_DB_PORT"), 
+        'user': os.getenv("SRC_DB_USERNAME"), 
+        'password': os.getenv("SRC_DB_PASSWORD"), 
+        'database': os.getenv("SRC_DB_DATABASE"),
+        'log_level': logging.INFO,
+        'log_path': ''}
+
+    print("connection:", conn_info['host'])
+
+    with vertica_python.connect(**conn_info) as conn:
+        cur = conn.cursor()
+
+        # multiline single sql statement
+        # sql = open(config['in_fspec'], 'r')
+        # cmd = ''
+        # for line in sql:
+        #     cmd += line
+        cmd = config['cmd']
+        
+        try:
+            cur.execute(cmd)
+        except:
+            print('FAIL')
+            logging.error("SQL Query Failure")
+            rcnt = 0
+
+        else:
+            results = cur.fetchall()
+            df = pd.DataFrame(results)
+            rcnt = df.shape[0]
+            
+        finally:
+            logging.info('-----')
+            logging.info("records: %s", rcnt)
+        
+    cur.close()
+
+    ## create script for running directly
+
+    bucket = os.getenv("SRC_S3_BUCKET")
+    bucket_key = os.getenv("SRC_BUCKET_KEY")
+    database = os.getenv("SRC_DB_DATABASE")
+    function = config['function']
+    # what are the results.
+    fspec = "scripts/"+bucket_key+"_"+function+"_ddl.sql"
+    f = open(fspec, 'w')
+
+    for row in results:
+        item = row[0]
+
+        outstring = item
+        #print(outstring)
+        outstring+="\n"
+        f.write(outstring)
+
+    f.close()
+    print("ddl export file written: ",fspec)
+
+
 
 def run_each_getter(config):
  
@@ -180,6 +243,18 @@ for row in result_set:
     h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
              'log': lname, 'export_type': 'parquet', 'conn_type': 'src', 'function': schema, 'bucket_key': bucket_key}
     run_each_getter(h)
+
+
+    cmd = "select export_objects('','"+schema+"');\n"
+    
+    fspec = "scripts/"+bucket_key+"_"+schema+"_out_ddl_"+"schema.sql"
+    f = open(fspec,'w')
+    f.write(cmd)
+    f.close
+
+    h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
+             'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'connection': get_vv_string(),'function': schema, 'bucket_key': bucket_key}
+    run_each_ddl(h)
 
     # freaking interpolation! so i hard coded the source database
     # cmd = "select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA ' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = '"+schema+"' order by row_count;\n"
