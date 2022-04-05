@@ -16,11 +16,12 @@ order  | runner
 ------ | ----
 01  | run_roles    
 02  | run_users
-03  | run_schemas
-04  | run_pools
-05  | run_schema / schemata
-06  | run_db
-07  | run_access
+03  | run_ddl
+04  | run_schemas
+05  | run_pools
+06  | run_schema / schemata
+07  | run_db
+08  | run_access
 08  | run_auth
 10  | run_locations
 11  |
