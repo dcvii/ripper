@@ -11,12 +11,12 @@ schema = sys.argv[1] or None
 if is_valid_teva_schema(schema):
 
     bucket_key = os.getenv('TARGET_BUCKET_KEY')
-    lname = 'log/migrate_'+bucket_key+'_'+schema+'.log'
+    lname = 'log/migrate_'+bucket_key+'_'+schema+'_ddl.log'
     bucket_key = os.getenv('TARGET_BUCKET_KEY')
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-    cmd_set = chunkify('scripts/'+bucket_key+'_out_'+schema+'_objects.sql')
+    cmd_set = chunkify('scripts/'+bucket_key+'_out_'+schema+'_ddl.sql')
     config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'parquet', 'schema': schema,
          'conn_type': 'tgt', 'function': 'ddl', 'bucket_key': bucket_key}
     result_set = run_multi_sql(cmd_set,config)
