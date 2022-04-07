@@ -62,6 +62,38 @@ def vert_conn(cfg):
     return conn_info
 
 
+def chunk_filter(config):
+    print('filtering chunk command set')
+    ct = 0
+    with open(config['fname']) as f:
+        chars = f.read()
+        chunks = []
+        cmd = ''
+        flagged = False
+
+        for this_char in chars:
+            cmd += this_char
+            # print('checking:', cmd)
+            m0 = re.search(r';',this_char)
+            m1 = re.search(config['filter'],cmd)
+            if m1 != None:
+                flagged = True
+
+            if m0 != None:
+                if not flagged:                         
+                    chunks.append(cmd)
+                    ct += 1
+                    cmd = ''
+                else:
+                    # print('chunk rejected')
+                    cmd = ''
+                    flagged = False
+           
+        print(ct,'legit commands found:',config['fname'])
+        f.close()
+    return chunks
+
+
 def chunkify(fname):
     print('chunking multi sql into command set')
     ct = 0
@@ -149,7 +181,7 @@ def run_single_file_sql(config):
         cmd = ''
         for line in sql:
             cmd += line
-        
+
         try:
             cur.execute(cmd)
         except:
