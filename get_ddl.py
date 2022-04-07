@@ -43,13 +43,13 @@ if is_valid_teva_schema(schema):
     print("raw ddl export file written: ",fspec)
 
    # this returns a large set of characters not lines
-    config = {'result_set': result_set, 'filter': 'PROJECTION', 'fname': fspec}
+    config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN', 'fname': fspec}
     filtered_results = chunk_filter(config)
 
 
     fspec = "scripts/"+bucket_key+"_"+schema+"_out_ddl.sql"
     f = open(fspec, 'w')
-    f.write(''.join(filtered_results))
+    f.write(''.join(filtered_results)) #wonky conversion to a string
     f.close()
     print("filtered ddl export file written: ",fspec)
 
