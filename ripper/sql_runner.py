@@ -30,7 +30,7 @@ def vert_conn(cfg):
         'user': os.getenv("TARGET_DB_USERNAME"), 
         'password': os.getenv("TARGET_DB_PASSWORD"), 
         'database': os.getenv("TARGET_DB_DATABASE"),
-        'log_level': logging.INFO,
+        'log_level': logging.WARNING,
         'log_path': ''}
     elif cfg == 'tgt_commit':
         conn_info = {'host': os.getenv("TARGET_DB_HOST"), 
@@ -38,7 +38,7 @@ def vert_conn(cfg):
         'user': os.getenv("TARGET_DB_USERNAME"), 
         'password': os.getenv("TARGET_DB_PASSWORD"), 
         'database': os.getenv("TARGET_DB_DATABASE"),
-        'log_level': logging.INFO,
+        'log_level': logging.WARNING,
         'autocommit': True,
         'log_path': ''}
     elif cfg == 'src_commit':
@@ -47,7 +47,7 @@ def vert_conn(cfg):
         'user': os.getenv("SRC_DB_USERNAME"), 
         'password': os.getenv("SRC_DB_PASSWORD"), 
         'database': os.getenv("SRC_DB_DATABASE"),
-        'log_level': logging.INFO,
+        'log_level': logging.WARNING,
         'autocommit': True,
         'log_path': ''}
 
@@ -57,7 +57,7 @@ def vert_conn(cfg):
         'user': os.getenv("SRC_DB_USERNAME"), 
         'password': os.getenv("SRC_DB_PASSWORD"), 
         'database': os.getenv("SRC_DB_DATABASE"),
-        'log_level': logging.INFO,
+        'log_level': logging.WARNING,
         'log_path': ''}
     return conn_info
 
