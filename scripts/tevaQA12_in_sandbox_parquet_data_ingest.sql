@@ -5,9 +5,9 @@ COPY sandbox.has_pa_mapping FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_pa
 COPY sandbox.iqvia_plans_discard_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/iqvia_plans_discard_v01/*' PARQUET;
 COPY sandbox.has_st_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_st_mapping_v1/*' PARQUET;
 COPY sandbox.ddd_exc_or FROM 's3://teva-export-buckt/tevaQA12/sandbox/ddd_exc_or/*' PARQUET;
-COPY sandbox.has_st_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_st_mapping_v01/*' PARQUET;
-COPY sandbox.has_pa_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_pa_mapping_v1/*' PARQUET;
 COPY sandbox.has_st_mapping FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_st_mapping/*' PARQUET;
+COPY sandbox.has_pa_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_pa_mapping_v1/*' PARQUET;
+COPY sandbox.has_st_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_st_mapping_v01/*' PARQUET;
 COPY sandbox.has_pa_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/has_pa_mapping_v01/*' PARQUET;
 COPY sandbox.ftf_override_plan_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_override_plan_v1/*' PARQUET;
 COPY sandbox.botox_step_restriction_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/botox_step_restriction_v01/*' PARQUET;
@@ -27,9 +27,9 @@ COPY sandbox.ftf_override_plan_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox
 COPY sandbox.sessions FROM 's3://teva-export-buckt/tevaQA12/sandbox/sessions/*' PARQUET;
 COPY sandbox.M_D_PRODUCTS FROM 's3://teva-export-buckt/tevaQA12/sandbox/M_D_PRODUCTS/*' PARQUET;
 COPY sandbox.tier_cat_description_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/tier_cat_description_mapping_v01/*' PARQUET;
-COPY sandbox.tier_cat_description_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/tier_cat_description_mapping_v1/*' PARQUET;
-COPY sandbox.coverage_cat_description_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/coverage_cat_description_mapping_v01/*' PARQUET;
 COPY sandbox.ftf_pbm_functions_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_pbm_functions_v01/*' PARQUET;
+COPY sandbox.coverage_cat_description_mapping_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/coverage_cat_description_mapping_v01/*' PARQUET;
+COPY sandbox.tier_cat_description_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/tier_cat_description_mapping_v1/*' PARQUET;
 COPY sandbox.coverage_cat_description_mapping_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/coverage_cat_description_mapping_v1/*' PARQUET;
 COPY sandbox.tier_cat_description_mapping_v01_tmp FROM 's3://teva-export-buckt/tevaQA12/sandbox/tier_cat_description_mapping_v01_tmp/*' PARQUET;
 COPY sandbox.ftf_pbm_functions_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_pbm_functions_v1/*' PARQUET;
@@ -65,8 +65,8 @@ COPY sandbox.coverage_category_derivation_config_v01 FROM 's3://teva-export-buck
 COPY sandbox.copay_tier_derivation_config_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/copay_tier_derivation_config_v1/*' PARQUET;
 COPY sandbox.copay_tier_derivation_config_v01_tmp FROM 's3://teva-export-buckt/tevaQA12/sandbox/copay_tier_derivation_config_v01_tmp/*' PARQUET;
 COPY sandbox.past_mapping_changes FROM 's3://teva-export-buckt/tevaQA12/sandbox/past_mapping_changes/*' PARQUET;
-COPY sandbox.step_restriction_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/step_restriction_v01/*' PARQUET;
 COPY sandbox.copay_tier_derivation_config_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/copay_tier_derivation_config_v01/*' PARQUET;
+COPY sandbox.step_restriction_v01 FROM 's3://teva-export-buckt/tevaQA12/sandbox/step_restriction_v01/*' PARQUET;
 COPY sandbox.ONC_Basket_IDs_for_QA FROM 's3://teva-export-buckt/tevaQA12/sandbox/ONC_Basket_IDs_for_QA/*' PARQUET;
 COPY sandbox.step_restriction_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/step_restriction_v1/*' PARQUET;
 COPY sandbox.ref_rptng_mrkts FROM 's3://teva-export-buckt/tevaQA12/sandbox/ref_rptng_mrkts/*' PARQUET;
@@ -297,8 +297,8 @@ COPY sandbox.ajovy_cust_level_flags FROM 's3://teva-export-buckt/tevaQA12/sandbo
 COPY sandbox.key_ctl_account_summary_cdw_v1 FROM 's3://teva-export-buckt/tevaQA12/sandbox/key_ctl_account_summary_cdw_v1/*' PARQUET;
 COPY sandbox.tt3 FROM 's3://teva-export-buckt/tevaQA12/sandbox/tt3/*' PARQUET;
 COPY sandbox.iqvia_plancode_fid_xref FROM 's3://teva-export-buckt/tevaQA12/sandbox/iqvia_plancode_fid_xref/*' PARQUET;
-COPY sandbox.ftf_iqvia_xref_v2 FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_iqvia_xref_v2/*' PARQUET;
 COPY sandbox.ftf_iqvia_xref FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_iqvia_xref/*' PARQUET;
+COPY sandbox.ftf_iqvia_xref_v2 FROM 's3://teva-export-buckt/tevaQA12/sandbox/ftf_iqvia_xref_v2/*' PARQUET;
 COPY sandbox.payer_spine25_detailed_teva_brands FROM 's3://teva-export-buckt/tevaQA12/sandbox/payer_spine25_detailed_teva_brands/*' PARQUET;
 COPY sandbox.access_monitor_s121 FROM 's3://teva-export-buckt/tevaQA12/sandbox/access_monitor_s121/*' PARQUET;
 COPY sandbox.raw_ftf_pbms_cdw FROM 's3://teva-export-buckt/tevaQA12/sandbox/raw_ftf_pbms_cdw/*' PARQUET;

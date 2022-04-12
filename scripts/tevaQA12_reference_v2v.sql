@@ -4,8 +4,8 @@ COPY /*1*/ reference.reporting_non_target_brands FROM VERTICA teva.reference.rep
 COPY /*3*/ reference.ims_xpd_mapping FROM VERTICA teva.reference.ims_xpd_mapping;
 COPY /*5*/ reference.xpo_sales_category FROM VERTICA teva.reference.xpo_sales_category;
 COPY /*6*/ reference.ddd_category FROM VERTICA teva.reference.ddd_category;
-COPY /*7*/ reference.sales_force_product_metrics FROM VERTICA teva.reference.sales_force_product_metrics;
 COPY /*7*/ reference.ics_laba_saba FROM VERTICA teva.reference.ics_laba_saba;
+COPY /*7*/ reference.sales_force_product_metrics FROM VERTICA teva.reference.sales_force_product_metrics;
 COPY /*7*/ reference.zzz_business_unit FROM VERTICA teva.reference.zzz_business_unit;
 COPY /*8*/ reference.how_executed FROM VERTICA teva.reference.how_executed;
 COPY /*8*/ reference.ims_report_dol_qty_mapping FROM VERTICA teva.reference.ims_report_dol_qty_mapping;

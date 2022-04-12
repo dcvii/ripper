@@ -3,8 +3,8 @@ COPY reference.reporting_non_target_brands FROM 's3://teva-export-buckt/tevaQA12
 COPY reference.ims_xpd_mapping FROM 's3://teva-export-buckt/tevaQA12/reference/ims_xpd_mapping/*' PARQUET;
 COPY reference.xpo_sales_category FROM 's3://teva-export-buckt/tevaQA12/reference/xpo_sales_category/*' PARQUET;
 COPY reference.ddd_category FROM 's3://teva-export-buckt/tevaQA12/reference/ddd_category/*' PARQUET;
-COPY reference.sales_force_product_metrics FROM 's3://teva-export-buckt/tevaQA12/reference/sales_force_product_metrics/*' PARQUET;
 COPY reference.ics_laba_saba FROM 's3://teva-export-buckt/tevaQA12/reference/ics_laba_saba/*' PARQUET;
+COPY reference.sales_force_product_metrics FROM 's3://teva-export-buckt/tevaQA12/reference/sales_force_product_metrics/*' PARQUET;
 COPY reference.zzz_business_unit FROM 's3://teva-export-buckt/tevaQA12/reference/zzz_business_unit/*' PARQUET;
 COPY reference.how_executed FROM 's3://teva-export-buckt/tevaQA12/reference/how_executed/*' PARQUET;
 COPY reference.ims_report_dol_qty_mapping FROM 's3://teva-export-buckt/tevaQA12/reference/ims_report_dol_qty_mapping/*' PARQUET;
