@@ -24,21 +24,21 @@ config = {'in_fspec': 'sql/user_ddl.sql', 'log': lname, 'export_type': 'csv', 'c
 result_set = run_single_file_sql(config)
 
 
-config = {'in_fspec': 'sql/odd_parms_03.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd03', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_03.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd03', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_04.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd04', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_04.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd04', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_05.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd05', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_05.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd05', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_06.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd06', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_06.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd06', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_07.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd07', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_07.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd07', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 
-config = {'in_fspec': 'sql/odd_parms_08.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd08', 'bucket_key': bucket_key}
-result_set = run_single_file_sql(config)
+# config = {'in_fspec': 'sql/odd_parms_08.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src_commit','schema': 'all_schemas','function':'odd08', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
 

@@ -283,6 +283,7 @@ def is_valid_schema(item):
     config = {'in_fspec': 'sql/valids.sql', 'conn_type': 'src', 'bucket_key': 'bucket_key'}
     result_set = run_single_file_sql(config)
 
+    print(result_set)
     if [item] in result_set:
         print(item, "is valid schema")
         return True

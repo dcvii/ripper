@@ -1,2 +1,0 @@
-ALTER DATABASE DEFAULT SET DefaultIdleSessionTimeout = 3600 secs;
-ALTER DATABASE DEFAULT SET MergeOutInterval = 300;
