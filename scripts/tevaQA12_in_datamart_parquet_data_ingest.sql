@@ -55,6 +55,7 @@ COPY datamart.veeva_sync FROM 's3://teva-export-buckt/tevaQA12/datamart/veeva_sy
 COPY datamart.formulary_restrictions FROM 's3://teva-export-buckt/tevaQA12/datamart/formulary_restrictions/*' PARQUET;
 COPY datamart.sfa_sample FROM 's3://teva-export-buckt/tevaQA12/datamart/sfa_sample/*' PARQUET;
 COPY datamart.xpd_switch_details_antimigraine FROM 's3://teva-export-buckt/tevaQA12/datamart/xpd_switch_details_antimigraine/*' PARQUET;
+COPY datamart.sfa_affiliations FROM 's3://teva-export-buckt/tevaQA12/datamart/sfa_affiliations/*' PARQUET;
 COPY datamart.ddd_adhoc FROM 's3://teva-export-buckt/tevaQA12/datamart/ddd_adhoc/*' PARQUET;
 COPY datamart.psr_enrollment FROM 's3://teva-export-buckt/tevaQA12/datamart/psr_enrollment/*' PARQUET;
 COPY datamart.touchpoint_presentation FROM 's3://teva-export-buckt/tevaQA12/datamart/touchpoint_presentation/*' PARQUET;

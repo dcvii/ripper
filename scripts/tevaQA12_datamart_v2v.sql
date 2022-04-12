@@ -56,6 +56,7 @@ COPY /*400470*/ datamart.veeva_sync FROM VERTICA teva.datamart.veeva_sync;
 COPY /*441117*/ datamart.formulary_restrictions FROM VERTICA teva.datamart.formulary_restrictions;
 COPY /*459553*/ datamart.sfa_sample FROM VERTICA teva.datamart.sfa_sample;
 COPY /*586928*/ datamart.xpd_switch_details_antimigraine FROM VERTICA teva.datamart.xpd_switch_details_antimigraine;
+COPY /*629071*/ datamart.sfa_affiliations FROM VERTICA teva.datamart.sfa_affiliations;
 COPY /*721976*/ datamart.ddd_adhoc FROM VERTICA teva.datamart.ddd_adhoc;
 COPY /*735261*/ datamart.psr_enrollment FROM VERTICA teva.datamart.psr_enrollment;
 COPY /*763567*/ datamart.touchpoint_presentation FROM VERTICA teva.datamart.touchpoint_presentation;

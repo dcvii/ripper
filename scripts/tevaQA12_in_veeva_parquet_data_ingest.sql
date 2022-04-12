@@ -1,7 +1,7 @@
 COPY veeva.territory2model FROM 's3://teva-export-buckt/tevaQA12/veeva/territory2model/*' PARQUET;
 COPY veeva.territory2type FROM 's3://teva-export-buckt/tevaQA12/veeva/territory2type/*' PARQUET;
-COPY veeva.survey FROM 's3://teva-export-buckt/tevaQA12/veeva/survey/*' PARQUET;
 COPY veeva.user_territory FROM 's3://teva-export-buckt/tevaQA12/veeva/user_territory/*' PARQUET;
+COPY veeva.survey FROM 's3://teva-export-buckt/tevaQA12/veeva/survey/*' PARQUET;
 COPY veeva.territory FROM 's3://teva-export-buckt/tevaQA12/veeva/territory/*' PARQUET;
 COPY veeva.user_role FROM 's3://teva-export-buckt/tevaQA12/veeva/user_role/*' PARQUET;
 COPY veeva.recordtype FROM 's3://teva-export-buckt/tevaQA12/veeva/recordtype/*' PARQUET;
@@ -23,10 +23,10 @@ COPY veeva.veeva_user FROM 's3://teva-export-buckt/tevaQA12/veeva/veeva_user/*' 
 COPY veeva.remote_meeting FROM 's3://teva-export-buckt/tevaQA12/veeva/remote_meeting/*' PARQUET;
 COPY veeva.remote_meeting_attendee FROM 's3://teva-export-buckt/tevaQA12/veeva/remote_meeting_attendee/*' PARQUET;
 COPY veeva.medical_inquiry FROM 's3://teva-export-buckt/tevaQA12/veeva/medical_inquiry/*' PARQUET;
-COPY veeva.time_off_territory_kc FROM 's3://teva-export-buckt/tevaQA12/veeva/time_off_territory_kc/*' PARQUET;
 COPY veeva.survey_question_response FROM 's3://teva-export-buckt/tevaQA12/veeva/survey_question_response/*' PARQUET;
-COPY veeva.deciles FROM 's3://teva-export-buckt/tevaQA12/veeva/deciles/*' PARQUET;
+COPY veeva.time_off_territory_kc FROM 's3://teva-export-buckt/tevaQA12/veeva/time_off_territory_kc/*' PARQUET;
 COPY veeva.sent_email FROM 's3://teva-export-buckt/tevaQA12/veeva/sent_email/*' PARQUET;
+COPY veeva.deciles FROM 's3://teva-export-buckt/tevaQA12/veeva/deciles/*' PARQUET;
 COPY veeva.account_merge_history FROM 's3://teva-export-buckt/tevaQA12/veeva/account_merge_history/*' PARQUET;
 COPY veeva.call_goal FROM 's3://teva-export-buckt/tevaQA12/veeva/call_goal/*' PARQUET;
 COPY veeva.email_activity FROM 's3://teva-export-buckt/tevaQA12/veeva/email_activity/*' PARQUET;
@@ -40,10 +40,10 @@ COPY veeva.account FROM 's3://teva-export-buckt/tevaQA12/veeva/account/*' PARQUE
 COPY veeva.objectterritory2association FROM 's3://teva-export-buckt/tevaQA12/veeva/objectterritory2association/*' PARQUET;
 COPY veeva.address FROM 's3://teva-export-buckt/tevaQA12/veeva/address/*' PARQUET;
 COPY veeva.tsf FROM 's3://teva-export-buckt/tevaQA12/veeva/tsf/*' PARQUET;
+COPY veeva.call_detail FROM 's3://teva-export-buckt/tevaQA12/veeva/call_detail/*' PARQUET;
 COPY veeva.sync_tracking FROM 's3://teva-export-buckt/tevaQA12/veeva/sync_tracking/*' PARQUET;
 COPY veeva.product_metrics FROM 's3://teva-export-buckt/tevaQA12/veeva/product_metrics/*' PARQUET;
 COPY veeva.accountshare FROM 's3://teva-export-buckt/tevaQA12/veeva/accountshare/*' PARQUET;
-COPY veeva.call_detail FROM 's3://teva-export-buckt/tevaQA12/veeva/call_detail/*' PARQUET;
 COPY veeva.ids_call_sample FROM 's3://teva-export-buckt/tevaQA12/veeva/ids_call_sample/*' PARQUET;
 COPY veeva.ids_call_key_message FROM 's3://teva-export-buckt/tevaQA12/veeva/ids_call_key_message/*' PARQUET;
 COPY veeva.call FROM 's3://teva-export-buckt/tevaQA12/veeva/call/*' PARQUET;

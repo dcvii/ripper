@@ -4,5 +4,5 @@ COPY /*223*/ teva_transform.teva_transform_lock FROM VERTICA teva.teva_transform
 COPY /*227*/ teva_transform.teva_transforms FROM VERTICA teva.teva_transform.teva_transforms;
 COPY /*2058*/ teva_transform.teva_transform_steps FROM VERTICA teva.teva_transform.teva_transform_steps;
 COPY /*23465*/ teva_transform.teva_transform_control FROM VERTICA teva.teva_transform.teva_transform_control;
-COPY /*17054298*/ teva_transform.teva_transform_log FROM VERTICA teva.teva_transform.teva_transform_log;
+COPY /*17095820*/ teva_transform.teva_transform_log FROM VERTICA teva.teva_transform.teva_transform_log;
 DISCONNECT teva;

@@ -14,8 +14,8 @@ COPY reference.ref_rptng_par_brands_05132020 FROM 's3://teva-export-buckt/tevaQA
 COPY reference.zzz_invoice_adjustments_alloc FROM 's3://teva-export-buckt/tevaQA12/reference/zzz_invoice_adjustments_alloc/*' PARQUET;
 COPY reference.salesforce_reference FROM 's3://teva-export-buckt/tevaQA12/reference/salesforce_reference/*' PARQUET;
 COPY reference.reporting_par_brands FROM 's3://teva-export-buckt/tevaQA12/reference/reporting_par_brands/*' PARQUET;
-COPY reference.mb_rptng_mrkts FROM 's3://teva-export-buckt/tevaQA12/reference/mb_rptng_mrkts/*' PARQUET;
 COPY reference.zs_revo_products FROM 's3://teva-export-buckt/tevaQA12/reference/zs_revo_products/*' PARQUET;
+COPY reference.mb_rptng_mrkts FROM 's3://teva-export-buckt/tevaQA12/reference/mb_rptng_mrkts/*' PARQUET;
 COPY reference.bkp_rptg_par_brands_12162020 FROM 's3://teva-export-buckt/tevaQA12/reference/bkp_rptg_par_brands_12162020/*' PARQUET;
 COPY reference.zzz_market_sales_force FROM 's3://teva-export-buckt/tevaQA12/reference/zzz_market_sales_force/*' PARQUET;
 COPY reference.reporting_market_sales_force FROM 's3://teva-export-buckt/tevaQA12/reference/reporting_market_sales_force/*' PARQUET;
@@ -52,8 +52,8 @@ COPY reference.bag_product FROM 's3://teva-export-buckt/tevaQA12/reference/bag_p
 COPY reference.supplier_validation_rules FROM 's3://teva-export-buckt/tevaQA12/reference/supplier_validation_rules/*' PARQUET;
 COPY reference.reporting_ho_users FROM 's3://teva-export-buckt/tevaQA12/reference/reporting_ho_users/*' PARQUET;
 COPY reference.mb_ref_sales_force_headcnts_04282020 FROM 's3://teva-export-buckt/tevaQA12/reference/mb_ref_sales_force_headcnts_04282020/*' PARQUET;
-COPY reference.ref_rptng_salesforce_headcnts_05132020_2 FROM 's3://teva-export-buckt/tevaQA12/reference/ref_rptng_salesforce_headcnts_05132020_2/*' PARQUET;
 COPY reference.bkp_rptng_sf_hdcnts_12162020 FROM 's3://teva-export-buckt/tevaQA12/reference/bkp_rptng_sf_hdcnts_12162020/*' PARQUET;
+COPY reference.ref_rptng_salesforce_headcnts_05132020_2 FROM 's3://teva-export-buckt/tevaQA12/reference/ref_rptng_salesforce_headcnts_05132020_2/*' PARQUET;
 COPY reference.acute_market_definition FROM 's3://teva-export-buckt/tevaQA12/reference/acute_market_definition/*' PARQUET;
 COPY reference.active_fileclass_names FROM 's3://teva-export-buckt/tevaQA12/reference/active_fileclass_names/*' PARQUET;
 COPY reference.valid_value_exclusion FROM 's3://teva-export-buckt/tevaQA12/reference/valid_value_exclusion/*' PARQUET;

@@ -65,6 +65,7 @@ def vert_conn(cfg):
 def chunk_filter(config):
     print('filtering chunk command set')
     ct = 0
+    legit = 0
     with open(config['fname']) as f:
         chars = f.read()
         chunks = []
@@ -83,13 +84,15 @@ def chunk_filter(config):
                 if not flagged:                         
                     chunks.append(cmd)
                     ct += 1
+                    legit += 1
                     cmd = ''
                 else:
                     # print('chunk rejected')
+                    ct += 1
                     cmd = ''
                     flagged = False
-           
-        print(ct,'legit commands found:',config['fname'])
+        print(ct, 'commands searched')   
+        print(legit,'legit commands found:',config['fname'])
         f.close()
     return chunks
 
@@ -283,12 +286,12 @@ def is_valid_schema(item):
     config = {'in_fspec': 'sql/valids.sql', 'conn_type': 'src', 'bucket_key': 'bucket_key'}
     result_set = run_single_file_sql(config)
 
-    print(result_set)
     if [item] in result_set:
         print(item, "is valid schema")
         return True
     else:
         print(item, "is NOT valid schema")
+        print(result_set)
         return False
 
     

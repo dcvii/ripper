@@ -55,6 +55,7 @@ EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/veeva_syn
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/formulary_restrictions') AS SELECT * FROM datamart.formulary_restrictions;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/sfa_sample') AS SELECT * FROM datamart.sfa_sample;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/xpd_switch_details_antimigraine') AS SELECT * FROM datamart.xpd_switch_details_antimigraine;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/sfa_affiliations') AS SELECT * FROM datamart.sfa_affiliations;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/ddd_adhoc') AS SELECT * FROM datamart.ddd_adhoc;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/psr_enrollment') AS SELECT * FROM datamart.psr_enrollment;
 EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12/datamart/touchpoint_presentation') AS SELECT * FROM datamart.touchpoint_presentation;

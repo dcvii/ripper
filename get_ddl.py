@@ -42,7 +42,7 @@ if is_valid_schema(schema):
     print("raw ddl export file written: ",fspec)
 
    # this returns a large set of characters not lines
-    config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN', 'fname': fspec}
+    config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN|SEQUENCE', 'fname': fspec}
     filtered_results = chunk_filter(config)
 
 

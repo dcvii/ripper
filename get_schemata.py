@@ -245,16 +245,16 @@ for row in result_set:
     run_each_getter(h)
 
 
-    cmd = "select export_objects('','"+schema+"');\n"
+    # cmd = "select export_objects('','"+schema+"');\n"
     
-    fspec = "scripts/"+bucket_key+"_"+schema+"_out_ddl_"+"schema.sql"
-    f = open(fspec,'w')
-    f.write(cmd)
-    f.close
+    # fspec = "scripts/"+bucket_key+"_"+schema+"_out_ddl_"+"schema.sql"
+    # f = open(fspec,'w')
+    # f.write(cmd)
+    # f.close
 
-    h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
-             'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'connection': get_vv_string(),'function': schema, 'bucket_key': bucket_key}
-    run_each_ddl(h)
+    # h = {'in_fspec': fspec, 'out_fspec': 'sql/blah.sql', 'cmd': cmd,
+    #          'log': lname, 'export_type': 'csv', 'conn_type': 'src', 'connection': get_vv_string(),'function': schema, 'bucket_key': bucket_key}
+    # run_each_ddl(h)
 
     # freaking interpolation! so i hard coded the source database
     # cmd = "select 'COPY '||table_schema||'.'||table_name||' FROM VERTICA ' ||table_schema ||'.'|| table_name ||';' as cmd from migration.source_schemas where table_schema = '"+schema+"' order by row_count;\n"

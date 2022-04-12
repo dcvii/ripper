@@ -2,10 +2,10 @@ COPY metadata.error_code_reference FROM 's3://teva-export-buckt/tevaQA12/metadat
 COPY metadata.misc_settings_reference FROM 's3://teva-export-buckt/tevaQA12/metadata/misc_settings_reference/*' PARQUET;
 COPY metadata.file_status_reference FROM 's3://teva-export-buckt/tevaQA12/metadata/file_status_reference/*' PARQUET;
 COPY metadata.validation_rules_mapping FROM 's3://teva-export-buckt/tevaQA12/metadata/validation_rules_mapping/*' PARQUET;
-COPY metadata.log_data_validation_errors FROM 's3://teva-export-buckt/tevaQA12/metadata/log_data_validation_errors/*' PARQUET;
 COPY metadata.validation_data_type_reference FROM 's3://teva-export-buckt/tevaQA12/metadata/validation_data_type_reference/*' PARQUET;
 COPY metadata.event_type_reference FROM 's3://teva-export-buckt/tevaQA12/metadata/event_type_reference/*' PARQUET;
 COPY metadata.workflow_process FROM 's3://teva-export-buckt/tevaQA12/metadata/workflow_process/*' PARQUET;
+COPY metadata.log_data_validation_errors FROM 's3://teva-export-buckt/tevaQA12/metadata/log_data_validation_errors/*' PARQUET;
 COPY metadata.id_lookup FROM 's3://teva-export-buckt/tevaQA12/metadata/id_lookup/*' PARQUET;
 COPY metadata.log_configuration_validation_errors FROM 's3://teva-export-buckt/tevaQA12/metadata/log_configuration_validation_errors/*' PARQUET;
 COPY metadata.data_feed_version_validation_rules FROM 's3://teva-export-buckt/tevaQA12/metadata/data_feed_version_validation_rules/*' PARQUET;

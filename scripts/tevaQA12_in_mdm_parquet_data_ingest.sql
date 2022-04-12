@@ -4,9 +4,9 @@ COPY mdm.alternate_name FROM 's3://teva-export-buckt/tevaQA12/mdm/alternate_name
 COPY mdm.hco FROM 's3://teva-export-buckt/tevaQA12/mdm/hco/*' PARQUET;
 COPY mdm.source_details FROM 's3://teva-export-buckt/tevaQA12/mdm/source_details/*' PARQUET;
 COPY mdm.raw_dea FROM 's3://teva-export-buckt/tevaQA12/mdm/raw_dea/*' PARQUET;
+COPY mdm.hcp FROM 's3://teva-export-buckt/tevaQA12/mdm/hcp/*' PARQUET;
 COPY mdm.raw_npi FROM 's3://teva-export-buckt/tevaQA12/mdm/raw_npi/*' PARQUET;
 COPY mdm.dea_address FROM 's3://teva-export-buckt/tevaQA12/mdm/dea_address/*' PARQUET;
-COPY mdm.hcp FROM 's3://teva-export-buckt/tevaQA12/mdm/hcp/*' PARQUET;
 COPY mdm.professional FROM 's3://teva-export-buckt/tevaQA12/mdm/professional/*' PARQUET;
 COPY mdm.regulation FROM 's3://teva-export-buckt/tevaQA12/mdm/regulation/*' PARQUET;
 COPY mdm.merges FROM 's3://teva-export-buckt/tevaQA12/mdm/merges/*' PARQUET;
