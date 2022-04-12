@@ -278,6 +278,20 @@ def run_migration_table(config):
     return results
 
 
+def is_valid_schema(item):
+    #bucket_key = os.getenv('TARGET_BUCKET_KEY')
+    config = {'in_fspec': 'sql/valids.sql', 'conn_type': 'src', 'bucket_key': 'bucket_key'}
+    result_set = run_single_file_sql(config)
+
+    if [item] in result_set:
+        print(item, "is valid schema")
+        return True
+    else:
+        print(item, "is NOT valid schema")
+        return False
+
+    
+
 def is_valid_teva_schema(s):
 
     v =['fia',  'sfa_history',  'customer_master', 'migration',  'teva_staging',  'reference',  'raw',  'metadata',  'teva_transform', 

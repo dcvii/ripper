@@ -5,8 +5,6 @@ march 2022
 
 
 
-
-
 ## order of runners
 
 It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate. The order of the grants follows. As the getters can be run in any order, each set of runners will handle a unique set of objects from the source databa
@@ -14,15 +12,15 @@ It is very important that these runners be executed in the proper order such tha
 
 order  | runner 
 ------ | ----
-01  | run_roles    
-02  | run_users
-03  | run_ddl
-04  | run_schemas
+01  | run_ddl
+02  | run_sequences
+02  | run_roles    
+03  | run_users
+04  | run_schema / schemata
 05  | run_pools
-06  | run_schema / schemata
-07  | run_db
-08  | run_access
-08  | run_auth
+06  | run_db
+07  | run_access
+09  | run_auth
 10  | run_locations
 11  |
 
