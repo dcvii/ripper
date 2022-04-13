@@ -15,7 +15,7 @@ if is_valid_schema(schema):
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-    cmd_set = chunkify('scripts/'+bucket_key+'_out_'+schema+'_ddl.sql')
+    cmd_set = chunkify('scripts/'+bucket_key+'_'+schema+'_out_ddl.sql')
     config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'parquet', 'schema': schema,
          'conn_type': 'tgt', 'function': 'ddl', 'bucket_key': bucket_key}
     result_set = run_multi_sql(cmd_set,config)

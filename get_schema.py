@@ -202,7 +202,7 @@ def get_catalog(config):
 
 
   
-home = "/Users/mbowen/devcode/PYDEV/migrator/"
+home = os.getenv("MIGRATION_HOME")
 bucket_key = os.getenv("SRC_BUCKET_KEY")
 
 lname = 'log/get_full_schemas.log'

@@ -1,0 +1,11 @@
+COPY atlas.region_dim FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/region_dim/*' PARQUET;
+COPY atlas.port_dim FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/port_dim/*' PARQUET;
+COPY atlas.date_dim FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/date_dim/*' PARQUET;
+COPY atlas.mock_dealer FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/mock_dealer/*' PARQUET;
+COPY atlas.dealer_dim_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/dealer_dim_src/*' PARQUET;
+COPY atlas.vehicle_config FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/vehicle_config/*' PARQUET;
+COPY atlas.zip_code_lkp FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/zip_code_lkp/*' PARQUET;
+COPY atlas.arrivals_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/arrivals_src/*' PARQUET;
+COPY atlas.cust_dim_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/cust_dim_src/*' PARQUET;
+COPY atlas.cust_dim_vpy_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/cust_dim_vpy_src/*' PARQUET;
+COPY atlas.sales_fact FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/atlas/sales_fact/*' PARQUET;

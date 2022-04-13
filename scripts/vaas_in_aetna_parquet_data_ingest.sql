@@ -1,0 +1,9 @@
+COPY aetna.provider_specialty_sql_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_specialty_sql_src/*' PARQUET;
+COPY aetna.provider_base_db2_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_db2_src/*' PARQUET;
+COPY aetna.provider_loc_sql_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_loc_sql_src/*' PARQUET;
+COPY aetna.provider_base_sql_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_sql_src/*' PARQUET;
+COPY aetna.provider_specialty_db2_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_specialty_db2_src/*' PARQUET;
+COPY aetna.specialty FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/specialty/*' PARQUET;
+COPY aetna.specialty_int FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/specialty_int/*' PARQUET;
+COPY aetna.provider_base_src FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_src/*' PARQUET;
+COPY aetna.provider_base_dup FROM 's3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_dup/*' PARQUET;

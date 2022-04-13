@@ -1,0 +1,13 @@
+CONNECT TO VERTICA vaasdemo USER dbadmin PASSWORD 'Alabama7878!' ON '35.166.171.38' , 5433;
+COPY /*12*/ atlas.region_dim FROM VERTICA teva.atlas.region_dim;
+COPY /*12*/ atlas.port_dim FROM VERTICA teva.atlas.port_dim;
+COPY /*738*/ atlas.date_dim FROM VERTICA teva.atlas.date_dim;
+COPY /*1000*/ atlas.mock_dealer FROM VERTICA teva.atlas.mock_dealer;
+COPY /*3060*/ atlas.dealer_dim_src FROM VERTICA teva.atlas.dealer_dim_src;
+COPY /*11984*/ atlas.vehicle_config FROM VERTICA teva.atlas.vehicle_config;
+COPY /*85482*/ atlas.zip_code_lkp FROM VERTICA teva.atlas.zip_code_lkp;
+COPY /*93892*/ atlas.arrivals_src FROM VERTICA teva.atlas.arrivals_src;
+COPY /*494766*/ atlas.cust_dim_src FROM VERTICA teva.atlas.cust_dim_src;
+COPY /*494766*/ atlas.cust_dim_vpy_src FROM VERTICA teva.atlas.cust_dim_vpy_src;
+COPY /*508492*/ atlas.sales_fact FROM VERTICA teva.atlas.sales_fact;
+DISCONNECT vaasdemo;

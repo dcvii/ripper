@@ -1,0 +1,11 @@
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/region_dim') AS SELECT * FROM atlas.region_dim;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/port_dim') AS SELECT * FROM atlas.port_dim;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/date_dim') AS SELECT * FROM atlas.date_dim;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/mock_dealer') AS SELECT * FROM atlas.mock_dealer;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/dealer_dim_src') AS SELECT * FROM atlas.dealer_dim_src;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/vehicle_config') AS SELECT * FROM atlas.vehicle_config;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/zip_code_lkp') AS SELECT * FROM atlas.zip_code_lkp;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/arrivals_src') AS SELECT * FROM atlas.arrivals_src;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/cust_dim_src') AS SELECT * FROM atlas.cust_dim_src;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/cust_dim_vpy_src') AS SELECT * FROM atlas.cust_dim_vpy_src;
+EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/atlas/sales_fact') AS SELECT * FROM atlas.sales_fact;
