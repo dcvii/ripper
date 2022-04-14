@@ -1,0 +1,11 @@
+COPY payerspine.mb_test FROM 's3://teva-export-buckt/tevaQA12F/payerspine/mb_test/*' PARQUET;
+COPY payerspine.PS_PROVIDER_OVERRIDE_DEFAULT_V01 FROM 's3://teva-export-buckt/tevaQA12F/payerspine/PS_PROVIDER_OVERRIDE_DEFAULT_V01/*' PARQUET;
+COPY payerspine.PS_KEY_CONTROLLER_LIST_V01 FROM 's3://teva-export-buckt/tevaQA12F/payerspine/PS_KEY_CONTROLLER_LIST_V01/*' PARQUET;
+COPY payerspine.ftf_health_plans_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_health_plans_6mofiles/*' PARQUET;
+COPY payerspine.ftf_formularies_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_formularies_6mofiles/*' PARQUET;
+COPY payerspine.ftf_pbms_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_pbms_6mofiles/*' PARQUET;
+COPY payerspine.mc_wb_new_view_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/mc_wb_new_view_6mofiles/*' PARQUET;
+COPY payerspine.mc_wb_pbm_plans_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/mc_wb_pbm_plans_6mofiles/*' PARQUET;
+COPY payerspine.ftf_restrictions_v2_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_restrictions_v2_6mofiles/*' PARQUET;
+COPY payerspine.ftf_ims_bridge_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_ims_bridge_6mofiles/*' PARQUET;
+COPY payerspine.ftf_health_plan_geography_6mofiles FROM 's3://teva-export-buckt/tevaQA12F/payerspine/ftf_health_plan_geography_6mofiles/*' PARQUET;

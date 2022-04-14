@@ -1,0 +1,11 @@
+COPY customer_master.teva_flag FROM 's3://teva-export-buckt/tevaQA12F/customer_master/teva_flag/*' PARQUET;
+COPY customer_master.customer_flags FROM 's3://teva-export-buckt/tevaQA12F/customer_master/customer_flags/*' PARQUET;
+COPY customer_master.hco_demo FROM 's3://teva-export-buckt/tevaQA12F/customer_master/hco_demo/*' PARQUET;
+COPY customer_master.raw_dea FROM 's3://teva-export-buckt/tevaQA12F/customer_master/raw_dea/*' PARQUET;
+COPY customer_master.hcp_demo FROM 's3://teva-export-buckt/tevaQA12F/customer_master/hcp_demo/*' PARQUET;
+COPY customer_master.hcp_detail FROM 's3://teva-export-buckt/tevaQA12F/customer_master/hcp_detail/*' PARQUET;
+COPY customer_master.tvcmid_merges FROM 's3://teva-export-buckt/tevaQA12F/customer_master/tvcmid_merges/*' PARQUET;
+COPY customer_master.sample_eligibility FROM 's3://teva-export-buckt/tevaQA12F/customer_master/sample_eligibility/*' PARQUET;
+COPY customer_master.ims_flag FROM 's3://teva-export-buckt/tevaQA12F/customer_master/ims_flag/*' PARQUET;
+COPY customer_master.alternate_identifier FROM 's3://teva-export-buckt/tevaQA12F/customer_master/alternate_identifier/*' PARQUET;
+COPY customer_master.tvcmid_xref FROM 's3://teva-export-buckt/tevaQA12F/customer_master/tvcmid_xref/*' PARQUET;

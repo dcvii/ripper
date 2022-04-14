@@ -12,6 +12,7 @@ if is_valid_schema(schema):
 
     bucket_key = os.getenv('TARGET_BUCKET_KEY')
     lname = 'log/migrate_'+bucket_key+'_'+schema+'_ddl.log'
+    print('writing to log:', lname)
     logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
