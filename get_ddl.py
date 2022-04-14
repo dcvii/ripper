@@ -7,13 +7,14 @@ import logging
 
 from ripper.sql_runner import chunk_filter, chunkify, run_multi_sql, run_single_file_sql, run_migration_table, is_valid_schema
 
-schema = sys.argv[1] or None
-if is_valid_schema(schema):
 
-    bucket_key = os.getenv('TARGET_BUCKET_KEY')
-    lname = 'log/get_'+bucket_key+'_'+schema+'_ddl.log'
-    print('writing log:',lname)
-    logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
+schema = sys.argv[1] or None
+bucket_key = os.getenv('TARGET_BUCKET_KEY')
+lname = 'log/get_'+bucket_key+'_'+schema+'_ddl.log'
+logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
+
+if is_valid_schema(schema):
+   
 
     cmd = "select export_objects('','"+schema+"');\n"
     

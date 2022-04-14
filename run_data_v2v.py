@@ -5,14 +5,14 @@ import logging
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql, run_migration_table, is_valid_schema
 
-bucket_key = os.getenv('TARGET_BUCKET_KEY')
 
 schema = sys.argv[1] or None
+bucket_key = os.getenv('TARGET_BUCKET_KEY')
+lname = 'log/migrate_'+bucket_key+'_'+schema+'_v2v.log'
+logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
+
+
 if is_valid_schema(schema):
-
-    lname = 'log/migrate_'+bucket_key+'_'+schema+'_v2v.log'
-    logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
-
 
     cmd_set = chunkify('scripts/'+bucket_key+'_'+schema+'_v2v.sql')
     config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'parquet', 'schema': schema,
