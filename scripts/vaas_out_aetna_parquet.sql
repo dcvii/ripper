@@ -1,9 +1,0 @@
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_specialty_sql_src') AS SELECT * FROM aetna.provider_specialty_sql_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_db2_src') AS SELECT * FROM aetna.provider_base_db2_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_loc_sql_src') AS SELECT * FROM aetna.provider_loc_sql_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_sql_src') AS SELECT * FROM aetna.provider_base_sql_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_specialty_db2_src') AS SELECT * FROM aetna.provider_specialty_db2_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/specialty') AS SELECT * FROM aetna.specialty;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/specialty_int') AS SELECT * FROM aetna.specialty_int;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_src') AS SELECT * FROM aetna.provider_base_src;
-EXPORT TO PARQUET (directory='s3://vertica-mbowen-us-west-2-migrator/vaas/aetna/provider_base_dup') AS SELECT * FROM aetna.provider_base_dup;
