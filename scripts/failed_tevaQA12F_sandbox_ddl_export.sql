@@ -1,1672 +1,2732 @@
+CREATE SCHEMA sandbox;
+
+CREATE TABLE sandbox.ic_target
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    row_create_date date DEFAULT "sysdate"()
+);
 
 
+CREATE TABLE sandbox.ic_goal_setting
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1) DEFAULT 'N',
+    dnp_flag char(1) DEFAULT 'N',
+    market_rolling_6 float,
+    product_rolling_6 float,
+    market_rolling_12 float,
+    market_baseline float,
+    product_baseline float,
+    target_market_rolling_6 float,
+    target_product_rolling_6 float,
+    target_market_rolling_12 float,
+    target_market_baseline float,
+    target_product_baseline float,
+    include_in_nation_rollup char(1) DEFAULT 'Y',
+    include_in_area_rollup char(1) DEFAULT 'Y',
+    include_in_region_rollup char(1) DEFAULT 'Y',
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date DEFAULT "sysdate"()
+);
 
-CREATE  VIEW sandbox.V_HCOS_KAISER_PROF_AFFIL AS
- SELECT hcp.tvcmid AS TVCMID,
-        p.ims_id AS IMS_ID,
-        p.npi AS NPI,
-        p.all_dea AS ALL_DEA,
-        p.last_name AS LAST_NAME,
-        p.first_name AS FIRST_NAME,
-        p.middle_name AS MIDDLE_NAME,
-        at.affil_type_desc AS AFFIL_TYPE_DESC,
-        b.ims_org_id AS IMS_FACILITY_NUMBER,
-        b.cot_facility_type AS COT_FACILITY_TYPE,
-        b.business_name AS BUSINESS_NAME,
-        b.physical_addr_1 AS PHYSICAL_ADDR_1,
-        b.physical_addr_2 AS PHYSICAL_ADDR_2,
-        b.physical_city AS PHYSICAL_CITY,
-        b.physical_state AS PHYSICAL_STATE,
-        b.physical_zip AS PHYSICAL_ZIP
- FROM (((((( SELECT bx.ims_org_id,
-        bx.cot_facility_type,
-        bx.business_name,
-        bx.physical_addr_1,
-        bx.physical_addr_2,
-        bx.physical_city,
-        bx.physical_state,
-        bx.physical_zip
- FROM hcos.ims_hcos_business bx
- WHERE (bx.file_id = ( SELECT max(ims_hcos_business.file_id) AS file_id
- FROM hcos.ims_hcos_business))) b JOIN ( SELECT pafx.ims_org_id,
-        pafx.hce_id_prfsnl,
-        pafx.affil_type_id
- FROM hcos.ims_hcos_provider_affiliation_fact pafx
- WHERE (pafx.file_id = ( SELECT max(ims_hcos_provider_affiliation_fact.file_id) AS file_id
- FROM hcos.ims_hcos_provider_affiliation_fact))) paf ON ((b.ims_org_id = paf.ims_org_id))) JOIN ( SELECT px.ims_id,
-        px.npi,
-        px.all_dea,
-        px.last_name,
-        px.first_name,
-        px.middle_name,
-        px.hce_id_prfsnl
- FROM hcos.ims_hcos_professional px
- WHERE (px.file_id = ( SELECT max(ims_hcos_professional.file_id) AS file_id
- FROM hcos.ims_hcos_professional))) p ON ((paf.hce_id_prfsnl = p.hce_id_prfsnl))) LEFT  JOIN ( SELECT atx.affil_type_id,
-        atx.affil_type_desc
- FROM hcos.ims_hcos_affiliation_type atx
- WHERE (atx.file_id = ( SELECT max(ims_hcos_affiliation_type.file_id) AS file_id
- FROM hcos.ims_hcos_affiliation_type))) at ON ((paf.affil_type_id = at.affil_type_id))) JOIN ( SELECT rfx.ims_org_id_child,
-        rfx.ims_org_id_parent
- FROM hcos.ims_hcos_relationship_fact rfx
- WHERE (rfx.file_id = ( SELECT max(ims_hcos_relationship_fact.file_id) AS max
- FROM hcos.ims_hcos_relationship_fact))) rf ON ((b.ims_org_id = rf.ims_org_id_child))) LEFT  JOIN mdm.hcp hcp ON ((p.ims_id = hcp.ims_prescriber_id)))
- WHERE (rf.ims_org_id_parent = 'INS00000226'::varchar(11));
 
-CREATE  VIEW sandbox.test_view AS
- SELECT ftf_restrictions.health_plan_id,
-        ftf_restrictions.drug_id,
-        ftf_restrictions.restriction_detail_id,
-        ftf_restrictions.restriction_code,
-        ftf_restrictions.formulary_entry_restriction_id,
-        ftf_restrictions.restriction_detail_text,
-        ftf_restrictions.restriction_addtnl_information_1,
-        ftf_restrictions.restriction_addtnl_information_2,
-        ftf_restrictions.record_id,
-        ftf_restrictions.file_id
- FROM cleansed.ftf_restrictions
- WHERE (ftf_restrictions.file_id IN ( SELECT max(ftf_restrictions.file_id) AS max
- FROM cleansed.ftf_restrictions));
+CREATE TABLE sandbox.call_plan_decile
+(
+    hcp_id varchar(50),
+    market varchar(50),
+    decile_value varchar(50),
+    veeva_id varchar(50)
+);
 
-CREATE  VIEW sandbox.vw_ftf_formularies AS
- SELECT ftf_formularies.health_plan_id,
-        ftf_formularies.drug_id,
-        ftf_formularies.tier_code,
-        ftf_formularies.restrictions,
-        ftf_formularies.reason_code,
-        ftf_formularies.reason_code_description,
-        ftf_formularies.file_id,
-        ftf_formularies.record_id
- FROM cleansed.ftf_formularies
- WHERE (ftf_formularies.file_id IN ( SELECT max(ftf_formularies.file_id) AS max
- FROM cleansed.ftf_formularies));
 
-CREATE  VIEW sandbox.create_paragard_anda_sales AS
-SELECT sh.source_customer_id AS "BP #", NULL AS "Ortho E", sh.customer_name AS "BP Name", coalesce(sh.ship_to_address_line_2, sh.ship_to_address_line_1) AS "Ship-to Street", sh.ship_to_city AS "Ship-to City", sh.ship_to_state AS "Ship-to State", sh.ship_to_zip AS "Ship-to ZipCd", NULL AS "Ship-to Ctry", NULL AS "Ship-to Phone", NULL AS "Ship-to Fax", NULL AS "Ship-to Email", ad.address AS "Bill-to Street", ad.city AS "Bill-to City", ad.state AS "Bill-to State", ad.zip_code AS "Bill-to ZipCd", NULL AS "Bill-to Ctry", NULL AS "Bill-to Phone", NULL AS "Bill-to Fax", NULL AS "Bill-to Email", CASE mod(sh.customer_type, 1::float) WHEN NULLSEQUAL 0::float THEN sh.customer_type ELSE rtrim(sh.customer_type, '0'::varchar(1)) END AS "Class of Trade", CASE mod(sh.order_no, 1::float) WHEN NULLSEQUAL 0::float THEN (((sh.order_no)::numeric)::int)::varchar ELSE rtrim(sh.order_no, '0'::varchar(1)) END AS "Invoice #", CASE mod(sh.invoice_amount, 1::float) WHEN NULLSEQUAL 0::float THEN ((sh.invoice_amount)::int)::varchar ELSE rtrim((sh.invoice_amount)::varchar, '0'::varchar(1)) END AS "Del Amt", to_char(sh.invoice_date, 'YYYY-MM-DD'::varchar(10)) AS "Inv Date", CASE mod(sh.quantity, 1::float) WHEN NULLSEQUAL 0::float THEN ((sh.quantity)::int)::varchar ELSE rtrim((sh.quantity)::varchar, '0'::varchar(1)) END AS "24237", NULL AS "24238", NULL AS "24800", NULL AS "33223", CASE mod(sh.package_size, 1::numeric(18,0)) WHEN NULLSEQUAL 0::numeric(18,0) THEN (sh.package_size)::varchar ELSE rtrim((sh.package_size)::varchar, '0'::varchar(1)) END AS Packs, NULL AS UnitPrice, NULL AS Territory, NULL AS "Order Type Cd", NULL AS "Order Type Desc", NULL AS LOBCdDesc, NULL AS PriceMatrixDef, ('A'::varchar(1) || btrim(to_char(sh.source_parent_customer_id, '000000000'::varchar(9)))) AS ParentBPCd, NULL AS ParentBPCdDesc, NULL AS GrandParentBPCdDesc, NULL AS "PO#", NULL AS "UPS#", CASE mod(sh.order_no, 1::float) WHEN NULLSEQUAL 0::float THEN (((sh.order_no)::numeric)::int)::varchar ELSE rtrim(sh.order_no, '0'::varchar(1)) END AS OrdNbr, NULL AS OrdLnNbr, NULL AS DiscAmt, NULL AS WhseCd, 'ANDA'::varchar(4) AS DATA_SOURCE, '51285020401'::varchar(11) AS NDC11_CODE FROM (datamart.specialty_pharmacy_shipment sh LEFT JOIN (SELECT tw_address.address_id, tw_address.address, tw_address.city, tw_address.state, tw_address.zip_code FROM datamart.tw_address) ad ON ((sh.tw_bill_to_address_id = ad.address_id))) WHERE ((sh.basket_name ~~ '%PARAGARD%'::varchar(10)) AND (sh.specialty_pharmacy_data_source = 'Anda'::varchar(4)) AND (sh.ship_date >= add_months(trunc(('now()'::varchar(5))::date, 'MM'::varchar(2)), (-1))) AND (sh.ship_date < trunc(('now()'::varchar(5))::date, 'MM'::varchar(2)))) GROUP BY sh.source_customer_id, NULL, sh.customer_name, coalesce(sh.ship_to_address_line_2, sh.ship_to_address_line_1), sh.ship_to_city, sh.ship_to_state, sh.ship_to_zip, ad.address, ad.city, ad.state, ad.zip_code, CASE mod(sh.customer_type, 1::float) WHEN NULLSEQUAL 0::float THEN sh.customer_type ELSE rtrim(sh.customer_type, '0'::varchar(1)) END, CASE mod(sh.order_no, 1::float) WHEN NULLSEQUAL 0::float THEN (((sh.order_no)::numeric)::int)::varchar ELSE rtrim(sh.order_no, '0'::varchar(1)) END, CASE mod(sh.invoice_amount, 1::float) WHEN NULLSEQUAL 0::float THEN ((sh.invoice_amount)::int)::varchar ELSE rtrim((sh.invoice_amount)::varchar, '0'::varchar(1)) END, to_char(sh.invoice_date, 'YYYY-MM-DD'::varchar(10)), CASE mod(sh.quantity, 1::float) WHEN NULLSEQUAL 0::float THEN ((sh.quantity)::int)::varchar ELSE rtrim((sh.quantity)::varchar, '0'::varchar(1)) END, CASE mod(sh.package_size, 1::numeric(18,0)) WHEN NULLSEQUAL 0::numeric(18,0) THEN (sh.package_size)::varchar ELSE rtrim((sh.package_size)::varchar, '0'::varchar(1)) END, ('A'::varchar(1) || btrim(to_char(sh.source_parent_customer_id, '000000000'::varchar(9)))), 'ANDA'::varchar(4), '51285020401'::varchar(11);
+CREATE TABLE sandbox.scd_roster
+(
+    scd_status varchar(10) DEFAULT 'Current',
+    scd_effective_date date DEFAULT trunc("sysdate"()),
+    scd_expiration_date date DEFAULT '2099-12-31'::date,
+    employee_id varchar(100),
+    territory_number varchar(100),
+    territory_name varchar(255),
+    sales_force_id varchar(100),
+    full_name varchar(100),
+    first_name varchar(100),
+    middle_name varchar(100),
+    last_name varchar(100),
+    address_line1 varchar(100),
+    address_line2 varchar(100),
+    address_line3 varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(100),
+    country varchar(100),
+    business_address_line1 varchar(100),
+    business_address_line2 varchar(100),
+    business_address_line3 varchar(100),
+    business_city varchar(100),
+    business_state varchar(2),
+    business_zip varchar(100),
+    business_country varchar(100),
+    shipping_address_line1 varchar(100),
+    shipping_address_line2 varchar(100),
+    shipping_address_line3 varchar(100),
+    shipping_city varchar(100),
+    shipping_state varchar(2),
+    shipping_zip varchar(100),
+    shipping_country varchar(100),
+    business_phone varchar(100),
+    home_phone varchar(100),
+    mobile_phone varchar(100),
+    fax varchar(100),
+    voice_mail_extension varchar(100),
+    email varchar(255),
+    hire_date date,
+    title varchar(100),
+    rep_type varchar(10),
+    username varchar(100),
+    out_of_territory varchar(5),
+    parent_territory_number varchar(100),
+    company_code varchar(100),
+    original_hire_date date,
+    team varchar(100),
+    salutation varchar(15),
+    suffix varchar(15),
+    cost_center varchar(30),
+    sample_eligibility_flag varchar(10),
+    samplestorage_address_line1 varchar(100),
+    samplestorage_address_line2 varchar(100),
+    samplestorage_address_line3 varchar(100),
+    samplestorage_city varchar(100),
+    samplestorage_zip varchar(100),
+    samplestorage_state varchar(2),
+    samplestorage_country varchar(100),
+    hr_status varchar(100),
+    reg_contract varchar(100),
+    preferred_name varchar(100),
+    business_unit_cd varchar(10),
+    business_unit_name varchar(100),
+    veeva_user_id varchar(100),
+    mngr_employee_id varchar(100),
+    birth_month_day varchar(5),
+    calculated_rep_type varchar(20),
+    job_code varchar(10),
+    oracle_string varchar(50),
+    global_employee_id varchar(35),
+    supervisor_global_employee_id varchar(35),
+    separation_date date,
+    separation_reason varchar(100)
+);
 
-CREATE  VIEW sandbox.knipper_supplemental_test AS
- SELECT a.tvcmid AS TVCMID,
-        CASE WHEN (a.medical_suffix IS NULL) THEN ''::varchar ELSE a.medical_suffix END AS ProfDesig,
-        a.first_name AS FName,
-        a.last_name AS Lname,
-        CASE WHEN (a.middle_name IS NULL) THEN ''::varchar ELSE a.middle_name END AS MI,
-        CASE WHEN (a.personal_suffix IS NULL) THEN ''::varchar ELSE a.personal_suffix END AS Suffix,
-        CASE WHEN (a.hce_status_desc IS NULL) THEN 'A'::varchar(1) WHEN (a.hce_status_desc = 'ACTIVE'::varchar(6)) THEN 'A'::varchar(1) WHEN (a.hce_status_desc = 'INACTIVE'::varchar(8)) THEN 'I'::varchar(1) ELSE 'D'::varchar(1) END AS Status,
-        CASE WHEN (a.hce_status_desc = 'PRESUMED DEAD'::varchar(13)) THEN 'D'::varchar(1) WHEN (a.hce_status_desc = 'SEMI-RETIRED'::varchar(12)) THEN 'O'::varchar(1) WHEN (a.hce_status_desc = 'RETIRED'::varchar(7)) THEN 'R'::varchar(1) ELSE ''::varchar END AS DeleteReason,
-        CASE WHEN ((a.hce_status_desc IS NULL) OR (a.hce_status_desc <> ALL (ARRAY['ACTIVE'::varchar(8), 'INACTIVE'::varchar(8)]))) THEN to_char(e.last_update_date, 'MM/DD/YYYY'::varchar(10)) ELSE ''::varchar END AS DeleteDate,
-        CASE WHEN (a.primary_specialty IS NULL) THEN 'US'::varchar(2) ELSE a.primary_specialty END AS Specialty,
-        CASE WHEN (a.address_line1 IS NULL) THEN ''::varchar ELSE a.address_line1 END AS Address1,
-        CASE WHEN (a.address_line2 IS NULL) THEN ''::varchar ELSE a.address_line2 END AS Address2,
-        ''::varchar AS Address3,
-        CASE WHEN (a.city IS NULL) THEN ''::varchar ELSE a.city END AS City,
-        CASE WHEN (a.state IS NULL) THEN ''::varchar ELSE a.state END AS State,
-        CASE WHEN (a.zip IS NULL) THEN ''::varchar ELSE a.zip END AS Zip,
-        CASE WHEN (b.sln IS NULL) THEN ''::varchar ELSE b.sln END AS SLN,
-        CASE WHEN ((b.sln IS NULL) OR (b.sln = ''::varchar)) THEN ''::varchar ELSE CASE WHEN (b.sln_status_code = 'A'::varchar(1)) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END END AS SLNActiveFlag,
-        CASE WHEN ((b.sln IS NULL) OR (b.sln = ''::varchar)) THEN ''::varchar ELSE to_char(b.sln_expiration_date, 'MM/DD/YYYY'::varchar(10)) END AS SLNExpirationDate,
-        CASE WHEN (c.flag_value = 'Y'::varchar(1)) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END AS DNCWakeFlag,
-        CASE WHEN (d.tvcmid IS NOT NULL) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END AS DNP
- FROM (((((( SELECT prescriber_rx.tvcmid
- FROM datamart.prescriber_rx
- GROUP BY prescriber_rx.tvcmid) exp JOIN ( SELECT hcp_demo.tvcmid,
-        hcp_demo.ims_id,
-        hcp_demo.npi,
-        hcp_demo.last_name,
-        hcp_demo.first_name,
-        hcp_demo.middle_name,
-        hcp_demo.personal_suffix,
-        hcp_demo.medical_suffix,
-        hcp_demo.primary_specialty,
-        hcp_demo.address_line1,
-        hcp_demo.address_line2,
-        hcp_demo.city,
-        hcp_demo.state_code AS state,
-        hcp_demo.zip,
-        hcp_demo.business_phone,
-        hcp_demo.business_email,
-        hcp_demo.hce_status_desc,
-        hcp_demo.file_id,
-        hcp_demo.record_id,
-        hcp_demo.np_pa_flag
- FROM datamart.customer_hcp_demographics hcp_demo
- WHERE (hcp_demo.file_id = ( SELECT max(customer_hcp_demographics.file_id) AS MAX
- FROM datamart.customer_hcp_demographics))) a ON ((exp.tvcmid = a.tvcmid))) JOIN ( SELECT sample_eligibility.sln,
-        sample_eligibility.sln_state,
-        sample_eligibility.sln_expiration_date,
-        sample_eligibility.sln_status_code,
-        sample_eligibility.tvcmid
- FROM mdm.sample_eligibility
- WHERE (sample_eligibility.file_id = ( SELECT max(sample_eligibility.file_id) AS MAX
- FROM mdm.sample_eligibility))) b ON (((a.tvcmid = b.tvcmid) AND (a.state = b.sln_state)))) LEFT  JOIN ( SELECT ims_flag.tvcmid,
-        ims_flag.flag_type,
-        ims_flag.flag_value
- FROM mdm.ims_flag
- WHERE ((ims_flag.file_id = ( SELECT max(ims_flag.file_id) AS MAX
- FROM mdm.ims_flag)) AND (ims_flag.flag_type = 'AMADNC'::varchar(6)))) c ON ((a.tvcmid = c.tvcmid))) LEFT  JOIN datamart.do_not_promote d ON ((a.tvcmid = d.tvcmid))) LEFT  JOIN ( SELECT hcp.updated_date AS last_update_date,
-        hcp.tvcmid
- FROM mdm.hcp
- WHERE (hcp.file_id = ( SELECT max(hcp.file_id) AS MAX
- FROM mdm.hcp))) e ON ((a.tvcmid = e.tvcmid)));
 
-CREATE  VIEW sandbox.ad_hoc_ad AS
- SELECT ('"'::varchar(1) || fed.id_num) AS federation_id,
-        NULL AS contact,
-        'Third_Party_Redemptions'::varchar(23) AS source,
-        to_char(c.fill_date, 'yyyy-mm-ddThh:mi:ss.msz'::varchar(23)) AS "datetime",
-        concat((c.file_id)::varchar, (c.record_id)::varchar) AS trackback_id,
-        NULL AS previous_activity,
-        (brand.basket_id)::varchar(20) AS level_master_id,
-        'HCP'::varchar(3) AS activity_role,
-        'Voucher/Coupon_Redemption'::varchar(25) AS type,
-        'Voucher/Coupon_Redemption'::varchar(25) AS native_type,
-        ((((('Voucher/Coupon Redemption - '::varchar(28) || coalesce(b.name, ''::varchar)) || ','::varchar(1)) || coalesce(cvp.program_description, ''::varchar)) || ','::varchar(1)) || c.redemption_type) AS details,
-        to_char(now(), 'yyyy-mm-ddThh:mi:ss.msz'::varchar(23)) AS created,
-        (to_char(now(), 'yyyy-mm-ddThh:mi:ss.msz'::varchar(23)) || '"'::varchar(1)) AS modified
- FROM ((((datamart.copay c JOIN reference.copay_voucher_program cvp ON (((c.program_number = cvp.program_number) AND (c.redemption_type = cvp.redemption_type)))) JOIN datamart.tvcmid_xref fed ON (((c.physician_tvcmid = fed.tvcmid) AND (fed.id_type = 'FED_ID'::varchar(6))))) LEFT  JOIN product.basket b ON ((c.basket_id = b.basket_id))) LEFT  JOIN ( SELECT bb.basket_id,
-        bb.name,
-        bp.basket_id AS prod_id
- FROM ((product.basket_item bip JOIN product.basket bp ON ((bip.entity_id = bp.basket_id))) JOIN product.basket bb ON (((bip.basket_id = bb.basket_id) AND (bb.basket_type = 'brand'::varchar(5)))))) brand ON ((c.basket_id = brand.prod_id)));
+CREATE TABLE sandbox.scd_sales_geography
+(
+    scd_status varchar(10) DEFAULT 'Current',
+    scd_effective_date date DEFAULT trunc("sysdate"()),
+    scd_expiration_date date DEFAULT '2099-12-31'::date,
+    sales_force_id varchar(4),
+    geography_number varchar(15),
+    geography_name varchar(100),
+    geography_desc varchar(100),
+    geography_type varchar(15),
+    employee_type varchar(10),
+    sales_team varchar(100),
+    parent_geography_number varchar(15),
+    fleet_eligible_flag varchar(1)
+);
 
-CREATE  VIEW sandbox.v_sent_email AS
- SELECT se.id,
-        se.isdeleted,
-        se.name,
-        se.createddate,
-        se.createdbyid,
-        se.lastmodifieddate,
-        se.lastmodifiedbyid,
-        se.systemmodstamp,
-        se.mayedit,
-        se.islocked,
-        se.is_parent_call_vod__c,
-        se.call2_vod__c,
-        se.product_vod__c,
-        se.detail_priority_vod__c,
-        se.mobile_id_vod__c,
-        se.type_vod__c,
-        se.file_id,
-        se.record_id
- FROM (veeva.call_detail se JOIN ( SELECT call_detail.id,
-        max(call_detail.file_id) AS file_id
- FROM veeva.call_detail
- WHERE (call_detail.createddate >= add_months((statement_timestamp())::timestamp, (-25)))
- GROUP BY call_detail.id) se2 ON (((se.id = se2.id) AND (se.file_id = se2.file_id))));
 
-CREATE  VIEW sandbox.account AS
- SELECT x.id,
-        x.isdeleted,
-        x.masterrecordid,
-        x.name,
-        x.lastname,
-        x.firstname,
-        x.salutation,
-        x.type,
-        x.recordtypeid,
-        x.phone,
-        x.fax,
-        x.website,
-        x.numberofemployees,
-        x.ownership,
-        x.ownerid,
-        x.createddate,
-        x.createdbyid,
-        x.lastmodifieddate,
-        x.lastmodifiedbyid,
-        x.systemmodstamp,
-        x.lastactivitydate,
-        x.mayedit,
-        x.islocked,
-        x.lastvieweddate,
-        x.lastreferenceddate,
-        x.isexcludedfromrealign,
-        x.personcontactid,
-        x.ispersonaccount,
-        x.personmailingstreet,
-        x.personmailingcity,
-        x.personmailingstate,
-        x.personmailingpostalcode,
-        x.personmailingcountry,
-        x.personmailinglatitude,
-        x.personmailinglongitude,
-        x.personotherstreet,
-        x.personothercity,
-        x.personotherstate,
-        x.personotherpostalcode,
-        x.personothercountry,
-        x.personotherlatitude,
-        x.personotherlongitude,
-        x.personmobilephone,
-        x.personhomephone,
-        x.personotherphone,
-        x.personassistantphone,
-        x.personemail,
-        x.persontitle,
-        x.persondepartment,
-        x.personassistantname,
-        x.personbirthdate,
-        x.personhasoptedoutofemail,
-        x.personhasoptedoutoffax,
-        x.persondonotcall,
-        x.personlastcurequestdate,
-        x.personlastcuupdatedate,
-        x.personemailbouncedreason,
-        x.personemailbounceddate,
-        x.jigsaw,
-        x.jigsawcompanyid,
-        x.accountsource,
-        x.sicdesc,
-        x.external_id_vod__c,
-        x.credentials_vod__c,
-        x.exclude_from_zip_to_terr_proce,
-        x.group_specialty_1_vod__c,
-        x.group_specialty_2_vod__c,
-        x.specialty_1_vod__c,
-        x.specialty_2_vod__c,
-        x.formatted_name_vod__c,
-        x.territory_test_vod__c,
-        x.mobile_id_vod__c,
-        x.gender_vod__c,
-        x.id_vod__c,
-        x.do_not_sync_sales_data_vod__c,
-        x.id2_vod__c,
-        x.preferred_name_vod__c,
-        x.sample_default_vod__c,
-        x.segmentations_vod__c,
-        x.restricted_products_vod__c,
-        x.payer_id_vod__c,
-        x.account_status_tva__c,
-        x.do_not_call_vod__c,
-        x.beds__c,
-        x.spend_amount__c,
-        x.pdrp_opt_out_vod__c,
-        x.spend_status_value_vod__c,
-        x.pdrp_opt_out_date_vod__c,
-        x.spend_status_vod__c,
-        x.enable_restricted_products,
-        x.call_reminder_vod__c,
-        x.account_group_vod__c,
-        x.primary_parent_vod__c,
-        x.color_vod__c,
-        x.middle_vod__c,
-        x.suffix_vod__c,
-        x.account_location_tva__c,
-        x.no_orders_vod__c,
-        x.account_master_id_tva__c,
-        x.account_email_tva__c,
-        x.account_search_firstlast,
-        x.account_search_lastfirst,
-        x.person_preferred_name_tva__c,
-        x.practice_at_hospital_vod__c,
-        x.practice_near_hospital_vod__c,
-        x.do_not_create_child_account,
-        x.total_mds_dos__c,
-        x.aha__c,
-        x.order_type_vod__c,
-        x.npi_vod__c,
-        x.me__c,
-        x.speaker__c,
-        x.investigator_vod__c,
-        x.default_order_type_vod__c,
-        x.person_degree_tva__c,
-        x.tax_status__c,
-        x.model__c,
-        x.offerings__c,
-        x.departments__c,
-        x.account_type__c,
-        x.account_search_business_vod__c,
-        x.business_professional_person,
-        x.no_spend_tva__c,
-        x.hospital_type_vod__c,
-        x.account_class_vod__c,
-        x.furigana_vod__c,
-        x.tirf_rems_tva__c,
-        x.fentora_app_tva__c,
-        x.total_revenue_000__c,
-        x.net_income_loss_000__c,
-        x.pmpm_income_loss_000__c,
-        x.commercial_premiums_pmpm__c,
-        x.medical_loss_ratio__c,
-        x.medical_expenses_pmpm__c,
-        x.commercial_patient_days_1000,
-        x.hmo_market_shr__c,
-        x.hmo__c,
-        x.hmo_pos__c,
-        x.ppo__c,
-        x.ppo_pos__c,
-        x.medicare__c,
-        x.medicaid__c,
-        x.nuvigil_app_tva__c,
-        x.mds_status_tva__c,
-        x.lis_status_tva__c,
-        x.dnc_pcs_tva__c,
-        x.dnc_cns_tva__c,
-        x.suffix_tva__c,
-        x.tysabri_status_tva__c,
-        x.business_description__c,
-        x.regional_strategy__c,
-        x.contracts_process__c,
-        x.cml_profiled_tva__c,
-        x.cell_phone_tva__c,
-        x.no_contact_tva__c,
-        x.outlet_id_tva__c,
-        x.pmo_gpo_account_affiliations,
-        x.territory_status_tva__c,
-        x.zdea_number_tva__c,
-        x.veeva_id_tva__c,
-        x.treanda_lq_tgt_tva__c,
-        x.tbo_filgrastim_target_tva__c,
-        x.sln_rescrub_tva__c,
-        x.account_identifier_vod__c,
-        x.target__c,
-        x.kol_vod__c,
-        x.rems_expiration_date_teva__c,
-        x.account_demo_id_tva__c,
-        x.total_lives__c,
-        x.total_physicians_enrolled__c,
-        x.tirf_rems_eff_date_tva__c,
-        x.business_associate_agreement,
-        x.do_not_promote_tva__c,
-        x.account_dea_tva__c,
-        x.bp_number__c,
-        x.paragard_segmentation_tva__c,
-        x.telesales_activity_tva__c,
-        x.designation_tva__c,
-        x.total_pharmacists__c,
-        x.comp_pricing_tva__c,
-        x.formulary_tva__c,
-        x.gln_tva__c,
-        x.gpo_contracts_tva__c,
-        x.hin_tva__c,
-        x.max_id_tva__c,
-        x.oncology_services_tva__c,
-        x.pcp_program_tva__c,
-        x.pharmacy_location_tva__c,
-        x.primary_credential_tva__c,
-        x.primary_wholesaler_tva__c,
-        x.rep_credentialing_tva__c,
-        x.secondary_credential_tva__c,
-        x.sign_in_location_tva__c,
-        x.special_tva__c,
-        x.sub_type_id_tva__c,
-        x.sub_type_tva__c,
-        x.teva_contracts_tva__c,
-        x.ims_org_id_tva__c,
-        x.year_of_birth_tva__c,
-        x.teaching_hospital_tva__c,
-        x.account_archived_tva__c,
-        x.mobile_id_vod__pc,
-        x.file_id,
-        x.record_id,
-        x.cm_id_tva__c,
-        x.staff_email,
-        x.company_managed_email,
-        x.alternate_email
- FROM (veeva.account x JOIN ( SELECT account.id,
-        max(account.file_id) AS file_id
- FROM veeva.account
- GROUP BY account.id) x2 ON (((x.id = x2.id) AND (x.file_id = x2.file_id))));
+CREATE TABLE sandbox.onc_osm_targets
+(
+    tvcmid int,
+    target_value varchar(50)
+);
 
-CREATE  VIEW sandbox.v_account AS
- SELECT x.id,
-        x.isdeleted,
-        x.masterrecordid,
-        x.name,
-        x.lastname,
-        x.firstname,
-        x.salutation,
-        x.type,
-        x.recordtypeid,
-        x.phone,
-        x.fax,
-        x.website,
-        x.numberofemployees,
-        x.ownership,
-        x.ownerid,
-        x.createddate,
-        x.createdbyid,
-        x.lastmodifieddate,
-        x.lastmodifiedbyid,
-        x.systemmodstamp,
-        x.lastactivitydate,
-        x.mayedit,
-        x.islocked,
-        x.lastvieweddate,
-        x.lastreferenceddate,
-        x.isexcludedfromrealign,
-        x.personcontactid,
-        x.ispersonaccount,
-        x.personmailingstreet,
-        x.personmailingcity,
-        x.personmailingstate,
-        x.personmailingpostalcode,
-        x.personmailingcountry,
-        x.personmailinglatitude,
-        x.personmailinglongitude,
-        x.personotherstreet,
-        x.personothercity,
-        x.personotherstate,
-        x.personotherpostalcode,
-        x.personothercountry,
-        x.personotherlatitude,
-        x.personotherlongitude,
-        x.personmobilephone,
-        x.personhomephone,
-        x.personotherphone,
-        x.personassistantphone,
-        x.personemail,
-        x.persontitle,
-        x.persondepartment,
-        x.personassistantname,
-        x.personbirthdate,
-        x.personhasoptedoutofemail,
-        x.personhasoptedoutoffax,
-        x.persondonotcall,
-        x.personlastcurequestdate,
-        x.personlastcuupdatedate,
-        x.personemailbouncedreason,
-        x.personemailbounceddate,
-        x.jigsaw,
-        x.jigsawcompanyid,
-        x.accountsource,
-        x.sicdesc,
-        x.external_id_vod__c,
-        x.credentials_vod__c,
-        x.exclude_from_zip_to_terr_proce,
-        x.group_specialty_1_vod__c,
-        x.group_specialty_2_vod__c,
-        x.specialty_1_vod__c,
-        x.specialty_2_vod__c,
-        x.formatted_name_vod__c,
-        x.territory_test_vod__c,
-        x.mobile_id_vod__c,
-        x.gender_vod__c,
-        x.id_vod__c,
-        x.do_not_sync_sales_data_vod__c,
-        x.id2_vod__c,
-        x.preferred_name_vod__c,
-        x.sample_default_vod__c,
-        x.segmentations_vod__c,
-        x.restricted_products_vod__c,
-        x.payer_id_vod__c,
-        x.account_status_tva__c,
-        x.do_not_call_vod__c,
-        x.beds__c,
-        x.spend_amount__c,
-        x.pdrp_opt_out_vod__c,
-        x.spend_status_value_vod__c,
-        x.pdrp_opt_out_date_vod__c,
-        x.spend_status_vod__c,
-        x.enable_restricted_products,
-        x.call_reminder_vod__c,
-        x.account_group_vod__c,
-        x.primary_parent_vod__c,
-        x.color_vod__c,
-        x.middle_vod__c,
-        x.suffix_vod__c,
-        x.account_location_tva__c,
-        x.no_orders_vod__c,
-        x.account_master_id_tva__c,
-        x.account_email_tva__c,
-        x.account_search_firstlast,
-        x.account_search_lastfirst,
-        x.person_preferred_name_tva__c,
-        x.practice_at_hospital_vod__c,
-        x.practice_near_hospital_vod__c,
-        x.do_not_create_child_account,
-        x.total_mds_dos__c,
-        x.aha__c,
-        x.order_type_vod__c,
-        x.npi_vod__c,
-        x.me__c,
-        x.speaker__c,
-        x.investigator_vod__c,
-        x.default_order_type_vod__c,
-        x.person_degree_tva__c,
-        x.tax_status__c,
-        x.model__c,
-        x.offerings__c,
-        x.departments__c,
-        x.account_type__c,
-        x.account_search_business_vod__c,
-        x.business_professional_person,
-        x.no_spend_tva__c,
-        x.hospital_type_vod__c,
-        x.account_class_vod__c,
-        x.furigana_vod__c,
-        x.tirf_rems_tva__c,
-        x.fentora_app_tva__c,
-        x.total_revenue_000__c,
-        x.net_income_loss_000__c,
-        x.pmpm_income_loss_000__c,
-        x.commercial_premiums_pmpm__c,
-        x.medical_loss_ratio__c,
-        x.medical_expenses_pmpm__c,
-        x.commercial_patient_days_1000,
-        x.hmo_market_shr__c,
-        x.hmo__c,
-        x.hmo_pos__c,
-        x.ppo__c,
-        x.ppo_pos__c,
-        x.medicare__c,
-        x.medicaid__c,
-        x.nuvigil_app_tva__c,
-        x.mds_status_tva__c,
-        x.lis_status_tva__c,
-        x.dnc_pcs_tva__c,
-        x.dnc_cns_tva__c,
-        x.suffix_tva__c,
-        x.tysabri_status_tva__c,
-        x.business_description__c,
-        x.regional_strategy__c,
-        x.contracts_process__c,
-        x.cml_profiled_tva__c,
-        x.cell_phone_tva__c,
-        x.no_contact_tva__c,
-        x.outlet_id_tva__c,
-        x.pmo_gpo_account_affiliations,
-        x.territory_status_tva__c,
-        x.zdea_number_tva__c,
-        x.veeva_id_tva__c,
-        x.treanda_lq_tgt_tva__c,
-        x.tbo_filgrastim_target_tva__c,
-        x.sln_rescrub_tva__c,
-        x.account_identifier_vod__c,
-        x.target__c,
-        x.kol_vod__c,
-        x.rems_expiration_date_teva__c,
-        x.account_demo_id_tva__c,
-        x.total_lives__c,
-        x.total_physicians_enrolled__c,
-        x.tirf_rems_eff_date_tva__c,
-        x.business_associate_agreement,
-        x.do_not_promote_tva__c,
-        x.account_dea_tva__c,
-        x.bp_number__c,
-        x.paragard_segmentation_tva__c,
-        x.telesales_activity_tva__c,
-        x.designation_tva__c,
-        x.total_pharmacists__c,
-        x.comp_pricing_tva__c,
-        x.formulary_tva__c,
-        x.gln_tva__c,
-        x.gpo_contracts_tva__c,
-        x.hin_tva__c,
-        x.max_id_tva__c,
-        x.oncology_services_tva__c,
-        x.pcp_program_tva__c,
-        x.pharmacy_location_tva__c,
-        x.primary_credential_tva__c,
-        x.primary_wholesaler_tva__c,
-        x.rep_credentialing_tva__c,
-        x.secondary_credential_tva__c,
-        x.sign_in_location_tva__c,
-        x.special_tva__c,
-        x.sub_type_id_tva__c,
-        x.sub_type_tva__c,
-        x.teva_contracts_tva__c,
-        x.ims_org_id_tva__c,
-        x.year_of_birth_tva__c,
-        x.teaching_hospital_tva__c,
-        x.account_archived_tva__c,
-        x.mobile_id_vod__pc,
-        x.file_id,
-        x.record_id,
-        x.cm_id_tva__c,
-        x.staff_email,
-        x.company_managed_email,
-        x.alternate_email
- FROM (veeva.account x JOIN ( SELECT account.id,
-        max(account.file_id) AS file_id
- FROM veeva.account
- GROUP BY account.id) x2 ON (((x.id = x2.id) AND (x.file_id = x2.file_id))));
 
-CREATE  VIEW sandbox.v_call AS
- SELECT x.id,
-        x.ownerid,
-        x.isdeleted,
-        x.name,
-        x.recordtypeid,
-        x.createddate,
-        x.createdbyid,
-        x.lastmodifieddate,
-        x.lastmodifiedbyid,
-        x.systemmodstamp,
-        x.lastactivitydate,
-        x.mayedit,
-        x.islocked,
-        x.lastvieweddate,
-        x.lastreferenceddate,
-        x.sample_card_vod__c,
-        x.add_detail_vod__c,
-        x.property_vod__c,
-        x.account_vod__c,
-        x.zvod_product_discussion_vod__c,
-        x.status_vod__c,
-        x.parent_address_vod__c,
-        x.account_plan_vod__c,
-        x.zvod_savenew_vod__c,
-        x.next_call_notes_vod__c,
-        x.mobile_id_vod__c,
-        x.zvod_account_credentials_vod_c,
-        x.zvod_account_preferred_name_vo,
-        x.zvod_account_sample_status_vod,
-        x.zvod_attendees_vod__c,
-        x.zvod_key_messages_vod__c,
-        x.zvod_detailing_vod__c,
-        x.zvod_expenses_vod__c,
-        x.zvod_followup_vod__c,
-        x.zvod_samples_vod__c,
-        x.zvod_save_vod__c,
-        x.zvod_submit_vod__c,
-        x.zvod_delete_vod__c,
-        x.activity_type__c,
-        x.significant_event__c,
-        x.location_vod__c,
-        x.subject_vod__c,
-        x.call_datetime_vod__c,
-        x.disbursed_to_vod__c,
-        x.request_receipt_vod__c,
-        x.signature_date_vod__c,
-        x.territory_vod__c,
-        x.submitted_by_mobile_vod__c,
-        x.call_type_vod__c,
-        x.add_key_message_vod__c,
-        x.address_vod__c,
-        x.attendees_vod__c,
-        x.attendee_type_vod__c,
-        x.call_date_vod__c,
-        x.detailed_products_vod__c,
-        x.no_disbursement_vod__c,
-        x.parent_call_vod__c,
-        x.user_vod__c,
-        x.contact_vod__c,
-        x.zvod_entity_vod__c,
-        x.medical_event_vod__c,
-        x.mobile_created_datetime_vod__c,
-        x.mobile_last_modified_datetime,
-        x.license_vod__c,
-        x.is_parent_call_vod__c,
-        x.entity_display_name_vod__c,
-        x.last_device_vod__c,
-        x.ship_address_line_1_vod__c,
-        x.ship_address_line_2_vod__c,
-        x.ship_city_vod__c,
-        x.ship_country_vod__c,
-        x.ship_license_expiration_date,
-        x.ship_license_status_vod__c,
-        x.ship_license_vod__c,
-        x.ship_state_vod__c,
-        x.ship_to_address_vod__c,
-        x.ship_zip_vod__c,
-        x.ship_to_address_text_vod__c,
-        x.clm_vod__c,
-        x.zvod_clmdetails_vod__c,
-        x.is_sampled_call_vod__c,
-        x.zvod_surveys_vod__c,
-        x.presentations_vod__c,
-        x.entity_reference_id_vod__c,
-        x.error_reference_call_vod__c,
-        x.duration_vod__c,
-        x.color_vod__c,
-        x.allowed_products_vod__c,
-        x.zvod_attachments_vod__c,
-        x.sample_card_reason_vod__c,
-        x.assmca_vod__c,
-        x.address_line_1_vod__c,
-        x.address_line_2_vod__c,
-        x.city_vod__c,
-        x.dea_address_line_1_vod__c,
-        x.dea_address_line_2_vod__c,
-        x.dea_address_vod__c,
-        x.dea_city_vod__c,
-        x.dea_expiration_date_vod__c,
-        x.dea_state_vod__c,
-        x.dea_zip_4_vod__c,
-        x.dea_zip_vod__c,
-        x.dea_vod__c,
-        x.ship_zip_4_vod__c,
-        x.state_vod__c,
-        x.zip_4_vod__c,
-        x.zip_vod__c,
-        x.sample_send_card_vod__c,
-        x.zvod_address_vod_c_dea_status_,
-        x.signature_page_image_vod__c,
-        x.credentials_vod__c,
-        x.salutation_vod__c,
-        x.zvod_account_call_reminder_vod,
-        x.sales_org_tva__c,
-        x.zvod_business_account_vod__c,
-        x.product_priority_1_vod__c,
-        x.product_priority_2_vod__c,
-        x.product_priority_3_vod__c,
-        x.product_priority_4_vod__c,
-        x.product_priority_5_vod__c,
-        x.zvod_more_actions_vod__c,
-        x.zvod_call_conflict_status,
-        x.signature_timestamp_vod__c,
-        x.expense_amount_vod__c,
-        x.total_expense_attendees_count,
-        x.attendee_list_vod__c,
-        x.expense_post_status_vod__c,
-        x.attendee_post_status_vod__c,
-        x.expense_system_external_id,
-        x.incurred_expense_vod__c,
-        x.assigner_vod__c,
-        x.assignment_datetime_vod__c,
-        x.zvod_call_objective_vod__c,
-        x.signature_location_longitude,
-        x.signature_location_latitude,
-        x.location_services_status,
-        x.created_by_timezone_tva__c,
-        x.license_expiration_date_vod__c,
-        x.license_status_vod__c,
-        x.ship_assmca_vod__c,
-        x.ship_dea_expiration_date,
-        x.ship_dea_vod__c,
-        x.call_method_tva__c,
-        x.bendeka_indication_tva__c,
-        x.file_id,
-        x.record_id,
-        x.austedo_indication_tva__c,
-        x.call_duration_tva__c,
-        x.how_executed_tva__c,
-        x.Remote_Meeting_vod__c,
-        x.Veeva_Remote_Meeting_Id_vod__c,
-        x.Cobrowse_URL_Participant_vod__c,
-        x.Signature_Captured_Remotely_vod__c,
-        x.Remote_Signature_Attendee_Name_vod__c
- FROM (veeva.call x JOIN ( SELECT call.id,
-        max(call.file_id) AS file_id
- FROM veeva.call
- WHERE (call.createddate >= add_months((statement_timestamp())::timestamp, (-25)))
- GROUP BY call.id) x2 ON (((x.id = x2.id) AND (x.file_id = x2.file_id))));
+CREATE TABLE sandbox.speaker_bureau_results_09192018
+(
+    tvcmid int,
+    npi int,
+    last_name varchar(50),
+    first_name varchar(50),
+    middle_name varchar(50),
+    address varchar(63),
+    city varchar(50),
+    state varchar(50),
+    zip int,
+    speaker_affiliation varchar(77),
+    authorization_number varchar(50),
+    sln_state varchar(50),
+    license_expiration_date timestamp,
+    license_type_name varchar(69),
+    license_status_description varchar(50),
+    license_certification_name varchar(50),
+    oig_flag varchar(20),
+    fda_flag varchar(20),
+    dea_flag varchar(20),
+    "promotional speaker flag" varchar(20),
+    "personal promotion flag" varchar(20),
+    "non-personal promotion flag" varchar(20),
+    "advisor/ consultant flag" varchar(20)
+);
 
-CREATE  VIEW sandbox.v_call_detail AS
- SELECT x.id,
-        x.isdeleted,
-        x.name,
-        x.createddate,
-        x.createdbyid,
-        x.lastmodifieddate,
-        x.lastmodifiedbyid,
-        x.systemmodstamp,
-        x.mayedit,
-        x.islocked,
-        x.is_parent_call_vod__c,
-        x.call2_vod__c,
-        x.product_vod__c,
-        x.detail_priority_vod__c,
-        x.mobile_id_vod__c,
-        x.type_vod__c,
-        x.file_id,
-        x.record_id
- FROM (veeva.call_detail x JOIN ( SELECT call_detail.id,
-        max(call_detail.file_id) AS file_id
- FROM veeva.call_detail
- WHERE (call_detail.createddate >= add_months((statement_timestamp())::timestamp, (-25)))
- GROUP BY call_detail.id) x2 ON (((x.id = x2.id) AND (x.file_id = x2.file_id))));
 
-CREATE  VIEW sandbox.ics_mop AS
- SELECT rx_vertical.ims_id,
-        rx_vertical.hcp_id,
-        rx_vertical.plan_code,
-        rx_vertical.plan_name,
-        rx_vertical.model,
-        rx_vertical.basket_name,
-        sum(CASE WHEN (rx_vertical.month_bucket = 24) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth24,
-        sum(CASE WHEN (rx_vertical.month_bucket = 23) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth23,
-        sum(CASE WHEN (rx_vertical.month_bucket = 22) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth22,
-        sum(CASE WHEN (rx_vertical.month_bucket = 21) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth21,
-        sum(CASE WHEN (rx_vertical.month_bucket = 20) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth20,
-        sum(CASE WHEN (rx_vertical.month_bucket = 19) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth19,
-        sum(CASE WHEN (rx_vertical.month_bucket = 18) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth18,
-        sum(CASE WHEN (rx_vertical.month_bucket = 17) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth17,
-        sum(CASE WHEN (rx_vertical.month_bucket = 16) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth16,
-        sum(CASE WHEN (rx_vertical.month_bucket = 15) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth15,
-        sum(CASE WHEN (rx_vertical.month_bucket = 14) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth14,
-        sum(CASE WHEN (rx_vertical.month_bucket = 13) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth13,
-        sum(CASE WHEN (rx_vertical.month_bucket = 12) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth12,
-        sum(CASE WHEN (rx_vertical.month_bucket = 11) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth11,
-        sum(CASE WHEN (rx_vertical.month_bucket = 10) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth10,
-        sum(CASE WHEN (rx_vertical.month_bucket = 9) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth9,
-        sum(CASE WHEN (rx_vertical.month_bucket = 8) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth8,
-        sum(CASE WHEN (rx_vertical.month_bucket = 7) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth7,
-        sum(CASE WHEN (rx_vertical.month_bucket = 6) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth6,
-        sum(CASE WHEN (rx_vertical.month_bucket = 5) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth5,
-        sum(CASE WHEN (rx_vertical.month_bucket = 4) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth4,
-        sum(CASE WHEN (rx_vertical.month_bucket = 3) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth3,
-        sum(CASE WHEN (rx_vertical.month_bucket = 2) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth2,
-        sum(CASE WHEN (rx_vertical.month_bucket = 1) THEN rx_vertical.trx_count ELSE 0::numeric(18,0) END) AS trx_mth1
- FROM ( SELECT CASE WHEN (length(rx.ims_id) = 8) THEN ('XX'::varchar(2) || substr(rx.ims_id, 4)) ELSE rx.ims_id END AS ims_id,
-        CASE WHEN (length(rx.ims_id) = 8) THEN NULL ELSE coalesce(xref.veeva_account_id, rx.ims_id) END AS hcp_id,
-        rx.payer_plan_number AS plan_code,
-        rx.plan_name,
-        rx.model,
-        rx.basket_name,
-        w.month_bucket,
-        rx.trx_count
- FROM ((datamart.prescriber_rx rx JOIN ( SELECT ims_week_buckets.month_ending,
-        ims_week_buckets.month_bucket
- FROM integration.ims_week_buckets
- GROUP BY ims_week_buckets.month_ending,
-          ims_week_buckets.month_bucket) w ON ((rx.rollup_month = w.month_ending))) LEFT  JOIN ( SELECT a.tvcmid,
-        a.veeva_account_id
- FROM ( SELECT xref.tvcmid,
-        xref.id_num AS veeva_account_id,
-        row_number() OVER (PARTITION BY xref.tvcmid ORDER BY xref.id_num) AS rnk
- FROM datamart.tvcmid_xref xref
- WHERE (xref.id_type = 'VEEVA_ID'::varchar(8))) a
- WHERE (a.rnk = 1)) xref ON ((xref.tvcmid = rx.tvcmid)))
- WHERE ((rx.market_name = 'ICS MARKET TOTAL'::varchar(16)) AND (rx.basket_type = 'product'::varchar(7)) AND (rx.report_frequency = 'SPLITWEEK'::varchar(9)) AND (w.month_bucket >= 1) AND (w.month_bucket <= 24))) rx_vertical
- GROUP BY rx_vertical.ims_id,
-          rx_vertical.hcp_id,
-          rx_vertical.plan_code,
-          rx_vertical.plan_name,
-          rx_vertical.model,
-          rx_vertical.basket_name;
+CREATE TABLE sandbox.QVAR_Missing_SLN_10152018
+(
+    "Client ID" int,
+    "First Name" varchar(50),
+    "Last Name" varchar(50),
+    "Middle Name" varchar(20),
+    Suffix varchar(20),
+    "Address 1" varchar(63),
+    "Address 2" varchar(50),
+    "Address 3" varchar(20),
+    City varchar(50),
+    State varchar(50),
+    Zip int
+);
 
-CREATE  VIEW sandbox.call AS
- SELECT a.id,
-        a.ownerid,
-        a.isdeleted,
-        a.name,
-        a.recordtypeid,
-        a.createddate,
-        a.createdbyid,
-        a.lastmodifieddate,
-        a.lastmodifiedbyid,
-        a.systemmodstamp,
-        a.lastactivitydate,
-        a.mayedit,
-        a.islocked,
-        a.lastvieweddate,
-        a.lastreferenceddate,
-        a.sample_card_vod__c,
-        a.add_detail_vod__c,
-        a.property_vod__c,
-        a.account_vod__c,
-        a.zvod_product_discussion_vod__c,
-        a.status_vod__c,
-        a.parent_address_vod__c,
-        a.account_plan_vod__c,
-        a.zvod_savenew_vod__c,
-        a.next_call_notes_vod__c,
-        a.mobile_id_vod__c,
-        a.zvod_account_credentials_vod_c,
-        a.zvod_account_preferred_name_vo,
-        a.zvod_account_sample_status_vod,
-        a.zvod_attendees_vod__c,
-        a.zvod_key_messages_vod__c,
-        a.zvod_detailing_vod__c,
-        a.zvod_expenses_vod__c,
-        a.zvod_followup_vod__c,
-        a.zvod_samples_vod__c,
-        a.zvod_save_vod__c,
-        a.zvod_submit_vod__c,
-        a.zvod_delete_vod__c,
-        a.activity_type__c,
-        a.significant_event__c,
-        a.location_vod__c,
-        a.subject_vod__c,
-        a.call_datetime_vod__c,
-        a.disbursed_to_vod__c,
-        a.request_receipt_vod__c,
-        a.signature_date_vod__c,
-        a.territory_vod__c,
-        a.submitted_by_mobile_vod__c,
-        a.call_type_vod__c,
-        a.add_key_message_vod__c,
-        a.address_vod__c,
-        a.attendees_vod__c,
-        a.attendee_type_vod__c,
-        a.call_date_vod__c,
-        a.detailed_products_vod__c,
-        a.no_disbursement_vod__c,
-        a.parent_call_vod__c,
-        a.user_vod__c,
-        a.contact_vod__c,
-        a.zvod_entity_vod__c,
-        a.medical_event_vod__c,
-        a.mobile_created_datetime_vod__c,
-        a.mobile_last_modified_datetime,
-        a.license_vod__c,
-        a.is_parent_call_vod__c,
-        a.entity_display_name_vod__c,
-        a.last_device_vod__c,
-        a.ship_address_line_1_vod__c,
-        a.ship_address_line_2_vod__c,
-        a.ship_city_vod__c,
-        a.ship_country_vod__c,
-        a.ship_license_expiration_date,
-        a.ship_license_status_vod__c,
-        a.ship_license_vod__c,
-        a.ship_state_vod__c,
-        a.ship_to_address_vod__c,
-        a.ship_zip_vod__c,
-        a.ship_to_address_text_vod__c,
-        a.clm_vod__c,
-        a.zvod_clmdetails_vod__c,
-        a.is_sampled_call_vod__c,
-        a.zvod_surveys_vod__c,
-        a.presentations_vod__c,
-        a.entity_reference_id_vod__c,
-        a.error_reference_call_vod__c,
-        a.duration_vod__c,
-        a.color_vod__c,
-        a.allowed_products_vod__c,
-        a.zvod_attachments_vod__c,
-        a.sample_card_reason_vod__c,
-        a.assmca_vod__c,
-        a.address_line_1_vod__c,
-        a.address_line_2_vod__c,
-        a.city_vod__c,
-        a.dea_address_line_1_vod__c,
-        a.dea_address_line_2_vod__c,
-        a.dea_address_vod__c,
-        a.dea_city_vod__c,
-        a.dea_expiration_date_vod__c,
-        a.dea_state_vod__c,
-        a.dea_zip_4_vod__c,
-        a.dea_zip_vod__c,
-        a.dea_vod__c,
-        a.ship_zip_4_vod__c,
-        a.state_vod__c,
-        a.zip_4_vod__c,
-        a.zip_vod__c,
-        a.sample_send_card_vod__c,
-        a.zvod_address_vod_c_dea_status_,
-        a.signature_page_image_vod__c,
-        a.credentials_vod__c,
-        a.salutation_vod__c,
-        a.zvod_account_call_reminder_vod,
-        a.sales_org_tva__c,
-        a.zvod_business_account_vod__c,
-        a.product_priority_1_vod__c,
-        a.product_priority_2_vod__c,
-        a.product_priority_3_vod__c,
-        a.product_priority_4_vod__c,
-        a.product_priority_5_vod__c,
-        a.zvod_more_actions_vod__c,
-        a.zvod_call_conflict_status,
-        a.signature_timestamp_vod__c,
-        a.expense_amount_vod__c,
-        a.total_expense_attendees_count,
-        a.attendee_list_vod__c,
-        a.expense_post_status_vod__c,
-        a.attendee_post_status_vod__c,
-        a.expense_system_external_id,
-        a.incurred_expense_vod__c,
-        a.assigner_vod__c,
-        a.assignment_datetime_vod__c,
-        a.zvod_call_objective_vod__c,
-        a.signature_location_longitude,
-        a.signature_location_latitude,
-        a.location_services_status,
-        a.created_by_timezone_tva__c,
-        a.license_expiration_date_vod__c,
-        a.license_status_vod__c,
-        a.ship_assmca_vod__c,
-        a.ship_dea_expiration_date,
-        a.ship_dea_vod__c,
-        a.call_method_tva__c,
-        a.bendeka_indication_tva__c,
-        a.file_id,
-        a.record_id,
-        a.austedo_indication_tva__c,
-        a.call_duration_tva__c,
-        a.how_executed_tva__c,
-        a.Remote_Meeting_vod__c,
-        a.Veeva_Remote_Meeting_Id_vod__c,
-        a.Cobrowse_URL_Participant_vod__c,
-        a.Signature_Captured_Remotely_vod__c,
-        a.Remote_Signature_Attendee_Name_vod__c,
-        a.rowrank
- FROM ( SELECT c.id,
-        c.ownerid,
-        c.isdeleted,
-        c.name,
-        c.recordtypeid,
-        c.createddate,
-        c.createdbyid,
-        c.lastmodifieddate,
-        c.lastmodifiedbyid,
-        c.systemmodstamp,
-        c.lastactivitydate,
-        c.mayedit,
-        c.islocked,
-        c.lastvieweddate,
-        c.lastreferenceddate,
-        c.sample_card_vod__c,
-        c.add_detail_vod__c,
-        c.property_vod__c,
-        c.account_vod__c,
-        c.zvod_product_discussion_vod__c,
-        c.status_vod__c,
-        c.parent_address_vod__c,
-        c.account_plan_vod__c,
-        c.zvod_savenew_vod__c,
-        c.next_call_notes_vod__c,
-        c.mobile_id_vod__c,
-        c.zvod_account_credentials_vod_c,
-        c.zvod_account_preferred_name_vo,
-        c.zvod_account_sample_status_vod,
-        c.zvod_attendees_vod__c,
-        c.zvod_key_messages_vod__c,
-        c.zvod_detailing_vod__c,
-        c.zvod_expenses_vod__c,
-        c.zvod_followup_vod__c,
-        c.zvod_samples_vod__c,
-        c.zvod_save_vod__c,
-        c.zvod_submit_vod__c,
-        c.zvod_delete_vod__c,
-        c.activity_type__c,
-        c.significant_event__c,
-        c.location_vod__c,
-        c.subject_vod__c,
-        c.call_datetime_vod__c,
-        c.disbursed_to_vod__c,
-        c.request_receipt_vod__c,
-        c.signature_date_vod__c,
-        c.territory_vod__c,
-        c.submitted_by_mobile_vod__c,
-        c.call_type_vod__c,
-        c.add_key_message_vod__c,
-        c.address_vod__c,
-        c.attendees_vod__c,
-        c.attendee_type_vod__c,
-        c.call_date_vod__c,
-        c.detailed_products_vod__c,
-        c.no_disbursement_vod__c,
-        c.parent_call_vod__c,
-        c.user_vod__c,
-        c.contact_vod__c,
-        c.zvod_entity_vod__c,
-        c.medical_event_vod__c,
-        c.mobile_created_datetime_vod__c,
-        c.mobile_last_modified_datetime,
-        c.license_vod__c,
-        c.is_parent_call_vod__c,
-        c.entity_display_name_vod__c,
-        c.last_device_vod__c,
-        c.ship_address_line_1_vod__c,
-        c.ship_address_line_2_vod__c,
-        c.ship_city_vod__c,
-        c.ship_country_vod__c,
-        c.ship_license_expiration_date,
-        c.ship_license_status_vod__c,
-        c.ship_license_vod__c,
-        c.ship_state_vod__c,
-        c.ship_to_address_vod__c,
-        c.ship_zip_vod__c,
-        c.ship_to_address_text_vod__c,
-        c.clm_vod__c,
-        c.zvod_clmdetails_vod__c,
-        c.is_sampled_call_vod__c,
-        c.zvod_surveys_vod__c,
-        c.presentations_vod__c,
-        c.entity_reference_id_vod__c,
-        c.error_reference_call_vod__c,
-        c.duration_vod__c,
-        c.color_vod__c,
-        c.allowed_products_vod__c,
-        c.zvod_attachments_vod__c,
-        c.sample_card_reason_vod__c,
-        c.assmca_vod__c,
-        c.address_line_1_vod__c,
-        c.address_line_2_vod__c,
-        c.city_vod__c,
-        c.dea_address_line_1_vod__c,
-        c.dea_address_line_2_vod__c,
-        c.dea_address_vod__c,
-        c.dea_city_vod__c,
-        c.dea_expiration_date_vod__c,
-        c.dea_state_vod__c,
-        c.dea_zip_4_vod__c,
-        c.dea_zip_vod__c,
-        c.dea_vod__c,
-        c.ship_zip_4_vod__c,
-        c.state_vod__c,
-        c.zip_4_vod__c,
-        c.zip_vod__c,
-        c.sample_send_card_vod__c,
-        c.zvod_address_vod_c_dea_status_,
-        c.signature_page_image_vod__c,
-        c.credentials_vod__c,
-        c.salutation_vod__c,
-        c.zvod_account_call_reminder_vod,
-        c.sales_org_tva__c,
-        c.zvod_business_account_vod__c,
-        c.product_priority_1_vod__c,
-        c.product_priority_2_vod__c,
-        c.product_priority_3_vod__c,
-        c.product_priority_4_vod__c,
-        c.product_priority_5_vod__c,
-        c.zvod_more_actions_vod__c,
-        c.zvod_call_conflict_status,
-        c.signature_timestamp_vod__c,
-        c.expense_amount_vod__c,
-        c.total_expense_attendees_count,
-        c.attendee_list_vod__c,
-        c.expense_post_status_vod__c,
-        c.attendee_post_status_vod__c,
-        c.expense_system_external_id,
-        c.incurred_expense_vod__c,
-        c.assigner_vod__c,
-        c.assignment_datetime_vod__c,
-        c.zvod_call_objective_vod__c,
-        c.signature_location_longitude,
-        c.signature_location_latitude,
-        c.location_services_status,
-        c.created_by_timezone_tva__c,
-        c.license_expiration_date_vod__c,
-        c.license_status_vod__c,
-        c.ship_assmca_vod__c,
-        c.ship_dea_expiration_date,
-        c.ship_dea_vod__c,
-        c.call_method_tva__c,
-        c.bendeka_indication_tva__c,
-        c.file_id,
-        c.record_id,
-        c.austedo_indication_tva__c,
-        c.call_duration_tva__c,
-        c.how_executed_tva__c,
-        c.Remote_Meeting_vod__c,
-        c.Veeva_Remote_Meeting_Id_vod__c,
-        c.Cobrowse_URL_Participant_vod__c,
-        c.Signature_Captured_Remotely_vod__c,
-        c.Remote_Signature_Attendee_Name_vod__c,
-        rank() OVER (PARTITION BY c.id ORDER BY c.file_id DESC) AS rowrank
- FROM veeva.call c
- WHERE (c.call_date_vod__c >= add_months((statement_timestamp())::timestamp, (-24)))) a
- WHERE (a.rowrank = 1);
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_formularies AS
- SELECT btrim(ftf_formularies.health_plan_id) AS health_plan_id,
-        btrim(ftf_formularies.drug_id) AS drug_id,
-        btrim(ftf_formularies.tier_code) AS tier_code,
-        btrim(ftf_formularies.restrictions) AS restrictions,
-        btrim(ftf_formularies.reason_code) AS reason_code,
-        btrim(ftf_formularies.reason_code_description) AS btrim,
-        ftf_formularies.file_id,
-        ftf_formularies.record_id
- FROM cleansed.ftf_formularies
- WHERE (ftf_formularies.file_id IN ( SELECT max(ftf_formularies.file_id) AS max
- FROM cleansed.ftf_formularies));
+CREATE TABLE sandbox."KNIPPER QVARs IDs1033"
+(
+    TVCMID int,
+    ims_id int
+);
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_health_plans AS
- SELECT btrim(ftf_health_plans.formularyf_id) AS formularyf_id,
-        btrim(ftf_health_plans.provider_id) AS provider_id,
-        btrim(ftf_health_plans.provider) AS provider,
-        btrim(ftf_health_plans.health_plan_id) AS health_plan_id,
-        btrim(ftf_health_plans.health_plan) AS health_plan,
-        btrim(ftf_health_plans.parent_id) AS parent_id,
-        btrim(ftf_health_plans.parent) AS parent,
-        ftf_health_plans.national_lives_count,
-        btrim(ftf_health_plans.plan_type_name) AS plan_type_name,
-        ftf_health_plans.preferred_brand_tier,
-        ftf_health_plans.file_id,
-        ftf_health_plans.record_id
- FROM cleansed.ftf_health_plans
- WHERE (ftf_health_plans.file_id IN ( SELECT max(ftf_health_plans.file_id) AS max
- FROM cleansed.ftf_health_plans));
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_health_plan_geography AS
- SELECT btrim(ftf_health_plan_geography.health_plan_id) AS health_plan_id,
-        btrim(ftf_health_plan_geography.operating_state) AS operating_state,
-        ftf_health_plan_geography.lives_coverage,
-        ftf_health_plan_geography.file_id,
-        ftf_health_plan_geography.record_id
- FROM cleansed.ftf_health_plan_geography
- WHERE (ftf_health_plan_geography.file_id IN ( SELECT max(ftf_health_plan_geography.file_id) AS max
- FROM cleansed.ftf_health_plan_geography));
+CREATE TABLE sandbox.TJR_DRM45
+(
+    AUDIT_CODE varchar(10),
+    CLIENT_GROUP_DESCRIPTION varchar(100),
+    CLIENT_NBR varchar(3),
+    FILE_CODE varchar(2),
+    PRODUCT_GROUP_NBR varchar(8),
+    PRODUCT_GROUP_NAME varchar(100),
+    PRODUCT_CODE varchar(8),
+    PACK_CODE varchar(3),
+    PROD_DESC varchar(255),
+    WHOLESALE_PRICE varchar(50),
+    MFR_DESC varchar(100),
+    MFR_CODE varchar(5),
+    SPEC_REPACK_IND varchar(5),
+    USC_CODE varchar(10)
+);
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_pbms AS
- SELECT btrim(ftf_pbms.health_plan_id) AS health_plan_id,
-        btrim(ftf_pbms.pbm_id) AS pbm_id,
-        btrim(ftf_pbms.pbm) AS pbm,
-        btrim(ftf_pbms.pbm_function_id) AS pbm_function_id,
-        btrim(ftf_pbms.pbm_function) AS pbm_function,
-        ftf_pbms.file_id,
-        ftf_pbms.record_id
- FROM cleansed.ftf_pbms
- WHERE (ftf_pbms.file_id IN ( SELECT max(ftf_pbms.file_id) AS max
- FROM cleansed.ftf_pbms));
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_restrictions AS
- SELECT btrim(ftf_restrictions_v2.health_plan_id) AS health_plan_id,
-        btrim(ftf_restrictions_v2.drug_id) AS drug_id,
-        btrim(ftf_restrictions_v2.restriction_code) AS restriction_code,
-        ftf_restrictions_v2.restriction_detail_id,
-        btrim(ftf_restrictions_v2.restriction_detail_text) AS restriction_detail_text,
-        btrim(ftf_restrictions_v2.restriction_addtnl_information_1) AS restriction_addtnl_information_1,
-        btrim(ftf_restrictions_v2.restriction_addtnl_information_2) AS restriction_addtnl_information_2,
-        btrim(ftf_restrictions_v2.step_count) AS step_count,
-        btrim(ftf_restrictions_v2.pa_form) AS pa_form,
-        btrim(ftf_restrictions_v2.indication) AS indication,
-        btrim(ftf_restrictions_v2.grouped_restriction_level) AS grouped_restriction_level,
-        ftf_restrictions_v2.record_id,
-        ftf_restrictions_v2.file_id
- FROM cleansed.ftf_restrictions_v2
- WHERE (ftf_restrictions_v2.file_id IN ( SELECT max(ftf_restrictions_v2.file_id) AS max
- FROM cleansed.ftf_restrictions_v2));
+CREATE TABLE sandbox.QNASL_IMSID_04112019
+(
+    IMSID int
+);
 
-CREATE  VIEW sandbox.vw_curr_month_ims_plan_xref AS
- SELECT btrim(ims_plan_xref.payer_num) AS payer_num,
-        btrim(ims_plan_xref.payer_name) AS payer_name,
-        btrim(ims_plan_xref.plan_num) AS plan_num,
-        btrim(ims_plan_xref.payer_plan_num) AS payer_plan_num,
-        btrim(ims_plan_xref.plan_name) AS plan_name,
-        btrim(ims_plan_xref.model) AS model,
-        btrim(ims_plan_xref.city) AS city,
-        btrim(ims_plan_xref.hq_state) AS hq_state,
-        btrim(ims_plan_xref.operating_state) AS operating_state,
-        ims_plan_xref.months_with_data,
-        ims_plan_xref.file_id,
-        ims_plan_xref.record_id
- FROM cleansed.ims_plan_xref
- WHERE (ims_plan_xref.file_id IN ( SELECT max(ims_plan_xref.file_id) AS max
- FROM cleansed.ims_plan_xref));
 
-CREATE  VIEW sandbox.vw_curr_month_ims_pbm_xref AS
- SELECT btrim(ims_pbm_xref.pbm_name) AS pbm_name,
-        btrim(ims_pbm_xref.payer_plan_num) AS payer_plan_num,
-        btrim(ims_pbm_xref.xref_to_payer_plan_num) AS xref_to_payer_plan_num,
-        btrim(ims_pbm_xref.ipd_id) AS ipd_id,
-        btrim(ims_pbm_xref.ipd_type) AS ipd_type,
-        btrim(ims_pbm_xref.plan_name) AS plan_name,
-        ims_pbm_xref.pbm_num,
-        ims_pbm_xref.ims_processor_num,
-        ims_pbm_xref.file_id,
-        ims_pbm_xref.record_id
- FROM cleansed.ims_pbm_xref
- WHERE (ims_pbm_xref.file_id IN ( SELECT max(ims_pbm_xref.file_id) AS max
- FROM cleansed.ims_pbm_xref));
+CREATE TABLE sandbox.ingestion_databurst_updt
+(
+    table_name varchar(128)
+);
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_ims_bridge AS
- SELECT btrim(ftf_ims_bridge.payer_name) AS payer_name,
-        btrim(ftf_ims_bridge.code) AS code,
-        btrim(ftf_ims_bridge.name) AS name,
-        btrim(ftf_ims_bridge.state) AS state,
-        btrim(ftf_ims_bridge.comments) AS comments,
-        ftf_ims_bridge.plan_id,
-        btrim(ftf_ims_bridge.plan_name) AS plan_name,
-        btrim(ftf_ims_bridge.provider_name) AS provider_name,
-        btrim(ftf_ims_bridge.plan_type_name) AS plan_type_name,
-        ftf_ims_bridge.file_id,
-        ftf_ims_bridge.record_id
- FROM cleansed.ftf_ims_bridge
- WHERE (ftf_ims_bridge.file_id IN ( SELECT max(ftf_ims_bridge.file_id) AS max
- FROM cleansed.ftf_ims_bridge));
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_formularies AS
- SELECT btrim(ftf_formularies.health_plan_id) AS health_plan_id,
-        btrim(ftf_formularies.drug_id) AS drug_id,
-        btrim(ftf_formularies.tier_code) AS tier_code,
-        btrim(ftf_formularies.restrictions) AS restrictions,
-        btrim(ftf_formularies.reason_code) AS reason_code,
-        btrim(ftf_formularies.reason_code_description) AS btrim,
-        ftf_formularies.file_id,
-        ftf_formularies.record_id
- FROM cleansed.ftf_formularies
- WHERE (ftf_formularies.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_formularies.file_id
- FROM cleansed.ftf_formularies
- GROUP BY ftf_formularies.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
+CREATE TABLE sandbox.grants_teva_ingestion
+(
+    grant_id int,
+    grantor_id int,
+    grantor varchar(128),
+    privileges_description varchar(8192),
+    object_schema varchar(128),
+    object_name varchar(128),
+    object_id int,
+    object_type varchar(8192),
+    grantee_id int,
+    grantee varchar(128)
+);
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_health_plans AS
- SELECT btrim(ftf_health_plans.formularyf_id) AS formularyf_id,
-        btrim(ftf_health_plans.provider_id) AS provider_id,
-        btrim(ftf_health_plans.provider) AS provider,
-        btrim(ftf_health_plans.health_plan_id) AS health_plan_id,
-        btrim(ftf_health_plans.health_plan) AS health_plan,
-        btrim(ftf_health_plans.parent_id) AS parent_id,
-        btrim(ftf_health_plans.parent) AS parent,
-        ftf_health_plans.national_lives_count,
-        btrim(ftf_health_plans.plan_type_name) AS plan_type_name,
-        ftf_health_plans.preferred_brand_tier,
-        ftf_health_plans.file_id,
-        ftf_health_plans.record_id
- FROM cleansed.ftf_health_plans
- WHERE (ftf_health_plans.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_health_plans.file_id
- FROM cleansed.ftf_health_plans
- GROUP BY ftf_health_plans.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_health_plan_geography AS
- SELECT btrim(ftf_health_plan_geography.health_plan_id) AS health_plan_id,
-        btrim(ftf_health_plan_geography.operating_state) AS operating_state,
-        ftf_health_plan_geography.lives_coverage,
-        ftf_health_plan_geography.file_id,
-        ftf_health_plan_geography.record_id
- FROM cleansed.ftf_health_plan_geography
- WHERE (ftf_health_plan_geography.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_health_plan_geography.file_id
- FROM cleansed.ftf_health_plan_geography
- GROUP BY ftf_health_plan_geography.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
+CREATE TABLE sandbox.ZS_AM_SUBMRKT_PRODLIST_10162019
+(
+    basket_id int,
+    basket_name varchar(60),
+    basket_type varchar(50),
+    parent_basket_name varchar(56)
+);
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_pbms AS
- SELECT btrim(ftf_pbms.health_plan_id) AS health_plan_id,
-        btrim(ftf_pbms.pbm_id) AS pbm_id,
-        btrim(ftf_pbms.pbm) AS pbm,
-        btrim(ftf_pbms.pbm_function_id) AS pbm_function_id,
-        btrim(ftf_pbms.pbm_function) AS pbm_function,
-        ftf_pbms.file_id,
-        ftf_pbms.record_id
- FROM cleansed.ftf_pbms
- WHERE (ftf_pbms.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_pbms.file_id
- FROM cleansed.ftf_pbms
- GROUP BY ftf_pbms.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_restrictions AS
- SELECT btrim(ftf_restrictions_v2.health_plan_id) AS health_plan_id,
-        btrim(ftf_restrictions_v2.drug_id) AS drug_id,
-        btrim(ftf_restrictions_v2.restriction_code) AS restriction_code,
-        ftf_restrictions_v2.restriction_detail_id,
-        btrim(ftf_restrictions_v2.restriction_detail_text) AS restriction_detail_text,
-        btrim(ftf_restrictions_v2.restriction_addtnl_information_1) AS restriction_addtnl_information_1,
-        btrim(ftf_restrictions_v2.restriction_addtnl_information_2) AS restriction_addtnl_information_2,
-        btrim(ftf_restrictions_v2.step_count) AS step_count,
-        btrim(ftf_restrictions_v2.pa_form) AS pa_form,
-        btrim(ftf_restrictions_v2.indication) AS indication,
-        btrim(ftf_restrictions_v2.grouped_restriction_level) AS grouped_restriction_level,
-        ftf_restrictions_v2.record_id,
-        ftf_restrictions_v2.file_id
- FROM cleansed.ftf_restrictions_v2
- WHERE (ftf_restrictions_v2.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_restrictions_v2.file_id
- FROM cleansed.ftf_restrictions_v2
- GROUP BY ftf_restrictions_v2.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
+CREATE TABLE sandbox.ZS_AM_SUBMRKT_PRODLIST_10232019
+(
+    basket_id int,
+    basket_name varchar(60),
+    basket_type varchar(50),
+    parent_basket_name varchar(56),
+    Sub_Mrkt varchar(52)
+);
 
-CREATE  VIEW sandbox.vw_prev_month_ims_plan_xref AS
- SELECT btrim(ims_plan_xref.payer_num) AS payer_num,
-        btrim(ims_plan_xref.payer_name) AS payer_name,
-        btrim(ims_plan_xref.plan_num) AS plan_num,
-        btrim(ims_plan_xref.payer_plan_num) AS payer_plan_num,
-        btrim(ims_plan_xref.plan_name) AS plan_name,
-        btrim(ims_plan_xref.model) AS model,
-        btrim(ims_plan_xref.city) AS city,
-        btrim(ims_plan_xref.hq_state) AS hq_state,
-        btrim(ims_plan_xref.operating_state) AS operating_state,
-        ims_plan_xref.months_with_data,
-        ims_plan_xref.file_id,
-        ims_plan_xref.record_id
- FROM cleansed.ims_plan_xref
- WHERE (ims_plan_xref.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ims_plan_xref.file_id
- FROM cleansed.ims_plan_xref
- GROUP BY ims_plan_xref.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
 
-CREATE  VIEW sandbox.vw_prev_month_ims_pbm_xref AS
- SELECT btrim(ims_pbm_xref.pbm_name) AS pbm_name,
-        btrim(ims_pbm_xref.payer_plan_num) AS payer_plan_num,
-        btrim(ims_pbm_xref.xref_to_payer_plan_num) AS xref_to_payer_plan_num,
-        btrim(ims_pbm_xref.ipd_id) AS ipd_id,
-        btrim(ims_pbm_xref.ipd_type) AS ipd_type,
-        btrim(ims_pbm_xref.plan_name) AS plan_name,
-        ims_pbm_xref.pbm_num,
-        ims_pbm_xref.ims_processor_num,
-        ims_pbm_xref.file_id,
-        ims_pbm_xref.record_id
- FROM cleansed.ims_pbm_xref
- WHERE (ims_pbm_xref.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ims_pbm_xref.file_id
- FROM cleansed.ims_pbm_xref
- GROUP BY ims_pbm_xref.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
+CREATE TABLE sandbox.austedo_firstrx_callinfo_1212
+(
+    ims_id_original varchar(10),
+    call_date date,
+    ims_id varchar(10),
+    first_rx_date date
+);
 
-CREATE  VIEW sandbox.vw_prev_month_ftf_ims_bridge AS
- SELECT btrim(ftf_ims_bridge.payer_name) AS payer_name,
-        btrim(ftf_ims_bridge.code) AS code,
-        btrim(ftf_ims_bridge.name) AS name,
-        btrim(ftf_ims_bridge.state) AS state,
-        btrim(ftf_ims_bridge.comments) AS comments,
-        ftf_ims_bridge.plan_id,
-        btrim(ftf_ims_bridge.plan_name) AS plan_name,
-        btrim(ftf_ims_bridge.provider_name) AS provider_name,
-        btrim(ftf_ims_bridge.plan_type_name) AS plan_type_name,
-        ftf_ims_bridge.file_id,
-        ftf_ims_bridge.record_id
- FROM cleansed.ftf_ims_bridge
- WHERE (ftf_ims_bridge.file_id IN ( SELECT metadata_file.file_id
- FROM ( SELECT data_file_metadata.file_id,
-        (date_part('month'::varchar(5), data_file_metadata.processed_date))::int AS month,
-        rank() OVER (PARTITION BY (date_part('month'::varchar(5), data_file_metadata.processed_date))::int ORDER BY data_file_metadata.processed_date DESC) AS rn
- FROM metadata.data_file_metadata
- WHERE ((data_file_metadata.file_id IN ( SELECT ftf_ims_bridge.file_id
- FROM cleansed.ftf_ims_bridge
- GROUP BY ftf_ims_bridge.file_id)) AND ("datediff"('month'::varchar(5), data_file_metadata.processed_date, (now())::date) = 1))) metadata_file
- WHERE (metadata_file.rn = 1)));
 
-CREATE  VIEW sandbox.vw_curr_month_ftf_formularies_cdw_v2 AS
- SELECT (replace(replace(btrim(ftf_formularies.health_plan_id), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)))::float AS health_plan_id,
-        (replace(replace(btrim(ftf_formularies.drug_id), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)))::float AS drug_id,
-        replace(replace(btrim(ftf_formularies.tier_code), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)) AS tier_code,
-        replace(replace(btrim(ftf_formularies.restrictions), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)) AS restrictions,
-        replace(replace(btrim(ftf_formularies.reason_code), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)) AS reason_code,
-        replace(replace(btrim(ftf_formularies.reason_code_description), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)) AS reason_code_description,
-        replace(replace(btrim(ftf_formularies.pharmacy_status), ' '::varchar(1), ' '::varchar(1)), ' '::varchar(1), ' '::varchar(1)) AS pharmacy_status,
-        ftf_formularies.Market_Access_Coverage
- FROM cleansed.ftf_formularies
- WHERE (ftf_formularies.file_id IN ( SELECT max(ftf_formularies.file_id) AS max
- FROM cleansed.ftf_formularies));
+CREATE TABLE sandbox.austedo_callfrequency_data_12121
+(
+    ims_id_original varchar(10),
+    first_rx_date date,
+    total_calls_before_firstrx int
+);
 
-CREATE  VIEW sandbox.asi_market_access_w_test AS
-SELECT A.zip, A.state, A.payer_plan_num, A.report_num, A.ims_product_group_num, A.data_month, A.nrx_001, A.nrx_002, A.nrx_003, A.nrx_004, A.nrx_005, A.nrx_006, A.nrx_007, A.nrx_008, A.nrx_009, A.nrx_010, A.nrx_011, A.nrx_012, A.nrx_013, A.nrx_014, A.nrx_015, A.nrx_016, A.nrx_017, A.nrx_018, A.nrx_019, A.nrx_020, A.nrx_021, A.nrx_022, A.nrx_023, A.nrx_024, A.trx_001, A.trx_002, A.trx_003, A.trx_004, A.trx_005, A.trx_006, A.trx_007, A.trx_008, A.trx_009, A.trx_010, A.trx_011, A.trx_012, A.trx_013, A.trx_014, A.trx_015, A.trx_016, A.trx_017, A.trx_018, A.trx_019, A.trx_020, A.trx_021, A.trx_022, A.trx_023, A.trx_024 FROM ((SELECT coalesce(d.zip, o.zip, pcd.ptr_zip) AS zip, coalesce(d.state, o.state, pcd.ptr_state, mpzd.state) AS state, rx.payer_plan_number AS payer_plan_num, CASE WHEN (length(rx.ims_report_number_cnt) = 1) THEN btrim(to_char(rx.ims_report_number_cnt, '00'::varchar(2))) ELSE rx.ims_report_number_cnt END AS report_num, rx.ims_product_group AS ims_product_group_num, to_char(rx.data_date, 'MM/YYYY'::varchar(7)) AS data_month, sum(CASE WHEN (iwb.month_bucket = 1) THEN rx.nrx_count ELSE NULL::float END) AS nrx_001, sum(CASE WHEN (iwb.month_bucket = 2) THEN rx.nrx_count ELSE NULL::float END) AS nrx_002, sum(CASE WHEN (iwb.month_bucket = 3) THEN rx.nrx_count ELSE NULL::float END) AS nrx_003, sum(CASE WHEN (iwb.month_bucket = 4) THEN rx.nrx_count ELSE NULL::float END) AS nrx_004, sum(CASE WHEN (iwb.month_bucket = 5) THEN rx.nrx_count ELSE NULL::float END) AS nrx_005, sum(CASE WHEN (iwb.month_bucket = 6) THEN rx.nrx_count ELSE NULL::float END) AS nrx_006, sum(CASE WHEN (iwb.month_bucket = 7) THEN rx.nrx_count ELSE NULL::float END) AS nrx_007, sum(CASE WHEN (iwb.month_bucket = 8) THEN rx.nrx_count ELSE NULL::float END) AS nrx_008, sum(CASE WHEN (iwb.month_bucket = 9) THEN rx.nrx_count ELSE NULL::float END) AS nrx_009, sum(CASE WHEN (iwb.month_bucket = 10) THEN rx.nrx_count ELSE NULL::float END) AS nrx_010, sum(CASE WHEN (iwb.month_bucket = 11) THEN rx.nrx_count ELSE NULL::float END) AS nrx_011, sum(CASE WHEN (iwb.month_bucket = 12) THEN rx.nrx_count ELSE NULL::float END) AS nrx_012, sum(CASE WHEN (iwb.month_bucket = 13) THEN rx.nrx_count ELSE NULL::float END) AS nrx_013, sum(CASE WHEN (iwb.month_bucket = 14) THEN rx.nrx_count ELSE NULL::float END) AS nrx_014, sum(CASE WHEN (iwb.month_bucket = 15) THEN rx.nrx_count ELSE NULL::float END) AS nrx_015, sum(CASE WHEN (iwb.month_bucket = 16) THEN rx.nrx_count ELSE NULL::float END) AS nrx_016, sum(CASE WHEN (iwb.month_bucket = 17) THEN rx.nrx_count ELSE NULL::float END) AS nrx_017, sum(CASE WHEN (iwb.month_bucket = 18) THEN rx.nrx_count ELSE NULL::float END) AS nrx_018, sum(CASE WHEN (iwb.month_bucket = 19) THEN rx.nrx_count ELSE NULL::float END) AS nrx_019, sum(CASE WHEN (iwb.month_bucket = 20) THEN rx.nrx_count ELSE NULL::float END) AS nrx_020, sum(CASE WHEN (iwb.month_bucket = 21) THEN rx.nrx_count ELSE NULL::float END) AS nrx_021, sum(CASE WHEN (iwb.month_bucket = 22) THEN rx.nrx_count ELSE NULL::float END) AS nrx_022, sum(CASE WHEN (iwb.month_bucket = 23) THEN rx.nrx_count ELSE NULL::float END) AS nrx_023, sum(CASE WHEN (iwb.month_bucket = 24) THEN rx.nrx_count ELSE NULL::float END) AS nrx_024, sum(CASE WHEN (iwb.month_bucket = 1) THEN rx.trx_count ELSE NULL::float END) AS trx_001, sum(CASE WHEN (iwb.month_bucket = 2) THEN rx.trx_count ELSE NULL::float END) AS trx_002, sum(CASE WHEN (iwb.month_bucket = 3) THEN rx.trx_count ELSE NULL::float END) AS trx_003, sum(CASE WHEN (iwb.month_bucket = 4) THEN rx.trx_count ELSE NULL::float END) AS trx_004, sum(CASE WHEN (iwb.month_bucket = 5) THEN rx.trx_count ELSE NULL::float END) AS trx_005, sum(CASE WHEN (iwb.month_bucket = 6) THEN rx.trx_count ELSE NULL::float END) AS trx_006, sum(CASE WHEN (iwb.month_bucket = 7) THEN rx.trx_count ELSE NULL::float END) AS trx_007, sum(CASE WHEN (iwb.month_bucket = 8) THEN rx.trx_count ELSE NULL::float END) AS trx_008, sum(CASE WHEN (iwb.month_bucket = 9) THEN rx.trx_count ELSE NULL::float END) AS trx_009, sum(CASE WHEN (iwb.month_bucket = 10) THEN rx.trx_count ELSE NULL::float END) AS trx_010, sum(CASE WHEN (iwb.month_bucket = 11) THEN rx.trx_count ELSE NULL::float END) AS trx_011, sum(CASE WHEN (iwb.month_bucket = 12) THEN rx.trx_count ELSE NULL::float END) AS trx_012, sum(CASE WHEN (iwb.month_bucket = 13) THEN rx.trx_count ELSE NULL::float END) AS trx_013, sum(CASE WHEN (iwb.month_bucket = 14) THEN rx.trx_count ELSE NULL::float END) AS trx_014, sum(CASE WHEN (iwb.month_bucket = 15) THEN rx.trx_count ELSE NULL::float END) AS trx_015, sum(CASE WHEN (iwb.month_bucket = 16) THEN rx.trx_count ELSE NULL::float END) AS trx_016, sum(CASE WHEN (iwb.month_bucket = 17) THEN rx.trx_count ELSE NULL::float END) AS trx_017, sum(CASE WHEN (iwb.month_bucket = 18) THEN rx.trx_count ELSE NULL::float END) AS trx_018, sum(CASE WHEN (iwb.month_bucket = 19) THEN rx.trx_count ELSE NULL::float END) AS trx_019, sum(CASE WHEN (iwb.month_bucket = 20) THEN rx.trx_count ELSE NULL::float END) AS trx_020, sum(CASE WHEN (iwb.month_bucket = 21) THEN rx.trx_count ELSE NULL::float END) AS trx_021, sum(CASE WHEN (iwb.month_bucket = 22) THEN rx.trx_count ELSE NULL::float END) AS trx_022, sum(CASE WHEN (iwb.month_bucket = 23) THEN rx.trx_count ELSE NULL::float END) AS trx_023, sum(CASE WHEN (iwb.month_bucket = 24) THEN rx.trx_count ELSE NULL::float END) AS trx_024 FROM (((((datamart.prescriber_rx rx JOIN outbound.month_rollup_and_bucket iwb ON ((rx.rollup_month = iwb.month_ending))) LEFT JOIN (SELECT market_presc_zip_divisor.ims_id, market_presc_zip_divisor.ims_client_number, market_presc_zip_divisor.ims_report_number, market_presc_zip_divisor.state FROM outbound.market_presc_zip_divisor GROUP BY market_presc_zip_divisor.ims_id, market_presc_zip_divisor.ims_client_number, market_presc_zip_divisor.ims_report_number, market_presc_zip_divisor.state) mpzd ON (((rx.ims_id = mpzd.ims_id) AND (rx.ims_client_number = mpzd.ims_client_number) AND (rx.ims_report_number_cnt = mpzd.ims_report_number)))) LEFT JOIN (SELECT hcp_demo.tvcmid, hcp_demo.state_code AS state, hcp_demo.zip FROM datamart.customer_hcp_demographics hcp_demo WHERE (hcp_demo.file_id = (SELECT max(customer_hcp_demographics.file_id) AS MAX FROM datamart.customer_hcp_demographics))) d ON ((rx.tvcmid = d.tvcmid))) LEFT JOIN (SELECT hco_demo.tvcmid, hco_demo.state_code AS state, hco_demo.zip FROM datamart.customer_hco_demographics hco_demo WHERE (hco_demo.file_id = (SELECT max(customer_hco_demographics.file_id) AS MAX FROM datamart.customer_hco_demographics))) o ON ((rx.tvcmid = o.tvcmid))) LEFT JOIN (SELECT rnk.ims_id, rnk.ptr_state, rnk.ptr_zip FROM (SELECT DISTINCT prescriber_combined_demographics.ims_id, prescriber_combined_demographics.ptr_state, prescriber_combined_demographics.ptr_zip, prescriber_combined_demographics.ptr_address_source, row_number() OVER (PARTITION BY prescriber_combined_demographics.ims_id ORDER BY prescriber_combined_demographics.ptr_address_source) AS rnk FROM datamart.prescriber_combined_demographics ORDER BY prescriber_combined_demographics.ims_id, prescriber_combined_demographics.ptr_state, prescriber_combined_demographics.ptr_zip, prescriber_combined_demographics.ptr_address_source, row_number() OVER (PARTITION BY prescriber_combined_demographics.ims_id ORDER BY prescriber_combined_demographics.ptr_address_source)) rnk WHERE (rnk.rnk = 1)) pcd ON ((pcd.ims_id = rx.ims_id))) WHERE ((rx.basket_type = 'product'::varchar(7)) AND (rx.ims_report_number_cnt = ANY (ARRAY['1'::varchar(1), '2'::varchar(1), '3'::varchar(1), '4'::varchar(1), '5'::varchar(1), '6'::varchar(1), '68'::varchar(2)])) AND (rx.report_frequency = 'SPLITWEEK'::varchar(9))) GROUP BY coalesce(d.zip, o.zip, pcd.ptr_zip), coalesce(d.state, o.state, pcd.ptr_state, mpzd.state), rx.payer_plan_number, CASE WHEN (length(rx.ims_report_number_cnt) = 1) THEN btrim(to_char(rx.ims_report_number_cnt, '00'::varchar(2))) ELSE rx.ims_report_number_cnt END, rx.ims_product_group, to_char(rx.data_date, 'MM/YYYY'::varchar(7)) UNION ALL SELECT CASE WHEN (sp.ship_to_zip IS NULL) THEN '00000'::varchar(5) ELSE sp.ship_to_zip END AS ship_to_zip, sp.ship_to_state, CASE WHEN (pg.market_name = 'MS MARKET'::varchar(9)) THEN CASE WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id <> 572)) THEN 'I3'::varchar(2) WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id = 572)) THEN 'I3TYS'::varchar(5) WHEN (sp.specialty_pharmacy_data_source = 'Prime Therapeutics'::varchar(18)) THEN 'PRIME'::varchar(5) ELSE NULL END ELSE NULL END AS payer_plan_num, '55'::varchar(2) AS report_num, pg.ims_product_group AS ims_product_group_num, (SELECT to_char(x.month_ending, 'MM/YYYY'::varchar(7)) AS TO_CHAR FROM (SELECT max(month_rollup_and_bucket.month_ending) AS month_ending FROM outbound.month_rollup_and_bucket) x) AS data_month, NULL::float AS nrx_001, NULL::float AS nrx_002, NULL::float AS nrx_003, NULL::float AS nrx_004, NULL::float AS nrx_005, NULL::float AS nrx_006, NULL::float AS nrx_007, NULL::float AS nrx_008, NULL::float AS nrx_009, NULL::float AS nrx_010, NULL::float AS nrx_011, NULL::float AS nrx_012, NULL::float AS nrx_013, NULL::float AS nrx_014, NULL::float AS nrx_015, NULL::float AS nrx_016, NULL::float AS nrx_017, NULL::float AS nrx_018, NULL::float AS nrx_019, NULL::float AS nrx_020, NULL::float AS nrx_021, NULL::float AS nrx_022, NULL::float AS nrx_023, NULL::float AS nrx_024, sum(CASE WHEN (mth.month_bucket = 1) THEN sp.trx_cnt ELSE NULL::float END) AS trx_001, sum(CASE WHEN (mth.month_bucket = 2) THEN sp.trx_cnt ELSE NULL::float END) AS trx_002, sum(CASE WHEN (mth.month_bucket = 3) THEN sp.trx_cnt ELSE NULL::float END) AS trx_003, sum(CASE WHEN (mth.month_bucket = 4) THEN sp.trx_cnt ELSE NULL::float END) AS trx_004, sum(CASE WHEN (mth.month_bucket = 5) THEN sp.trx_cnt ELSE NULL::float END) AS trx_005, sum(CASE WHEN (mth.month_bucket = 6) THEN sp.trx_cnt ELSE NULL::float END) AS trx_006, sum(CASE WHEN (mth.month_bucket = 7) THEN sp.trx_cnt ELSE NULL::float END) AS trx_007, sum(CASE WHEN (mth.month_bucket = 8) THEN sp.trx_cnt ELSE NULL::float END) AS trx_008, sum(CASE WHEN (mth.month_bucket = 9) THEN sp.trx_cnt ELSE NULL::float END) AS trx_009, sum(CASE WHEN (mth.month_bucket = 10) THEN sp.trx_cnt ELSE NULL::float END) AS trx_010, sum(CASE WHEN (mth.month_bucket = 11) THEN sp.trx_cnt ELSE NULL::float END) AS trx_011, sum(CASE WHEN (mth.month_bucket = 12) THEN sp.trx_cnt ELSE NULL::float END) AS trx_012, sum(CASE WHEN (mth.month_bucket = 13) THEN sp.trx_cnt ELSE NULL::float END) AS trx_013, sum(CASE WHEN (mth.month_bucket = 14) THEN sp.trx_cnt ELSE NULL::float END) AS trx_014, sum(CASE WHEN (mth.month_bucket = 15) THEN sp.trx_cnt ELSE NULL::float END) AS trx_015, sum(CASE WHEN (mth.month_bucket = 16) THEN sp.trx_cnt ELSE NULL::float END) AS trx_016, sum(CASE WHEN (mth.month_bucket = 17) THEN sp.trx_cnt ELSE NULL::float END) AS trx_017, sum(CASE WHEN (mth.month_bucket = 18) THEN sp.trx_cnt ELSE NULL::float END) AS trx_018, sum(CASE WHEN (mth.month_bucket = 19) THEN sp.trx_cnt ELSE NULL::float END) AS trx_019, sum(CASE WHEN (mth.month_bucket = 20) THEN sp.trx_cnt ELSE NULL::float END) AS trx_020, sum(CASE WHEN (mth.month_bucket = 21) THEN sp.trx_cnt ELSE NULL::float END) AS trx_021, sum(CASE WHEN (mth.month_bucket = 22) THEN sp.trx_cnt ELSE NULL::float END) AS trx_022, sum(CASE WHEN (mth.month_bucket = 23) THEN sp.trx_cnt ELSE NULL::float END) AS trx_023, sum(CASE WHEN (mth.month_bucket = 24) THEN sp.trx_cnt ELSE NULL::float END) AS trx_024 FROM ((datamart.specialty_pharmacy_shipment sp JOIN (SELECT month_rollup_and_bucket.month_ending, month_rollup_and_bucket.month_bucket FROM outbound.month_rollup_and_bucket) mth ON ((last_day(sp.ship_date) = mth.month_ending))) JOIN (SELECT asi_outbound_ims_product_group_mapping.basket_id, asi_outbound_ims_product_group_mapping.market_name, asi_outbound_ims_product_group_mapping.ims_product_group, asi_outbound_ims_product_group_mapping.data_source FROM reference.asi_outbound_ims_product_group_mapping WHERE (asi_outbound_ims_product_group_mapping.market_name = 'MS MARKET'::varchar(9)) GROUP BY asi_outbound_ims_product_group_mapping.basket_id, asi_outbound_ims_product_group_mapping.market_name, asi_outbound_ims_product_group_mapping.ims_product_group, asi_outbound_ims_product_group_mapping.data_source) pg ON (((pg.basket_id = sp.basket_id) AND (pg.data_source = sp.specialty_pharmacy_data_source)))) WHERE ((sp.specialty_pharmacy_data_source = ANY (ARRAY['Prime Therapeutics'::varchar(18), 'Prime Therapeutics'::varchar(18)])) AND (sp.ims_id IS NOT NULL)) GROUP BY CASE WHEN (sp.ship_to_zip IS NULL) THEN '00000'::varchar(5) ELSE sp.ship_to_zip END, sp.ship_to_state, CASE WHEN (pg.market_name = 'MS MARKET'::varchar(9)) THEN CASE WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id <> 572)) THEN 'I3'::varchar(2) WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id = 572)) THEN 'I3TYS'::varchar(5) WHEN (sp.specialty_pharmacy_data_source = 'Prime Therapeutics'::varchar(18)) THEN 'PRIME'::varchar(5) ELSE NULL END ELSE NULL END, pg.ims_product_group, (SELECT to_char(x.month_ending, 'MM/YYYY'::varchar(7)) AS TO_CHAR FROM (SELECT max(month_rollup_and_bucket.month_ending) AS month_ending FROM outbound.month_rollup_and_bucket) x)) UNION ALL SELECT CASE WHEN (sp.ship_to_zip IS NULL) THEN '00000'::varchar(5) ELSE sp.ship_to_zip END AS ship_to_zip, sp.ship_to_state, CASE WHEN (pg.market_name = 'MS MARKET'::varchar(9)) THEN CASE WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id <> 572)) THEN 'I3'::varchar(2) WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id = 572)) THEN 'I3TYS'::varchar(5) WHEN (sp.specialty_pharmacy_data_source = 'Prime Therapeutics'::varchar(18)) THEN 'PRIME'::varchar(5) ELSE NULL END ELSE NULL END AS payer_plan_num, '55'::varchar(2) AS report_num, pg.ims_product_group AS ims_product_group_num, (SELECT to_char(x.month_ending, 'MM/YYYY'::varchar(7)) AS TO_CHAR FROM (SELECT max(month_rollup_and_bucket.month_ending) AS month_ending FROM outbound.month_rollup_and_bucket) x) AS data_month, NULL::float AS nrx_001, NULL::float AS nrx_002, NULL::float AS nrx_003, NULL::float AS nrx_004, NULL::float AS nrx_005, NULL::float AS nrx_006, NULL::float AS nrx_007, NULL::float AS nrx_008, NULL::float AS nrx_009, NULL::float AS nrx_010, NULL::float AS nrx_011, NULL::float AS nrx_012, NULL::float AS nrx_013, NULL::float AS nrx_014, NULL::float AS nrx_015, NULL::float AS nrx_016, NULL::float AS nrx_017, NULL::float AS nrx_018, NULL::float AS nrx_019, NULL::float AS nrx_020, NULL::float AS nrx_021, NULL::float AS nrx_022, NULL::float AS nrx_023, NULL::float AS nrx_024, sum(CASE WHEN (mth.month_bucket = 1) THEN sp.trx_cnt ELSE NULL::float END) AS trx_001, sum(CASE WHEN (mth.month_bucket = 2) THEN sp.trx_cnt ELSE NULL::float END) AS trx_002, sum(CASE WHEN (mth.month_bucket = 3) THEN sp.trx_cnt ELSE NULL::float END) AS trx_003, sum(CASE WHEN (mth.month_bucket = 4) THEN sp.trx_cnt ELSE NULL::float END) AS trx_004, sum(CASE WHEN (mth.month_bucket = 5) THEN sp.trx_cnt ELSE NULL::float END) AS trx_005, sum(CASE WHEN (mth.month_bucket = 6) THEN sp.trx_cnt ELSE NULL::float END) AS trx_006, sum(CASE WHEN (mth.month_bucket = 7) THEN sp.trx_cnt ELSE NULL::float END) AS trx_007, sum(CASE WHEN (mth.month_bucket = 8) THEN sp.trx_cnt ELSE NULL::float END) AS trx_008, sum(CASE WHEN (mth.month_bucket = 9) THEN sp.trx_cnt ELSE NULL::float END) AS trx_009, sum(CASE WHEN (mth.month_bucket = 10) THEN sp.trx_cnt ELSE NULL::float END) AS trx_010, sum(CASE WHEN (mth.month_bucket = 11) THEN sp.trx_cnt ELSE NULL::float END) AS trx_011, sum(CASE WHEN (mth.month_bucket = 12) THEN sp.trx_cnt ELSE NULL::float END) AS trx_012, sum(CASE WHEN (mth.month_bucket = 13) THEN sp.trx_cnt ELSE NULL::float END) AS trx_013, sum(CASE WHEN (mth.month_bucket = 14) THEN sp.trx_cnt ELSE NULL::float END) AS trx_014, sum(CASE WHEN (mth.month_bucket = 15) THEN sp.trx_cnt ELSE NULL::float END) AS trx_015, sum(CASE WHEN (mth.month_bucket = 16) THEN sp.trx_cnt ELSE NULL::float END) AS trx_016, sum(CASE WHEN (mth.month_bucket = 17) THEN sp.trx_cnt ELSE NULL::float END) AS trx_017, sum(CASE WHEN (mth.month_bucket = 18) THEN sp.trx_cnt ELSE NULL::float END) AS trx_018, sum(CASE WHEN (mth.month_bucket = 19) THEN sp.trx_cnt ELSE NULL::float END) AS trx_019, sum(CASE WHEN (mth.month_bucket = 20) THEN sp.trx_cnt ELSE NULL::float END) AS trx_020, sum(CASE WHEN (mth.month_bucket = 21) THEN sp.trx_cnt ELSE NULL::float END) AS trx_021, sum(CASE WHEN (mth.month_bucket = 22) THEN sp.trx_cnt ELSE NULL::float END) AS trx_022, sum(CASE WHEN (mth.month_bucket = 23) THEN sp.trx_cnt ELSE NULL::float END) AS trx_023, sum(CASE WHEN (mth.month_bucket = 24) THEN sp.trx_cnt ELSE NULL::float END) AS trx_024 FROM ((datamart.specialty_pharmacy_shipment sp JOIN (SELECT month_rollup_and_bucket.month_ending, month_rollup_and_bucket.month_bucket FROM outbound.month_rollup_and_bucket) mth ON ((add_months(last_day(sp.ship_date), 1) = mth.month_ending))) JOIN (SELECT asi_outbound_ims_product_group_mapping.basket_id, asi_outbound_ims_product_group_mapping.market_name, asi_outbound_ims_product_group_mapping.ims_product_group, asi_outbound_ims_product_group_mapping.data_source FROM reference.asi_outbound_ims_product_group_mapping WHERE (asi_outbound_ims_product_group_mapping.market_name = 'MS MARKET'::varchar(9)) GROUP BY asi_outbound_ims_product_group_mapping.basket_id, asi_outbound_ims_product_group_mapping.market_name, asi_outbound_ims_product_group_mapping.ims_product_group, asi_outbound_ims_product_group_mapping.data_source) pg ON (((pg.basket_id = sp.basket_id) AND (pg.data_source = sp.specialty_pharmacy_data_source)))) WHERE ((sp.specialty_pharmacy_data_source = ANY (ARRAY['OptumRx'::varchar(7), 'OptumRx'::varchar(7)])) AND (sp.ims_id IS NOT NULL)) GROUP BY CASE WHEN (sp.ship_to_zip IS NULL) THEN '00000'::varchar(5) ELSE sp.ship_to_zip END, sp.ship_to_state, CASE WHEN (pg.market_name = 'MS MARKET'::varchar(9)) THEN CASE WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id <> 572)) THEN 'I3'::varchar(2) WHEN ((sp.specialty_pharmacy_data_source = 'OptumRx'::varchar(7)) AND (sp.basket_id = 572)) THEN 'I3TYS'::varchar(5) WHEN (sp.specialty_pharmacy_data_source = 'Prime Therapeutics'::varchar(18)) THEN 'PRIME'::varchar(5) ELSE NULL END ELSE NULL END, pg.ims_product_group, (SELECT to_char(x.month_ending, 'MM/YYYY'::varchar(7)) AS TO_CHAR FROM (SELECT max(month_rollup_and_bucket.month_ending) AS month_ending FROM outbound.month_rollup_and_bucket) x)) A;
 
-CREATE  VIEW sandbox.vw_concur_hcp_delta_0928 AS
- SELECT concat('H'::varchar(1), (trunc(hcp.tvcmid))::varchar) AS cust_id,
-        NULL AS organization_name,
-        'HCP'::varchar(3) AS contact_type,
-        initcap(hcp.first_name) AS first_name,
-        initcap(hcp.middle_name) AS middle_name,
-        initcap(hcp.last_name) AS last_name,
-        hcp.suffix,
-        npi.npi,
-        addr.address_line_1,
-        addr.address_line_2,
-        addr.city,
-        addr.state,
-        addr.zipcode,
-        sln.license_number AS sln,
-        sln.state AS sln_state,
-        dea.dea_number AS dea,
-        NULL AS affiliation,
-        CASE WHEN ((prof.profession_code_shortname = 'RN'::varchar(2)) AND (hcp.teva_specialty_code = ANY (ARRAY['NRP'::varchar(3), 'CNA'::varchar(3), 'ARN'::varchar(3), 'CNM'::varchar(3), 'CNS'::varchar(3), 'PHA'::varchar(3)]))) THEN hcp.teva_specialty_code ELSE prof.profession_code_shortname END AS credential,
-        hcp.healthcare_professional_status_code,
-        date((statement_timestamp())::timestamp) AS create_date
- FROM (((((( SELECT hcp.TVCMID AS tvcmid,
-        hcp.FIRST_NAME AS first_name,
-        hcp.MIDDLE_NAME AS middle_name,
-        hcp.LAST_NAME AS last_name,
-        hcp.SUFFIX AS suffix,
-        hcp.HEALTHCARE_PROFESSIONAL_STATUS_CODE AS healthcare_professional_status_code,
-        hcp.TEVA_SPECIALTY_CODE AS teva_specialty_code
- FROM (raw.mdm_hcp hcp JOIN ( SELECT a.file_id,
-        rank() OVER (ORDER BY a.file_id DESC) AS file_rank
- FROM ( SELECT mdm_hcp.file_id
- FROM raw.mdm_hcp
- GROUP BY mdm_hcp.file_id) a) hcp_file ON (((hcp.file_id = hcp_file.file_id) AND (hcp_file.file_rank = 1))))) hcp JOIN ( SELECT ad.TVCMID AS tvcmid,
-        ad.ADDRESS_ID AS address_id,
-        ad.ADDRESS_STATUS AS address_status,
-        ad.ADDRESS_TYPE AS address_type,
-        initcap(ad.ADDRESS_LINE_1) AS address_line_1,
-        initcap(ad.ADDRESS_LINE_2) AS address_line_2,
-        initcap(ad.CITY) AS city,
-        ad.STATE AS state,
-        ad.ZIP5_POSTAL_CODE AS zipcode,
-        rank() OVER (PARTITION BY ad.TVCMID ORDER BY ad.PRACTICE_LOCATION_RANK DESC, ad.record_id) AS addr_rank
- FROM (raw.mdm_address ad JOIN ( SELECT a.file_id,
-        rank() OVER (ORDER BY a.file_id DESC) AS file_rank
- FROM ( SELECT mdm_address.file_id
- FROM raw.mdm_address
- GROUP BY mdm_address.file_id) a) addr_file ON (((ad.file_id = addr_file.file_id) AND (ad.ADDRESS_STATUS = 'A'::varchar(1)) AND (ad.SINGLE_ADDRESS_INDICATOR = 'Y'::varchar(1)) AND (addr_file.file_rank = 1))))) addr ON (((hcp.tvcmid = addr.tvcmid) AND (addr.addr_rank = 1)))) JOIN ( SELECT p.TVCMID AS tvcmid,
-        d.profession_code_shortname,
-        rank() OVER (PARTITION BY p.TVCMID ORDER BY p.CREATED_DATE DESC) AS rnk
- FROM (raw.mdm_professional p JOIN reference.Designations d ON (((p.PROFESSION_CODE = d.profession_code) AND (p.PROFESSION_RANK = 1::float) AND (p.STATUS = 'A'::varchar(1)))))) prof ON (((hcp.tvcmid = prof.tvcmid) AND (prof.rnk = 1)))) LEFT  JOIN ( SELECT mdm_dea_address.TVCMID AS tvcmid,
-        mdm_dea_address.DEA_NUMBER AS dea_number,
-        mdm_dea_address.ADDRESS_ID AS address_id,
-        rank() OVER (PARTITION BY mdm_dea_address.TVCMID, mdm_dea_address.ADDRESS_ID ORDER BY mdm_dea_address.DEA_EXPIRATION_DATE DESC, mdm_dea_address.UPDATED_DATE DESC, mdm_dea_address.record_id) AS rnk
- FROM raw.mdm_dea_address
- WHERE (mdm_dea_address.DEA_STATUS_CODE = 'A'::varchar(1))) dea ON (((addr.address_id = dea.address_id) AND (addr.tvcmid = dea.tvcmid) AND (dea.rnk = 1)))) LEFT  JOIN ( SELECT npi.tvcmid,
-        npi.npi
- FROM (( SELECT mdm_alternate_id.file_id,
-        mdm_alternate_id.TVCMID AS tvcmid,
-        max(mdm_alternate_id.ALTERNATE_ID_VALUE) AS npi
- FROM raw.mdm_alternate_id
- WHERE ((mdm_alternate_id.ALTERNATE_ID_TYPE = 'NPI'::varchar(3)) AND (mdm_alternate_id.STATUS = 'A'::varchar(1)))
- GROUP BY mdm_alternate_id.file_id,
-          mdm_alternate_id.TVCMID) npi JOIN ( SELECT b.file_id,
-        rank() OVER (ORDER BY b.file_id DESC) AS file_rank
- FROM ( SELECT mdm_alternate_id.file_id
- FROM raw.mdm_alternate_id
- WHERE ((mdm_alternate_id.ALTERNATE_ID_TYPE = 'NPI'::varchar(3)) AND (mdm_alternate_id.STATUS = 'A'::varchar(1)))
- GROUP BY mdm_alternate_id.file_id) b) npi2 ON (((npi.file_id = npi2.file_id) AND (npi2.file_rank = 1))))) npi ON ((hcp.tvcmid = npi.tvcmid))) LEFT  JOIN ( SELECT sln.TVCMID AS tvcmid,
-        sln.AUTHORIZATION_NUMBER AS license_number,
-        sln.STATE AS state,
-        rank() OVER (PARTITION BY sln.TVCMID, sln.STATE ORDER BY sln.LICENSE_TYPE_PRIVILEGE_RANK, sln.LICENSE_EXPIRATION_DATE DESC, sln.LICENSE_EFFECTIVE_DATE DESC, sln.UPDATED_DATE DESC, sln.record_id) AS rnk
- FROM raw.mdm_license sln
- WHERE (sln.LICENSE_STATUS_CODE = 'A'::varchar(1))) sln ON (((hcp.tvcmid = sln.tvcmid) AND (addr.state = sln.state) AND (sln.rnk = 1))))
- GROUP BY concat('H'::varchar(1), (trunc(hcp.tvcmid))::varchar),
-          NULL,
-          'HCP'::varchar(3),
-          initcap(hcp.first_name),
-          initcap(hcp.middle_name),
-          initcap(hcp.last_name),
-          hcp.suffix,
-          npi.npi,
-          addr.address_line_1,
-          addr.address_line_2,
-          addr.city,
-          addr.state,
-          addr.zipcode,
-          sln.license_number,
-          sln.state,
-          dea.dea_number,
-          CASE WHEN ((prof.profession_code_shortname = 'RN'::varchar(2)) AND (hcp.teva_specialty_code = ANY (ARRAY['NRP'::varchar(3), 'CNA'::varchar(3), 'ARN'::varchar(3), 'CNM'::varchar(3), 'CNS'::varchar(3), 'PHA'::varchar(3)]))) THEN hcp.teva_specialty_code ELSE prof.profession_code_shortname END,
-          hcp.healthcare_professional_status_code,
-          date((statement_timestamp())::timestamp) EXCEPT  SELECT concat('H'::varchar(1), (trunc(hcp.tvcmid))::varchar) AS cust_id,
-        NULL AS organization_name,
-        'HCP'::varchar(3) AS contact_type,
-        initcap(hcp.first_name) AS first_name,
-        initcap(hcp.middle_name) AS middle_name,
-        initcap(hcp.last_name) AS last_name,
-        hcp.suffix,
-        npi.npi,
-        addr.address_line_1,
-        addr.address_line_2,
-        addr.city,
-        addr.state,
-        addr.zipcode,
-        sln.license_number AS sln,
-        sln.state AS sln_state,
-        dea.dea_number AS dea,
-        NULL AS affiliation,
-        CASE WHEN ((prof.profession_code_shortname = 'RN'::varchar(2)) AND (hcp.teva_specialty_code = ANY (ARRAY['NRP'::varchar(3), 'CNA'::varchar(3), 'ARN'::varchar(3), 'CNM'::varchar(3), 'CNS'::varchar(3), 'PHA'::varchar(3)]))) THEN hcp.teva_specialty_code ELSE prof.profession_code_shortname END AS credential,
-        hcp.healthcare_professional_status_code,
-        date((statement_timestamp())::timestamp) AS create_date
- FROM (((((( SELECT hcp.TVCMID AS tvcmid,
-        hcp.FIRST_NAME AS first_name,
-        hcp.MIDDLE_NAME AS middle_name,
-        hcp.LAST_NAME AS last_name,
-        hcp.SUFFIX AS suffix,
-        hcp.HEALTHCARE_PROFESSIONAL_STATUS_CODE AS healthcare_professional_status_code,
-        hcp.TEVA_SPECIALTY_CODE AS teva_specialty_code
- FROM (raw.mdm_hcp hcp JOIN ( SELECT a.file_id,
-        rank() OVER (ORDER BY a.file_id DESC) AS file_rank
- FROM ( SELECT mdm_hcp.file_id
- FROM raw.mdm_hcp
- GROUP BY mdm_hcp.file_id) a) hcp_file ON (((hcp.file_id = hcp_file.file_id) AND (hcp_file.file_rank = 2))))) hcp JOIN ( SELECT ad.TVCMID AS tvcmid,
-        ad.ADDRESS_ID AS address_id,
-        ad.ADDRESS_STATUS AS address_status,
-        ad.ADDRESS_TYPE AS address_type,
-        initcap(ad.ADDRESS_LINE_1) AS address_line_1,
-        initcap(ad.ADDRESS_LINE_2) AS address_line_2,
-        initcap(ad.CITY) AS city,
-        ad.STATE AS state,
-        ad.ZIP5_POSTAL_CODE AS zipcode,
-        rank() OVER (PARTITION BY ad.TVCMID ORDER BY ad.PRACTICE_LOCATION_RANK DESC, ad.record_id) AS addr_rank
- FROM (raw.mdm_address ad JOIN ( SELECT a.file_id,
-        rank() OVER (ORDER BY a.file_id DESC) AS file_rank
- FROM ( SELECT mdm_address.file_id
- FROM raw.mdm_address
- GROUP BY mdm_address.file_id) a) addr_file ON (((ad.file_id = addr_file.file_id) AND (ad.ADDRESS_STATUS = 'A'::varchar(1)) AND (ad.SINGLE_ADDRESS_INDICATOR = 'Y'::varchar(1)) AND (addr_file.file_rank = 2))))) addr ON (((hcp.tvcmid = addr.tvcmid) AND (addr.addr_rank = 1)))) JOIN ( SELECT p.TVCMID AS tvcmid,
-        d.profession_code_shortname,
-        rank() OVER (PARTITION BY p.TVCMID ORDER BY p.CREATED_DATE DESC) AS rnk
- FROM (raw.mdm_professional p JOIN reference.Designations d ON (((p.PROFESSION_CODE = d.profession_code) AND (p.PROFESSION_RANK = 1::float) AND (p.STATUS = 'A'::varchar(1)))))) prof ON (((hcp.tvcmid = prof.tvcmid) AND (prof.rnk = 1)))) LEFT  JOIN ( SELECT mdm_dea_address.TVCMID AS tvcmid,
-        mdm_dea_address.DEA_NUMBER AS dea_number,
-        mdm_dea_address.ADDRESS_ID AS address_id,
-        rank() OVER (PARTITION BY mdm_dea_address.TVCMID, mdm_dea_address.ADDRESS_ID ORDER BY mdm_dea_address.DEA_EXPIRATION_DATE DESC, mdm_dea_address.UPDATED_DATE DESC, mdm_dea_address.record_id) AS rnk
- FROM raw.mdm_dea_address
- WHERE (mdm_dea_address.DEA_STATUS_CODE = 'A'::varchar(1))) dea ON (((addr.address_id = dea.address_id) AND (addr.tvcmid = dea.tvcmid) AND (dea.rnk = 1)))) LEFT  JOIN ( SELECT npi.tvcmid,
-        npi.npi
- FROM (( SELECT mdm_alternate_id.file_id,
-        mdm_alternate_id.TVCMID AS tvcmid,
-        max(mdm_alternate_id.ALTERNATE_ID_VALUE) AS npi
- FROM raw.mdm_alternate_id
- WHERE ((mdm_alternate_id.ALTERNATE_ID_TYPE = 'NPI'::varchar(3)) AND (mdm_alternate_id.STATUS = 'A'::varchar(1)))
- GROUP BY mdm_alternate_id.file_id,
-          mdm_alternate_id.TVCMID) npi JOIN ( SELECT b.file_id,
-        rank() OVER (ORDER BY b.file_id DESC) AS file_rank
- FROM ( SELECT mdm_alternate_id.file_id
- FROM raw.mdm_alternate_id
- WHERE ((mdm_alternate_id.ALTERNATE_ID_TYPE = 'NPI'::varchar(3)) AND (mdm_alternate_id.STATUS = 'A'::varchar(1)))
- GROUP BY mdm_alternate_id.file_id) b) npi2 ON (((npi.file_id = npi2.file_id) AND (npi2.file_rank = 2))))) npi ON ((hcp.tvcmid = npi.tvcmid))) LEFT  JOIN ( SELECT sln.TVCMID AS tvcmid,
-        sln.AUTHORIZATION_NUMBER AS license_number,
-        sln.STATE AS state,
-        rank() OVER (PARTITION BY sln.TVCMID, sln.STATE ORDER BY sln.LICENSE_TYPE_PRIVILEGE_RANK, sln.LICENSE_EXPIRATION_DATE DESC, sln.LICENSE_EFFECTIVE_DATE DESC, sln.UPDATED_DATE DESC, sln.record_id) AS rnk
- FROM raw.mdm_license sln
- WHERE (sln.LICENSE_STATUS_CODE = 'A'::varchar(1))) sln ON (((hcp.tvcmid = sln.tvcmid) AND (addr.state = sln.state) AND (sln.rnk = 1))))
- GROUP BY concat('H'::varchar(1), (trunc(hcp.tvcmid))::varchar),
-          NULL,
-          'HCP'::varchar(3),
-          initcap(hcp.first_name),
-          initcap(hcp.middle_name),
-          initcap(hcp.last_name),
-          hcp.suffix,
-          npi.npi,
-          addr.address_line_1,
-          addr.address_line_2,
-          addr.city,
-          addr.state,
-          addr.zipcode,
-          sln.license_number,
-          sln.state,
-          dea.dea_number,
-          CASE WHEN ((prof.profession_code_shortname = 'RN'::varchar(2)) AND (hcp.teva_specialty_code = ANY (ARRAY['NRP'::varchar(3), 'CNA'::varchar(3), 'ARN'::varchar(3), 'CNM'::varchar(3), 'CNS'::varchar(3), 'PHA'::varchar(3)]))) THEN hcp.teva_specialty_code ELSE prof.profession_code_shortname END,
-          hcp.healthcare_professional_status_code,
-          date((statement_timestamp())::timestamp);
+CREATE TABLE sandbox.austedo_callfrequency_data_1212
+(
+    ims_id_original varchar(10),
+    first_rx_date date,
+    total_calls_before_firstrx int
+);
+
+
+CREATE TABLE sandbox.J_CHUNG_DEA_IDs
+(
+    "Physician DEA#" varchar(50)
+);
+
+
+CREATE TABLE sandbox.mb_customer
+(
+    customer_id varchar(25),
+    tvcmid int,
+    ims_id varchar(10),
+    ims_outlet_code varchar(10),
+    ims_facility_number varchar(11),
+    federation_id varchar(200),
+    customer_type varchar(15),
+    prescriber_type varchar(25),
+    network_name varchar(100),
+    account_name varchar(100),
+    physician_first_name varchar(50),
+    physician_last_name varchar(50),
+    credential varchar(100),
+    subcat_group varchar(100),
+    subcat_code varchar(2),
+    pdrp_flag varchar(1),
+    pri_specialty_code varchar(10),
+    pri_specialty_desc varchar(100),
+    sec_specialty_code varchar(10),
+    sec_specialty_desc varchar(100),
+    cm_status_flag varchar(15),
+    gpo varchar(100),
+    dnp_flag varchar(1),
+    product_1_dnc_flag varchar(1),
+    product_2_dnc_flag varchar(1),
+    a_specialty_group varchar(10),
+    b_specialty_group varchar(10),
+    c_specialty_group varchar(10),
+    formulary_control varchar(20)
+);
+
+
+CREATE TABLE sandbox.test_con_curr
+(
+    cust_id float,
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10)
+);
+
+
+CREATE TABLE sandbox.mb_ic_demo_tn
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.mb_ic_rx_tn
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.mb_ic_rx_tr
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.mb_ic_demo_tr
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.PhysicianInfo_Dustin_0518
+(
+    "Prescribing Physician FN" varchar(50),
+    "Prescribing Physician LN" varchar(50),
+    "Prescribing Physician NPI" int,
+    "Prescribing Physician Zip Code" int
+);
+
+
+CREATE TABLE sandbox.test_concur_curr_kg
+(
+    cust_id int,
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10)
+);
+
+
+CREATE TABLE sandbox.concur_hcp_curr
+(
+    cust_id int,
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10),
+    create_date date
+);
+
+
+CREATE TABLE sandbox.concur_hcp_delta
+(
+    cust_id int,
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10),
+    create_date date
+);
+
+
+CREATE TABLE sandbox.prescriber_rx_ics_splitweek_08252020
+(
+    ims_id varchar(10),
+    payer_plan_number varchar(10),
+    ims_client_number varchar(5),
+    report_frequency varchar(20),
+    ims_product_group varchar(10),
+    basket_id int,
+    data_date date,
+    date date,
+    sales_category varchar(2),
+    tvcmid int,
+    prescriber_first_name varchar(50),
+    prescriber_last_name varchar(50),
+    basket_name varchar(300),
+    basket_type varchar(100),
+    rollup_week date,
+    rollup_month date,
+    nrx_count numeric(18,3),
+    trx_count numeric(18,3),
+    nrx_quantity numeric(18,3),
+    trx_quantity numeric(18,3),
+    unnormalized_nrx_count numeric(18,3),
+    unnormalized_trx_count numeric(18,3),
+    market_name varchar(75),
+    payer_name varchar(100),
+    plan_name varchar(100),
+    pbm_name varchar(100),
+    model varchar(100),
+    payment_method varchar(250),
+    ims_specialty varchar(10),
+    ims_rx_type varchar(1),
+    ims_supplemental_data varchar(20),
+    ims_zip_other varchar(10),
+    ims_report_number_cnt varchar(5),
+    cnt_file_id int,
+    cnt_record_id int,
+    ims_report_number_qty varchar(5),
+    qty_file_id int,
+    qty_record_id int,
+    rollup_flag char(1),
+    indication varchar(20),
+    pbm_parent_name varchar(100)
+);
+
+
+CREATE TABLE sandbox.idl_just_best_address
+(
+    cust_id int,
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10),
+    create_date date
+);
+
+
+CREATE TABLE sandbox.test_wprefix_as
+(
+    cust_id varchar(23),
+    organization_name varchar(1),
+    contact_type varchar(3),
+    first_name varchar(80),
+    middle_name varchar(80),
+    last_name varchar(80),
+    suffix varchar(10),
+    npi varchar(100),
+    address_line_1 varchar(160),
+    address_line_2 varchar(160),
+    city varchar(80),
+    state varchar(2),
+    zipcode varchar(5),
+    sln varchar(25),
+    sln_state varchar(2),
+    dea varchar(18),
+    affiliation varchar(1),
+    credential varchar(10),
+    healthcare_professional_status_code varchar(10),
+    create_date date
+);
+
+
+CREATE TABLE sandbox.TV46K_LAI
+(
+    "IMS ID" int,
+    TRx_Count_APD numeric(28,10),
+    Decile_APD int,
+    TRx_Count_LAI numeric(28,10),
+    Decile_LAI int,
+    "Specialty Code" varchar(50),
+    "Specialty Group" varchar(50)
+);
+
+
+CREATE TABLE sandbox."SYNEOS TARGET FILE"
+(
+    ims_id int,
+    tvcmid int,
+    basket_id int,
+    basket_name varchar(50),
+    territory_number varchar(50),
+    sales_force_id varchar(50),
+    flag_type varchar(50),
+    flag_value varchar(50),
+    flag_effective_start_date timestamp,
+    flag_effective_end_date timestamp
+);
+
+
+CREATE TABLE sandbox."IMS ID ISSUE_AUSTEDO_10262020"
+(
+    "IMS ID" varchar(50)
+);
+
+
+CREATE TABLE sandbox.pgk_my_sandbox
+(
+    "IMS ID" int,
+    Decile int,
+    TVCMID int,
+    "First Name" varchar(50),
+    "Last Name" varchar(50),
+    "Middle Name" varchar(50),
+    Suffix varchar(50),
+    "Address 1" varchar(79),
+    "Address 2" varchar(75),
+    "Address 3" varchar(50),
+    City varchar(50),
+    State varchar(50),
+    Zip int,
+    "SLN 1" varchar(20),
+    "SLN 1 Expiration Date" varchar(20),
+    "SLN 2" varchar(20),
+    "SLN 2 State" varchar(20),
+    "SLN 2 Expiration Date" varchar(20),
+    Specialty varchar(50),
+    "Specialty Description" varchar(66),
+    "Specialty Group" varchar(50),
+    "IMS ID_1" int,
+    NPI varchar(50),
+    DEA varchar(20),
+    Designation varchar(50),
+    Decile_1 int,
+    "Email Rented?" varchar(73),
+    "Dup IMS ID" varchar(20)
+);
+
+
+CREATE TABLE sandbox.TVCMID
+(
+    tvcmid int,
+    State varchar(10)
+);
+
+
+CREATE TABLE sandbox.ic_rx_jan2021
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.ic_demo_jan2021
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.mb_to_weekly_account_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    customer_id varchar(25),
+    tvcmid int,
+    network_name varchar(100),
+    account_name varchar(100),
+    channel varchar(50),
+    address varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    formulary_control varchar(20),
+    gpo varchar(100),
+    target varchar(100),
+    new_account varchar(1),
+    market_volume_indicator int,
+    product_vol_dollars numeric(21,2),
+    product_vol_mg int,
+    product_vol_mcg int,
+    market_vol_dollars numeric(21,2),
+    market_vol_mg int,
+    market_vol_mcg int,
+    prev_prod_vol_dollars numeric(21,2),
+    prev_prod_vol_mg int,
+    prev_prod_vol_mcg int,
+    prev_market_vol_dollars numeric(21,2),
+    prev_market_vol_mg int,
+    prev_market_vol_mcg int
+);
+
+
+CREATE TABLE sandbox.ic_rx_feb2021
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.ic_demo_feb2021
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.ic_rx_apr2021
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.ic_demo_apr2021
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.payer_demo
+(
+    payer_id int,
+    payer_name varchar(80)
+);
+
+
+CREATE TABLE sandbox.ftf_formularies
+(
+    health_plan_id varchar(6),
+    drug_id varchar(6),
+    tier_code varchar(2),
+    restrictions varchar(20),
+    reason_code varchar(100),
+    reason_code_description varchar(100),
+    file_id int,
+    record_id int
+);
+
+
+CREATE TABLE sandbox.ftf_health_plans
+(
+    formularyf_id varchar(6),
+    provider_id varchar(6),
+    provider varchar(250),
+    health_plan_id varchar(6),
+    health_plan varchar(100),
+    parent_id varchar(6),
+    parent varchar(250),
+    national_lives_count int,
+    plan_type_name varchar(250),
+    preferred_brand_tier varchar(64),
+    file_id int,
+    record_id int
+);
+
+
+CREATE TABLE sandbox.ftf_pbms
+(
+    health_plan_id varchar(6),
+    pbm_id varchar(6),
+    pbm varchar(250),
+    pbm_function_id varchar(6),
+    pbm_function varchar(250),
+    file_id int,
+    record_id int
+);
+
+
+CREATE TABLE sandbox.ims_pbm_xref
+(
+    pbm_name varchar(100),
+    payer_plan_num varchar(10),
+    xref_to_payer_plan_num varchar(10),
+    ipd_id varchar(10),
+    ipd_type varchar(10),
+    plan_name varchar(100),
+    pbm_num varchar(6),
+    ims_processor_num varchar(10),
+    file_id int,
+    record_id int
+);
+
+
+CREATE TABLE sandbox.ftf_ims_bridge
+(
+    payer_name varchar(200),
+    code varchar(50),
+    name varchar(250),
+    state varchar(2),
+    comments varchar(250),
+    plan_id varchar(100),
+    plan_name varchar(250),
+    provider_name varchar(250),
+    plan_type_name varchar(100),
+    file_id int,
+    record_id int
+);
+
+
+CREATE TABLE sandbox.iqvia_paytypeindex
+(
+    paytype_index varchar(64),
+    paytype varchar(64),
+    file_id int NOT NULL,
+    record_id int
+)
+PARTITION BY (iqvia_paytypeindex.file_id);
+
+
+CREATE TABLE sandbox.ftf_paytype_paytypeindex
+(
+    payType_index varchar(64),
+    paytype varchar(64),
+    file_id int NOT NULL,
+    record_id int
+)
+PARTITION BY (ftf_paytype_paytypeindex.file_id);
+
+
+CREATE TABLE sandbox.step_restriction
+(
+    code int,
+    restriction_group varchar(64),
+    notes varchar(64),
+    file_id int NOT NULL,
+    record_id int
+)
+PARTITION BY (step_restriction.file_id);
+
+
+CREATE TABLE sandbox.medical_rec_restriction
+(
+    code int,
+    restriction_detail_id varchar(64),
+    notes varchar(64),
+    file_id int NOT NULL,
+    record_id int
+)
+PARTITION BY (medical_rec_restriction.file_id);
+
+
+CREATE TABLE sandbox.unspecified_rec_restriction
+(
+    code int,
+    restriction_detail_id varchar(64),
+    notes varchar(64),
+    file_id int NOT NULL,
+    record_id int
+)
+PARTITION BY (unspecified_rec_restriction.file_id);
+
+
+CREATE TABLE sandbox.raw_ftf_restrictions_2
+(
+    health_plan_id varchar(6),
+    drug_id varchar(6),
+    restriction_code varchar(7),
+    restriction_detail_id varchar(6),
+    restriction_detail_text varchar(250),
+    restriction_addtnl_information_1 varchar(4000),
+    restriction_addtnl_information_2 varchar(4000),
+    step_count varchar(50),
+    pa_form varchar(4000),
+    indication varchar(255),
+    grouped_restriction_level varchar(255)
+);
+
+
+CREATE TABLE sandbox.raw_ftf_restrictions
+(
+    health_plan_id varchar(6),
+    drug_id varchar(6),
+    restriction_code varchar(7),
+    restriction_detail_id varchar(6),
+    restriction_detail_text varchar(500),
+    restriction_addtnl_information_1 varchar(4000),
+    restriction_addtnl_information_2 varchar(4000),
+    step_count varchar(50),
+    pa_form varchar(4000),
+    indication varchar(255),
+    grouped_restriction_level varchar(255)
+);
+
+
+CREATE TABLE sandbox.raw_ftf_health_plan_geography
+(
+    health_plan_id varchar(6),
+    county_fips_id int,
+    county_id int,
+    county_name varchar(50),
+    state_id int,
+    state_name varchar(10),
+    county_lives numeric(14,2)
+);
+
+
+CREATE TABLE sandbox.raw_access_master_bridge
+(
+    ftf_health_plan_fid varchar(64),
+    ftf_health_plan_name varchar(200),
+    ajovy_coverage_category varchar(100),
+    aimovid_coverage_category varchar(100),
+    emgality_coverage_category varchar(100),
+    ftf_provider_fid varchar(64),
+    ftf_provider_name varchar(200),
+    ftf_parent_name varchar(200),
+    pay_type_index varchar(64),
+    pay_type varchar(64),
+    ftf_health_plan_type varchar(64),
+    key_controlling_plan_formulary varchar(100),
+    key_controlling_account varchar(100),
+    key_pbm varchar(100),
+    iqvia_payer_name varchar(100),
+    iqvia_pbm varchar(100),
+    ftf_formulary_management_pbm varchar(100),
+    ftf_formulary_influencer_pbm varchar(100),
+    ftf_claims_processing_pbm varchar(100),
+    pref_brand_tier varchar(64),
+    ftf_match_iqvia int,
+    lives_m1 int,
+    lives_m2 int,
+    lives_m3 int,
+    lives_m4 int,
+    lives_m5 int,
+    lives_m6 int,
+    lives_m7 int,
+    lives_m8 int,
+    lives_m9 int,
+    lives_m10 int,
+    lives_m11 int,
+    lives_m12 int,
+    lives_m13 int,
+    lives_m14 int,
+    lives_m15 int,
+    lives_m16 int,
+    lives_m17 int
+);
+
+
+CREATE TABLE sandbox.access_monitor_s121
+(
+    client_id varchar(4),
+    client_physician_id varchar(25),
+    me_number varchar(11),
+    npi varchar(11),
+    valid_menum_flag numeric(5,2),
+    valid_npi_flag numeric(5,2),
+    am_no_see_rating numeric(5,2),
+    teams_no_see_rating varchar(25),
+    annual_call_freq_perc_25 numeric(5,2),
+    annual_call_freq_perc_50 numeric(5,2),
+    annual_call_freq_perc_75 numeric(5,2),
+    teams_call_freq varchar(25),
+    industry_attainment numeric(5,2),
+    teams_attainment varchar(25),
+    attn_perc_25 numeric(5,2),
+    attn_perc_50 numeric(5,2),
+    attn_perc_75 numeric(5,2),
+    teams_attn_perc varchar(25),
+    am_specialty_grouping varchar(50),
+    teams_spec varchar(25),
+    am_zip varchar(15),
+    teams_zip varchar(25),
+    reach_type varchar(25),
+    annual_f2f_call_freq_perc_25 numeric(5,2),
+    annual_f2f_call_freq_perc_50 numeric(5,2),
+    annual_f2f_call_freq_perc_75 numeric(5,2),
+    teams_call_freq_f2f varchar(25),
+    annual_remote_call_freq_perc_25 numeric(5,2),
+    annual_remote_call_freq_perc_50 numeric(5,2),
+    annual_remote_call_freq_perc_75 numeric(5,2),
+    teams_call_freq_remote varchar(25)
+);
+
+
+CREATE TABLE sandbox.Enrollment
+(
+    Prescriber_Name varchar(150),
+    State varchar(50),
+    Zip varchar(10),
+    NPI varchar(15)
+);
+
+
+CREATE TABLE sandbox.ic_rx_may2021
+(
+    ic_data_month date,
+    basket_name varchar(300),
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    dnc_flag char(1),
+    dnp_flag char(1),
+    rollup_month date,
+    month_bucket int,
+    nrx_count float,
+    trx_count float,
+    nrx_quantity float,
+    trx_quantity float,
+    include_in_nation_rollup char(1),
+    include_in_area_rollup char(1),
+    include_in_region_rollup char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    indication varchar(20),
+    outlet_dea varchar(15),
+    payer_plan_number varchar(10),
+    payment_method varchar(250)
+);
+
+
+CREATE TABLE sandbox.ic_demo_may2021
+(
+    ic_data_month date,
+    sales_force_id varchar(20),
+    area_number varchar(15),
+    region_number varchar(15),
+    territory_number varchar(15),
+    ims_id varchar(10),
+    tvcmid int,
+    outlet_code varchar(8),
+    va_station_number varchar(10),
+    specialty varchar(10),
+    last_name varchar(80),
+    first_name varchar(25),
+    mid_name varchar(2),
+    address_1 varchar(100),
+    address_2 varchar(100),
+    address_3 varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    address_source varchar(50),
+    pdrp_flag char(1),
+    pdrp_date date,
+    np_pa_flag char(1),
+    no_spend char(1),
+    ama_no_contact_flag char(1),
+    join_key varchar(10),
+    row_source varchar(100),
+    row_create_date date,
+    outlet_dea varchar(15),
+    secondary_specialty varchar(255)
+);
+
+
+CREATE TABLE sandbox.PGKMediCal
+(
+    "<NullColumn 0>" varchar(50),
+    "<NullColumn 1>" varchar(53),
+    "<NullColumn 2>" varchar(50),
+    "<NullColumn 3>" varchar(50),
+    "<NullColumn 4>" varchar(50),
+    "<NullColumn 5>" varchar(50),
+    "<NullColumn 6>" varchar(50),
+    "<NullColumn 7>" varchar(66),
+    "<NullColumn 8>" varchar(50),
+    "<NullColumn 9>" numeric(28,10),
+    "<NullColumn 10>" numeric(28,10),
+    "<NullColumn 11>" numeric(28,10),
+    "<NullColumn 12>" numeric(28,10)
+);
+
+
+CREATE TABLE sandbox.PSS_ARX_HCP_LIST
+(
+    "Prescribing Physician FN" varchar(50),
+    "Prescribing Physician LN" varchar(50),
+    "Prescribing Physician NPI" int
+);
+
+
+CREATE TABLE sandbox.comparison_payer_spine_cdw_v1
+(
+    iqvia_plan_code int,
+    iqvia_plan_name varchar(300),
+    iqvia_payer_name varchar(300),
+    iqvia_pbm varchar(300),
+    key_controlling_plan_formulary varchar(300),
+    key_controlling_account varchar(300),
+    key_controlling_parent varchar(300),
+    payer_pbm varchar(300),
+    payment_type varchar(300),
+    ajovy_access_for_ftf_plan varchar(300),
+    aimovig_access_for_ftf_plan varchar(300),
+    emgality_access_for_ftf_plan varchar(300),
+    lives_plan_kcf_lvl int,
+    lives_plan_lvl int,
+    apportionment_factor numeric(37,15),
+    saba_trx numeric(37,15),
+    change_iqvia_plan_code int,
+    change_iqvia_plan_name int,
+    change_iqvia_payer_name int,
+    change_iqvia_pbm int,
+    change_key_controlling_plan_formulary int,
+    change_key_controlling_account int,
+    change_key_controlling_parent int,
+    change_payer_pbm int,
+    change_payment_type int,
+    change_ajovy_access_for_ftf_plan int,
+    change_aimovig_access_for_ftf_plan int,
+    change_emgality_access_for_ftf_plan int,
+    change_lives_plan_kcf_lvl int,
+    change_lives_plan_lvl int,
+    change_apportionment_factor int,
+    change_saba_trx int,
+    change int,
+    month_flag varchar(200),
+    status varchar(200),
+    cycle_id int,
+    modified_time timestamp,
+    modified_by varchar(200)
+)
+PARTITION BY (comparison_payer_spine_cdw_v1.cycle_id);
+
+
+CREATE TABLE sandbox.tmp_weekly_total_calls
+(
+    sales_force_id varchar(8),
+    call_id varchar(80),
+    customer_id varchar(20),
+    geography_level varchar(9),
+    geography_id varchar(10),
+    geography varchar(100),
+    rep_name varchar(1),
+    user_id varchar(1),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(11),
+    time_period varchar(6),
+    period_type varchar(5),
+    period varchar(63),
+    week_bucket int,
+    date_sent timestamptz,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(3),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int
+);
+
+
+CREATE TABLE sandbox.temp_sp
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    geography_level varchar(9),
+    geography_id varchar(10),
+    geography varchar(100),
+    rep_name varchar(1),
+    user_id varchar(1),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    time_period varchar(6),
+    period_type varchar(5),
+    period date,
+    week_bucket int,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(15),
+    call_recordtype varchar(80),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int,
+    prsc_reach int
+);
+
+
+CREATE TABLE sandbox.test_cumm_count
+(
+    period varchar(80),
+    customer_id varchar(80)
+);
+
+
+CREATE TABLE sandbox.coverage_category_derivation_config_vOct
+(
+    tier_regex varchar(200),
+    pharmacy_status_regex varchar(200),
+    paytype_regex varchar(200),
+    haspa_regex varchar(200),
+    hasst_regex varchar(200),
+    haspast_regex varchar(200),
+    rest_groupstep_regex varchar(200),
+    coverage_category varchar(200),
+    record_id int,
+    file_id int
+)
+PARTITION BY (coverage_category_derivation_config_vOct.file_id);
+
+
+CREATE TABLE sandbox.ftf_restriction_id_group_mapping
+(
+    restriction_detail_id int,
+    restriction_detail_text varchar(15000),
+    grouped_restriction_level varchar(3000),
+    coverage_category varchar(1000),
+    used_flag int,
+    notes varchar(1000),
+    file_id int,
+    record_id int
+)
+PARTITION BY (ftf_restriction_id_group_mapping.file_id);
+
+
+CREATE TABLE sandbox.ts_monthly_new_prescriber
+(
+    customer_id varchar(200),
+    brand_id int,
+    month_ending date,
+    month_bucket int,
+    curr_trx float,
+    prev_trx float
+);
+
+
+CREATE TABLE sandbox.ts_monthly_prescriber_sales
+(
+    customer_id varchar(200),
+    tvcmid int,
+    ims_id varchar(200),
+    product_id int,
+    payer_plan_id varchar(200),
+    month_ending date,
+    month_bucket int,
+    data_source varchar(200),
+    channel varchar(30),
+    pbm_name varchar(100),
+    method_of_payment varchar(250),
+    trx float,
+    nrx float,
+    trx_units float,
+    nrx_units float,
+    trx_dollars int,
+    nrx_dollars int,
+    new_prescriber varchar(1)
+);
+
+
+CREATE TABLE sandbox.ts_monthly_prescriber_sales_summary
+(
+    sales_force_id varchar(200),
+    customer_id varchar(200),
+    tvcmid int,
+    ims_id varchar(200),
+    period_type varchar(200),
+    period varchar(200),
+    month_ending date,
+    month_bucket int,
+    market_id int,
+    brand_id int,
+    payer_id varchar(200),
+    payer_plan_id varchar(200),
+    method_of_payment varchar(200),
+    hcp_restriction_flag varchar(200),
+    segment varchar(200),
+    decile varchar(200),
+    hcp_payer_vol_rank int,
+    hcp_plan_vol_rank int,
+    product_vol_trx_count numeric(37,15),
+    prev_prod_vol_trx_count numeric(37,15),
+    product_vol_nrx_count numeric(37,15),
+    prev_prod_vol_nrx_count numeric(37,15),
+    market_vol_trx_count numeric(37,15),
+    prev_market_vol_trx_count numeric(37,15),
+    market_vol_nrx_count numeric(37,15),
+    prev_market_vol_nrx_count numeric(37,15),
+    samples numeric(37,15),
+    details_p1 numeric(37,15),
+    details_p2 numeric(37,15),
+    details_p3 numeric(37,15)
+);
+
+
+CREATE TABLE sandbox.ts_monthly_prescriber_summary
+(
+    sales_force_id varchar(200),
+    nation_id varchar(10),
+    nation varchar(100),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(200),
+    period varchar(200),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    customer_id varchar(200),
+    tvcmid int,
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(200),
+    prescriber_name varchar(102),
+    new_prescriber varchar(1),
+    address varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    target_status_flag varchar(1),
+    partner_target_status_flag varchar(1),
+    method_of_payment varchar(200),
+    specialty varchar(25),
+    segment varchar(200),
+    decile varchar(200),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(37,15),
+    market_vol_trx_count numeric(37,15),
+    prev_prod_vol_trx_count numeric(37,15),
+    prev_market_vol_trx_count numeric(37,15),
+    product_vol_nrx_count numeric(37,15),
+    market_vol_nrx_count numeric(37,15),
+    prev_prod_vol_nrx_count numeric(37,15),
+    prev_market_vol_nrx_count numeric(37,15),
+    samples numeric(37,15),
+    details_p1 numeric(37,15),
+    details_p2 numeric(37,15),
+    details_p3 numeric(37,15)
+);
+
+
+CREATE TABLE sandbox.ts_monthly_payer_prescriber_summary
+(
+    sales_force_id varchar(200),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(6),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    customer_id varchar(25),
+    tvcmid int,
+    hcp_plan_vol_rank int,
+    prescriber_name varchar(100),
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(1),
+    address varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(10),
+    target_status_flag varchar(5),
+    partner_target_status_flag varchar(5),
+    method_of_payment varchar(250),
+    specialty varchar(25),
+    segment varchar(100),
+    decile varchar(100),
+    rep_type varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    Nation_Product_TRx_Count numeric(21,3),
+    Nation_Product_NRx_Count numeric(21,3),
+    Nation_Market_TRx_Count numeric(21,3),
+    Nation_Market_NRx_Count numeric(21,3),
+    Nation_Product_TRx_Payer_Count numeric(21,3),
+    Nation_Product_NRx_Payer_Count numeric(21,3),
+    Nation_Market_TRx_Payer_Count numeric(21,3),
+    Nation_Market_NRx_Payer_Count numeric(21,3),
+    Nation_Product_TRx_Plan_Count numeric(21,3),
+    Nation_Product_NRx_Plan_Count numeric(21,3),
+    Nation_Market_TRx_Plan_Count numeric(21,3),
+    Nation_Market_NRx_Plan_Count numeric(21,3),
+    focus_target varchar(100)
+);
+
+
+CREATE TABLE sandbox.ts_monthly_geography_summary
+(
+    sales_force_id varchar(200),
+    geography_level varchar(10),
+    geography_id varchar(100),
+    geography varchar(250),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(15),
+    period varchar(15),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    target_status_flag varchar(1),
+    method_of_payment varchar(250),
+    specialty varchar(15),
+    segment varchar(100),
+    rep_type varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    product_vol_new_pres_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    product_vol_new_pres_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    prescribers_count int,
+    new_prescribers_count int,
+    decile varchar(100)
+);
+
+
+CREATE TABLE sandbox.ts_pre_call_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    rep_type varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(6),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    customer_id varchar(25),
+    tvcmid int,
+    hcp_plan_vol_rank int,
+    prescriber_name varchar(100),
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(1),
+    address varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(10),
+    target_status_flag varchar(5),
+    partner_target_status_flag varchar(5),
+    method_of_payment varchar(250),
+    specialty varchar(25),
+    segment varchar(100),
+    decile varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    focus_target varchar(100)
+);
+
+
+CREATE TABLE sandbox.ts_weekly_prescriber_sales
+(
+    customer_id varchar(25),
+    tvcmid int,
+    ims_id varchar(10),
+    product_id int,
+    payer_plan_id varchar(10),
+    week_ending date,
+    week_bucket int,
+    data_source varchar(7),
+    channel varchar(30),
+    pbm_name varchar(100),
+    method_of_payment varchar(250),
+    trx numeric(18,3),
+    nrx numeric(18,3),
+    trx_units numeric(18,3),
+    nrx_units numeric(18,3),
+    trx_dollars int,
+    nrx_dollars int,
+    new_prescriber varchar(1)
+);
+
+
+CREATE TABLE sandbox.ts_weekly_new_prescriber
+(
+    customer_id varchar(25),
+    brand_id int,
+    week_ending date,
+    week_bucket int,
+    curr_trx numeric(21,3),
+    prev_trx numeric(21,3)
+);
+
+
+CREATE TABLE sandbox.ts_weekly_prescriber_sales_summary
+(
+    sales_force_id varchar(5),
+    customer_id varchar(25),
+    tvcmid int,
+    ims_id varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    week_ending date,
+    week_bucket int,
+    market_id int,
+    brand_id int,
+    payer_id varchar(6),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    hcp_payer_vol_rank int,
+    hcp_plan_vol_rank int,
+    product_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples numeric(20,2),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2)
+);
+
+
+CREATE TABLE sandbox.ts_weekly_prescriber_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(100),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    customer_id varchar(25),
+    tvcmid int,
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(1),
+    prescriber_name varchar(100),
+    new_prescriber varchar(5),
+    address varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(10),
+    partner_target_status_flag varchar(5),
+    target_status_flag varchar(5),
+    method_of_payment varchar(250),
+    specialty varchar(25),
+    segment varchar(100),
+    decile varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int
+);
+
+
+CREATE TABLE sandbox.ts_weekly_payer_prescriber_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(6),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    customer_id varchar(25),
+    tvcmid int,
+    hcp_plan_vol_rank int,
+    prescriber_name varchar(100),
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(1),
+    address varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(10),
+    target_status_flag varchar(5),
+    partner_target_status_flag varchar(5),
+    method_of_payment varchar(250),
+    specialty varchar(25),
+    segment varchar(100),
+    decile varchar(100),
+    rep_type varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    focus_target varchar(100)
+);
+
+
+CREATE TABLE sandbox.ts_weekly_geography_summary
+(
+    sales_force_id varchar(5),
+    geography_level varchar(10),
+    geography_id varchar(100),
+    geography varchar(250),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(15),
+    period varchar(15),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    target_status_flag varchar(1),
+    method_of_payment varchar(250),
+    rep_type varchar(100),
+    specialty varchar(15),
+    segment varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    product_vol_new_pres_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    product_vol_new_pres_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    prescribers_count int,
+    new_prescribers_count int,
+    decile varchar(100)
+);
+
+
+CREATE TABLE sandbox.sales_force_headcounts
+(
+    sales_force_id varchar(5),
+    month date,
+    headcount int,
+    products int,
+    rep_type varchar(100)
+);
+
+
+CREATE TABLE sandbox.reporting_markets
+(
+    basket_id int,
+    basket_name varchar(300),
+    basket_type varchar(100),
+    status varchar(1),
+    geo_summary_include varchar(1),
+    presc_summary_include varchar(1),
+    market_share_market_id int,
+    market_share_brand_id int,
+    rptg_decile_attribute_type varchar(100),
+    rptg_decile_attribute_prod_id int,
+    rptg_segment_attribute_type varchar(100),
+    rptg_segment_attribute_prod_id int
+);
+
+
+CREATE TABLE sandbox.tmp_monthly_hcp_activity
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    territory_id varchar(10),
+    product_id int,
+    month_ending date,
+    month_bucket int,
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(20,2)
+);
+
+
+CREATE TABLE sandbox.tmp_monthly_hcp_trend_v2
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    geography_level varchar(10),
+    nation_id varchar(10),
+    nation_name varchar(100),
+    area_id varchar(10),
+    area_name varchar(100),
+    region_id varchar(10),
+    region_name varchar(100),
+    territory_id varchar(10),
+    territory_name varchar(100),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    time_period varchar(7),
+    period_type varchar(5),
+    period date,
+    month_bucket int,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(20,2)
+);
+
+
+CREATE TABLE sandbox.par_rnf_test
+(
+    sales_force_id varchar(5),
+    geography_level varchar(9),
+    geography_id varchar(10),
+    geography varchar(100),
+    rep_name varchar(1),
+    user_id varchar(1),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    time_period varchar(7),
+    period_type varchar(5),
+    period date,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(20,2),
+    prescriber_count_calls int,
+    prescriber_count_samples int,
+    prescriber_reached_calls int,
+    prescriber_reached_samples int
+);
+
+
+CREATE TABLE sandbox.ts_weekly_account_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    rep_type varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    customer_id varchar(25),
+    tvcmid int,
+    network_name varchar(100),
+    account_name varchar(100),
+    channel varchar(50),
+    address varchar(100),
+    city varchar(50),
+    state varchar(2),
+    zip varchar(5),
+    formulary_control varchar(20),
+    gpo varchar(100),
+    target varchar(100),
+    decile varchar(100),
+    new_account varchar(1),
+    market_volume_indicator int,
+    product_vol_units numeric(18,3),
+    market_vol_units numeric(18,3),
+    prev_prod_vol_units numeric(18,3),
+    prev_market_vol_units numeric(18,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int
+);
+
+
+CREATE TABLE sandbox.ts_weekly_account_geography_summary
+(
+    sales_force_id varchar(5),
+    geography_level varchar(10),
+    geography_id varchar(100),
+    geography varchar(250),
+    rep_name varchar(100),
+    rep_type varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(15),
+    period varchar(15),
+    segment varchar(100),
+    decile varchar(100),
+    target varchar(100),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    channel varchar(50),
+    market_volume_indicator int,
+    new_accounts int,
+    accounts_ordering int,
+    avg_sales_per_account numeric(18,2),
+    prev_accounts_ordering int,
+    product_vol_units numeric(18,3),
+    market_vol_units numeric(18,3),
+    prev_prod_vol_units numeric(18,3),
+    prev_market_vol_units numeric(18,3),
+    accounts_detailed_count int,
+    total_accounts_count int
+);
+
+
+CREATE TABLE sandbox.tmp_monthly_hcp_trend
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    geography_level varchar(10),
+    nation_id varchar(10),
+    nation_name varchar(100),
+    area_id varchar(10),
+    area_name varchar(100),
+    region_id varchar(10),
+    region_name varchar(100),
+    territory_id varchar(10),
+    territory_name varchar(100),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    time_period varchar(7),
+    period_type varchar(5),
+    period date,
+    month_bucket int,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(38,20)
+);
+
+
+CREATE TABLE sandbox.par_rnf_ho
+(
+    sales_force_id varchar(5),
+    geography_level varchar(10),
+    geography_id varchar(100),
+    geography varchar(250),
+    rep_name varchar(100),
+    user_id varchar(255),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(15),
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(25),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int,
+    prescriber_count_calls int,
+    prescriber_count_samples int,
+    prescriber_reached_calls int,
+    prescriber_reached_samples int,
+    how_executed varchar(40),
+    call_recordtype varchar(80)
+);
+
+
+CREATE TABLE sandbox.uzedy_reverse_geo_payer_weekly
+(
+    ts_nation_id varchar(10),
+    ts_nation varchar(10),
+    ts_area_id varchar(10),
+    ts_area varchar(100),
+    ts_region_id varchar(10),
+    ts_region varchar(100),
+    ts_territory_id varchar(10),
+    ts_territory varchar(100),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    pbm_id varchar(6),
+    pbm_name varchar(100),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(6),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    state varchar(100),
+    zip varchar(10),
+    key_controlling_parent varchar(100),
+    key_controlling_account varchar(100),
+    key_controlling_plan_formulary varchar(100),
+    gpo varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3)
+);
+
+
+CREATE TABLE sandbox.tmp_weekly_hcp_activity_1
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    territory_id varchar(10),
+    product_id int,
+    week_ending date,
+    week_bucket int,
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(38,20)
+);
+
+
+CREATE TABLE sandbox.tmp_weekly_rte_trend
+(
+    sales_force_id varchar(8),
+    call_id varchar(80),
+    customer_id varchar(20),
+    geography_level varchar(6),
+    geography_id varchar(8),
+    geography varchar(6),
+    rep_name varchar(1),
+    user_id varchar(1),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(2600),
+    time_period varchar(6),
+    period_type varchar(5),
+    period date,
+    week_bucket int,
+    date_sent timestamptz,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(3),
+    call_recordtype varchar(1),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int
+);
+
+
+CREATE TABLE sandbox.tmp_monthly_rte_trend
+(
+    sales_force_id varchar(8),
+    call_id varchar(80),
+    customer_id varchar(20),
+    geography_level varchar(6),
+    geography_id varchar(8),
+    geography varchar(6),
+    rep_name varchar(1),
+    user_id varchar(1),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(2600),
+    time_period varchar(7),
+    period_type varchar(5),
+    period date,
+    month_bucket int,
+    date_sent timestamptz,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(3),
+    call_recordtype varchar(1),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int
+);
+
+
+CREATE TABLE sandbox.tmp_monthly_rte_agg
+(
+    customer_id varchar(20),
+    sales_force_id varchar(8),
+    geography_level varchar(6),
+    geography_id varchar(8),
+    geography varchar(6),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(2600),
+    time_period varchar(7),
+    period_type varchar(10),
+    period varchar(11),
+    date_sent timestamptz,
+    decile varchar(100),
+    segment varchar(100),
+    specialty varchar(25),
+    target_status varchar(100),
+    how_executed varchar(3),
+    call_recordtype varchar(1),
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    total_details int,
+    samples int
+);
+
+
+CREATE TABLE sandbox.ajovy_reverse_geo_payer
+(
+    ma_nation_id varchar(8),
+    ma_nation varchar(200),
+    ma_area_id varchar(8),
+    ma_area varchar(200),
+    ma_region_id varchar(8),
+    ma_region varchar(200),
+    ma_territory_id varchar(8),
+    ma_territory varchar(200),
+    ns_nation_id varchar(8),
+    ns_nation varchar(200),
+    ns_area_id varchar(8),
+    ns_area varchar(200),
+    ns_region_id varchar(8),
+    ns_region varchar(200),
+    ns_territory_id varchar(8),
+    ns_territory varchar(200),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    time_period varchar(15),
+    period_type varchar(15),
+    period varchar(100),
+    pbm_id varchar(6),
+    pbm_name varchar(100),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(4),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    state varchar(2),
+    zip varchar(5),
+    final_key_controlling_account varchar(100),
+    key_parent_account varchar(100),
+    ajovy_formulary_status varchar(100),
+    aimovig_formulary_status varchar(100),
+    emgality_formulary_status varchar(100),
+    plan_payment_type varchar(10),
+    market_volume_indicator varchar(1),
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    lives_covered int,
+    key_controlling_parent varchar(100),
+    gpo varchar(100)
+);
+
+
+CREATE TABLE sandbox.austedo_reverse_geo_payer
+(
+    ma_nation_id varchar(8),
+    ma_nation varchar(200),
+    ma_area_id varchar(8),
+    ma_area varchar(200),
+    ma_region_id varchar(8),
+    ma_region varchar(200),
+    ma_territory_id varchar(8),
+    ma_territory varchar(200),
+    np_nation_id varchar(8),
+    np_nation varchar(200),
+    np_area_id varchar(8),
+    np_area varchar(200),
+    np_region_id varchar(8),
+    np_region varchar(200),
+    np_territory_id varchar(8),
+    np_territory varchar(200),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    time_period varchar(15),
+    period_type varchar(15),
+    period varchar(100),
+    pbm_id varchar(6),
+    pbm_name varchar(100),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(4),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    state varchar(2),
+    zip varchar(5),
+    final_key_controlling_account varchar(100),
+    key_parent_account varchar(100),
+    plan_payment_type varchar(10),
+    market_volume_indicator varchar(1),
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    key_controlling_parent varchar(100),
+    gpo varchar(100)
+);
+
+
+CREATE TABLE sandbox.digihaler_reverse_geo_payer
+(
+    ma_nation_id varchar(8),
+    ma_nation varchar(200),
+    ma_area_id varchar(8),
+    ma_area varchar(200),
+    ma_region_id varchar(8),
+    ma_region varchar(200),
+    ma_territory_id varchar(8),
+    ma_territory varchar(200),
+    rs_nation_id varchar(8),
+    rs_nation varchar(200),
+    rs_area_id varchar(8),
+    rs_area varchar(200),
+    rs_region_id varchar(8),
+    rs_region varchar(200),
+    rs_territory_id varchar(8),
+    rs_territory varchar(200),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    time_period varchar(15),
+    period_type varchar(15),
+    period varchar(100),
+    pbm_id varchar(6),
+    pbm_name varchar(100),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(4),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    state varchar(2),
+    zip varchar(5),
+    final_key_controlling_account varchar(100),
+    key_parent_account varchar(100),
+    plan_payment_type varchar(10),
+    market_volume_indicator varchar(1),
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    key_controlling_parent varchar(100),
+    gpo varchar(100)
+);
+
+
+CREATE TABLE sandbox.tp_anti_psych_weekly_new_prescriber
+(
+    customer_id varchar(25),
+    brand_id int,
+    week_ending date,
+    week_bucket int,
+    curr_trx numeric(21,3),
+    prev_trx numeric(21,3)
+);
+
+
+CREATE TABLE sandbox.tp_anti_psych_weekly_prescriber_sales
+(
+    customer_id varchar(25),
+    tvcmid int,
+    ims_id varchar(10),
+    product_id int,
+    payer_plan_id varchar(10),
+    week_ending date,
+    week_bucket int,
+    data_source varchar(7),
+    channel varchar(30),
+    pbm_name varchar(100),
+    method_of_payment varchar(250),
+    trx numeric(18,3),
+    nrx numeric(18,3),
+    trx_units numeric(18,3),
+    nrx_units numeric(18,3),
+    trx_dollars int,
+    nrx_dollars int,
+    new_prescriber varchar(1)
+);
+
+
+CREATE TABLE sandbox.tp_anti_psych_weekly_prescriber_sales_summary
+(
+    sales_force_id varchar(5),
+    customer_id varchar(25),
+    tvcmid int,
+    ims_id varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    week_ending date,
+    week_bucket int,
+    market_id int,
+    brand_id int,
+    payer_id varchar(6),
+    payer_plan_id varchar(10),
+    method_of_payment varchar(250),
+    hcp_payer_vol_rank int,
+    hcp_plan_vol_rank int,
+    product_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples numeric(20,2),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2)
+);
+
+
+CREATE TABLE sandbox.tp_anti_psych_weekly_payer_prescriber_summary
+(
+    sales_force_id varchar(5),
+    nation_id varchar(10),
+    nation varchar(10),
+    area_id varchar(10),
+    area varchar(100),
+    region_id varchar(10),
+    region varchar(100),
+    territory_id varchar(10),
+    territory varchar(100),
+    rep_name varchar(100),
+    user_id varchar(255),
+    time_period varchar(10),
+    period_type varchar(10),
+    period varchar(11),
+    market_id int,
+    market_name varchar(300),
+    brand_id int,
+    brand_name varchar(300),
+    teva_product_flag varchar(1),
+    payer_id varchar(6),
+    payer_name varchar(100),
+    plan_id varchar(6),
+    plan_name varchar(100),
+    payer_plan_id varchar(10),
+    customer_id varchar(25),
+    tvcmid int,
+    hcp_plan_vol_rank int,
+    prescriber_name varchar(100),
+    pdrp_flag varchar(1),
+    hcp_restriction_flag varchar(1),
+    address varchar(100),
+    city varchar(100),
+    state varchar(100),
+    zip varchar(10),
+    target_status_flag varchar(5),
+    partner_target_status_flag varchar(5),
+    method_of_payment varchar(250),
+    specialty varchar(25),
+    segment varchar(100),
+    decile varchar(100),
+    market_volume_indicator int,
+    product_vol_trx_count numeric(21,3),
+    market_vol_trx_count numeric(21,3),
+    prev_prod_vol_trx_count numeric(21,3),
+    prev_market_vol_trx_count numeric(21,3),
+    product_vol_nrx_count numeric(21,3),
+    market_vol_nrx_count numeric(21,3),
+    prev_prod_vol_nrx_count numeric(21,3),
+    prev_market_vol_nrx_count numeric(21,3),
+    samples int,
+    details_p1 int,
+    details_p2 int,
+    details_p3 int,
+    focus_target varchar(100)
+);
+
+
+CREATE TABLE sandbox.tmp_weekly_hcp_activity
+(
+    customer_id varchar(25),
+    sales_force_id varchar(5),
+    territory_id varchar(10),
+    product_id int,
+    week_ending date,
+    week_bucket int,
+    target_status varchar(100),
+    how_executed varchar(40),
+    call_recordtype varchar(80),
+    details_p1 numeric(20,2),
+    details_p2 numeric(20,2),
+    details_p3 numeric(20,2),
+    total_details numeric(20,2),
+    samples numeric(38,20)
+);
