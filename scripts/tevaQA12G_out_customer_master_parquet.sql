@@ -1,0 +1,11 @@
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/teva_flag') AS SELECT * FROM customer_master.teva_flag;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/customer_flags') AS SELECT * FROM customer_master.customer_flags;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/hco_demo') AS SELECT * FROM customer_master.hco_demo;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/raw_dea') AS SELECT * FROM customer_master.raw_dea;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/hcp_demo') AS SELECT * FROM customer_master.hcp_demo;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/hcp_detail') AS SELECT * FROM customer_master.hcp_detail;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/tvcmid_merges') AS SELECT * FROM customer_master.tvcmid_merges;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/sample_eligibility') AS SELECT * FROM customer_master.sample_eligibility;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/ims_flag') AS SELECT * FROM customer_master.ims_flag;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/alternate_identifier') AS SELECT * FROM customer_master.alternate_identifier;
+EXPORT TO PARQUET (directory='s3://teva-export-buckt/tevaQA12G/customer_master/tvcmid_xref') AS SELECT * FROM customer_master.tvcmid_xref;

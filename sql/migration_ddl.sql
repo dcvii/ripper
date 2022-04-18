@@ -133,5 +133,21 @@ order by grant_order asc;
 truncate table migration.odd_parms_src;
 
 
+-- ### audit stuff
+
+CREATE TABLE if not exists migration.audit
+(
+    table_schema varchar(128),
+    table_name varchar(128),
+    src_row_count int,
+    tgt_row_count int,
+    audit_init_ts timestamp,
+    export_type varchar(20),
+    export_cmd varchar(512),
+    export_success boolean,
+    export_ts timestamp
+
+);
+
 
 
