@@ -7,8 +7,8 @@ COPY /*9*/ metadata.validation_data_type_reference FROM VERTICA teva.metadata.va
 COPY /*14*/ metadata.event_type_reference FROM VERTICA teva.metadata.event_type_reference;
 COPY /*15*/ metadata.workflow_process FROM VERTICA teva.metadata.workflow_process;
 COPY /*17*/ metadata.id_lookup FROM VERTICA teva.metadata.id_lookup;
-COPY /*21*/ metadata.log_configuration_validation_errors FROM VERTICA teva.metadata.log_configuration_validation_errors;
-COPY /*21*/ metadata.log_data_validation_errors FROM VERTICA teva.metadata.log_data_validation_errors;
+COPY /*23*/ metadata.log_configuration_validation_errors FROM VERTICA teva.metadata.log_configuration_validation_errors;
+COPY /*23*/ metadata.log_data_validation_errors FROM VERTICA teva.metadata.log_data_validation_errors;
 COPY /*45*/ metadata.data_feed_version_validation_rules FROM VERTICA teva.metadata.data_feed_version_validation_rules;
 COPY /*186*/ metadata.wrkflw_cmnd_05132020 FROM VERTICA teva.metadata.wrkflw_cmnd_05132020;
 COPY /*240*/ metadata.purge_list FROM VERTICA teva.metadata.purge_list;
@@ -22,9 +22,9 @@ COPY /*4193*/ metadata.data_file_metadata_prepurge FROM VERTICA teva.metadata.da
 COPY /*4193*/ metadata.data_file_metadata_postpurge FROM VERTICA teva.metadata.data_file_metadata_postpurge;
 COPY /*5516*/ metadata.integration_mapping FROM VERTICA teva.metadata.integration_mapping;
 COPY /*6684*/ metadata.valid_values FROM VERTICA teva.metadata.valid_values;
-COPY /*55421*/ metadata.log_job_events FROM VERTICA teva.metadata.log_job_events;
+COPY /*56136*/ metadata.log_job_events FROM VERTICA teva.metadata.log_job_events;
 COPY /*192411*/ metadata.data_file_metadata_bkp FROM VERTICA teva.metadata.data_file_metadata_bkp;
-COPY /*196034*/ metadata.data_file_metadata FROM VERTICA teva.metadata.data_file_metadata;
-COPY /*1724122*/ metadata.workflow_log FROM VERTICA teva.metadata.workflow_log;
+COPY /*392464*/ metadata.data_file_metadata FROM VERTICA teva.metadata.data_file_metadata;
+COPY /*1724126*/ metadata.workflow_log FROM VERTICA teva.metadata.workflow_log;
 COPY /*2266824*/ metadata.log_files_purged FROM VERTICA teva.metadata.log_files_purged;
 DISCONNECT teva;

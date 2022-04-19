@@ -2,8 +2,8 @@ COPY hcos.ims_hcos_bed_cluster_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/
 COPY hcos.ims_hcos_aco_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_aco_type/*' PARQUET;
 COPY hcos.ims_hcos_identifier_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_identifier_type/*' PARQUET;
 COPY hcos.ims_hcos_affiliation_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_affiliation_type/*' PARQUET;
-COPY hcos.ims_hcos_bed_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_bed_type/*' PARQUET;
 COPY hcos.ims_hcos_professional_detail FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_professional_detail/*' PARQUET;
+COPY hcos.ims_hcos_bed_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_bed_type/*' PARQUET;
 COPY hcos.ims_hcos_identifier_term_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_identifier_term_type/*' PARQUET;
 COPY hcos.ims_hcos_identifier_category_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_identifier_category_type/*' PARQUET;
 COPY hcos.ims_hcos_relationship_type FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_relationship_type/*' PARQUET;
@@ -19,8 +19,8 @@ COPY hcos.ims_hcos_aco_detail_fact FROM 's3://teva-export-buckt/tevaQA12G/hcos/i
 COPY hcos.ims_hcos_clinical_fact_national FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_clinical_fact_national/*' PARQUET;
 COPY hcos.ims_hcos_bed_fact FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_bed_fact/*' PARQUET;
 COPY hcos.ims_hcos_ddd_xref FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_ddd_xref/*' PARQUET;
-COPY hcos.ims_hcos_clinical_fact_state FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_clinical_fact_state/*' PARQUET;
 COPY hcos.ims_hcos_professional_detail_fact FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_professional_detail_fact/*' PARQUET;
+COPY hcos.ims_hcos_clinical_fact_state FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_clinical_fact_state/*' PARQUET;
 COPY hcos.ims_hcos_contact_affiliation_fact FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_contact_affiliation_fact/*' PARQUET;
 COPY hcos.ims_hcos_aco_roster FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_aco_roster/*' PARQUET;
 COPY hcos.ims_hcos_cot_fact FROM 's3://teva-export-buckt/tevaQA12G/hcos/ims_hcos_cot_fact/*' PARQUET;

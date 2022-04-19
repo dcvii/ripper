@@ -52,8 +52,8 @@ COPY reference.active_fileclass_names FROM 's3://teva-export-buckt/tevaQA12G/ref
 COPY reference.valid_value_exclusion FROM 's3://teva-export-buckt/tevaQA12G/reference/valid_value_exclusion/*' PARQUET;
 COPY reference.active_alternate_alignments FROM 's3://teva-export-buckt/tevaQA12G/reference/active_alternate_alignments/*' PARQUET;
 COPY reference.call_plan_active_dates FROM 's3://teva-export-buckt/tevaQA12G/reference/call_plan_active_dates/*' PARQUET;
-COPY reference.mb_ref_rptng_workdays_01312020 FROM 's3://teva-export-buckt/tevaQA12G/reference/mb_ref_rptng_workdays_01312020/*' PARQUET;
 COPY reference.bkp_rptng_wrkdays_12162020 FROM 's3://teva-export-buckt/tevaQA12G/reference/bkp_rptng_wrkdays_12162020/*' PARQUET;
+COPY reference.mb_ref_rptng_workdays_01312020 FROM 's3://teva-export-buckt/tevaQA12G/reference/mb_ref_rptng_workdays_01312020/*' PARQUET;
 COPY reference.ref_rptng_wrkdays_05132020 FROM 's3://teva-export-buckt/tevaQA12G/reference/ref_rptng_wrkdays_05132020/*' PARQUET;
 COPY reference.mb_ref_rptng_workdays_04282020 FROM 's3://teva-export-buckt/tevaQA12G/reference/mb_ref_rptng_workdays_04282020/*' PARQUET;
 COPY reference.mb_ref_rptng_call_per_day_goal_01312020 FROM 's3://teva-export-buckt/tevaQA12G/reference/mb_ref_rptng_call_per_day_goal_01312020/*' PARQUET;
