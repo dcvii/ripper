@@ -68,8 +68,8 @@ COPY integration.ahm_expense FROM 's3://teva-export-buckt/tevaQA12G/integration/
 COPY integration.mm_ims_bridge FROM 's3://teva-export-buckt/tevaQA12G/integration/mm_ims_bridge/*' PARQUET;
 COPY integration.ddd_adhoc FROM 's3://teva-export-buckt/tevaQA12G/integration/ddd_adhoc/*' PARQUET;
 COPY integration.roster_associate_audit FROM 's3://teva-export-buckt/tevaQA12G/integration/roster_associate_audit/*' PARQUET;
-COPY integration.ddd_md_demographics FROM 's3://teva-export-buckt/tevaQA12G/integration/ddd_md_demographics/*' PARQUET;
 COPY integration.cmop_rx FROM 's3://teva-export-buckt/tevaQA12G/integration/cmop_rx/*' PARQUET;
+COPY integration.ddd_md_demographics FROM 's3://teva-export-buckt/tevaQA12G/integration/ddd_md_demographics/*' PARQUET;
 COPY integration.ahm_participant FROM 's3://teva-export-buckt/tevaQA12G/integration/ahm_participant/*' PARQUET;
 COPY integration.fia_mpd FROM 's3://teva-export-buckt/tevaQA12G/integration/fia_mpd/*' PARQUET;
 COPY integration.touchpoint_presentations FROM 's3://teva-export-buckt/tevaQA12G/integration/touchpoint_presentations/*' PARQUET;

@@ -114,9 +114,9 @@ COPY cleansed.alphascrip_weekly_copay_mck FROM 's3://teva-export-buckt/tevaQA12G
 COPY cleansed.kc_hr_aud_associates FROM 's3://teva-export-buckt/tevaQA12G/cleansed/kc_hr_aud_associates/*' PARQUET;
 COPY cleansed.alphascrip_weekly_voucher_mck FROM 's3://teva-export-buckt/tevaQA12G/cleansed/alphascrip_weekly_voucher_mck/*' PARQUET;
 COPY cleansed.cmop_rx FROM 's3://teva-export-buckt/tevaQA12G/cleansed/cmop_rx/*' PARQUET;
-COPY cleansed.knipper_samples_v2 FROM 's3://teva-export-buckt/tevaQA12G/cleansed/knipper_samples_v2/*' PARQUET;
 COPY cleansed.asi_copay_voucher_detail_wkly_pskw FROM 's3://teva-export-buckt/tevaQA12G/cleansed/asi_copay_voucher_detail_wkly_pskw/*' PARQUET;
 COPY cleansed.ahm_participant FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ahm_participant/*' PARQUET;
+COPY cleansed.knipper_samples_v2 FROM 's3://teva-export-buckt/tevaQA12G/cleansed/knipper_samples_v2/*' PARQUET;
 COPY cleansed.zip_to_terr_v2 FROM 's3://teva-export-buckt/tevaQA12G/cleansed/zip_to_terr_v2/*' PARQUET;
 COPY cleansed.alphascrip_copay_redemptions FROM 's3://teva-export-buckt/tevaQA12G/cleansed/alphascrip_copay_redemptions/*' PARQUET;
 COPY cleansed.fia_mpd FROM 's3://teva-export-buckt/tevaQA12G/cleansed/fia_mpd/*' PARQUET;
@@ -136,8 +136,8 @@ COPY cleansed.ftf_formularies FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ft
 COPY cleansed.doubleclick_ds_conversions FROM 's3://teva-export-buckt/tevaQA12G/cleansed/doubleclick_ds_conversions/*' PARQUET;
 COPY cleansed.customer_flags FROM 's3://teva-export-buckt/tevaQA12G/cleansed/customer_flags/*' PARQUET;
 COPY cleansed.ims_ddd_md_demo_weekly_units_tr FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ims_ddd_md_demo_weekly_units_tr/*' PARQUET;
-COPY cleansed.ims_ddd_md_demo_weekly_dollars_tr FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ims_ddd_md_demo_weekly_dollars_tr/*' PARQUET;
 COPY cleansed.xpd_demographics FROM 's3://teva-export-buckt/tevaQA12G/cleansed/xpd_demographics/*' PARQUET;
+COPY cleansed.ims_ddd_md_demo_weekly_dollars_tr FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ims_ddd_md_demo_weekly_dollars_tr/*' PARQUET;
 COPY cleansed.fia_provider FROM 's3://teva-export-buckt/tevaQA12G/cleansed/fia_provider/*' PARQUET;
 COPY cleansed.ims_ddd_md_weekly_dollars_tr FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ims_ddd_md_weekly_dollars_tr/*' PARQUET;
 COPY cleansed.ims_ddd_md_weekly_units_tr FROM 's3://teva-export-buckt/tevaQA12G/cleansed/ims_ddd_md_weekly_units_tr/*' PARQUET;

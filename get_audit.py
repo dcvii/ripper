@@ -29,30 +29,23 @@ if is_valid_schema(schema):
          'conn_type': 'src', 'function': 'ddl', 'bucket_key': bucket_key}
     result_set = run_multi_sql(cset,config)
 
-    fspec = "scripts/"+bucket_key+"_"+schema+"_get_audit.sql"
+    # now rewrite the same file and 
+    fspec = "scripts/"+bucket_key+"_"+schema+"_audit.sql"
     f = open(fspec, 'w')
 
+    # f.write(result_set)
     for row in result_set:
-        item = row[0]
+        schema, table, ct = row
 
-        outstring = item
-        #print(outstring)
-        outstring+="\n"
-        f.write(outstring)
+        audit_record = "update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V'," 
+        audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+")"
+        audit_record += " where table_schema = '"+schema+"' and table_name = '"+table+"';\n"
+        # print(audit_record)
+        f.write(audit_record)
 
     f.close()
-    print("raw ddl export file written: ",fspec)
+    print("audit record file written: ",fspec)
 
-   # this returns a large set of characters not lines
-    config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN|SEQUENCE', 'fname': fspec}
-    filtered_results = chunk_filter(config)
-
-
-    fspec = "scripts/"+bucket_key+"_"+schema+"_out_ddl.sql"
-    f = open(fspec, 'w')
-    f.write(''.join(filtered_results)) #wonky conversion to a string
-    f.close()
-    print("filtered ddl export file written: ",fspec)
 
 else:
     print('invalid schema')

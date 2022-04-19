@@ -53,8 +53,8 @@ COPY /*142*/ reference.active_fileclass_names FROM VERTICA teva.reference.active
 COPY /*150*/ reference.valid_value_exclusion FROM VERTICA teva.reference.valid_value_exclusion;
 COPY /*154*/ reference.active_alternate_alignments FROM VERTICA teva.reference.active_alternate_alignments;
 COPY /*155*/ reference.call_plan_active_dates FROM VERTICA teva.reference.call_plan_active_dates;
-COPY /*180*/ reference.mb_ref_rptng_workdays_01312020 FROM VERTICA teva.reference.mb_ref_rptng_workdays_01312020;
 COPY /*180*/ reference.bkp_rptng_wrkdays_12162020 FROM VERTICA teva.reference.bkp_rptng_wrkdays_12162020;
+COPY /*180*/ reference.mb_ref_rptng_workdays_01312020 FROM VERTICA teva.reference.mb_ref_rptng_workdays_01312020;
 COPY /*180*/ reference.ref_rptng_wrkdays_05132020 FROM VERTICA teva.reference.ref_rptng_wrkdays_05132020;
 COPY /*180*/ reference.mb_ref_rptng_workdays_04282020 FROM VERTICA teva.reference.mb_ref_rptng_workdays_04282020;
 COPY /*240*/ reference.mb_ref_rptng_call_per_day_goal_01312020 FROM VERTICA teva.reference.mb_ref_rptng_call_per_day_goal_01312020;

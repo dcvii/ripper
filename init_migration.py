@@ -37,6 +37,7 @@ result_set = run_single_file_sql(config)
 config = {'in_fspec': 'sql/user_ddl.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src','schema': 'all_schemas','function':'user', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
+
 ## target side
 
 print('target configuration')
@@ -51,4 +52,10 @@ config = {'in_fspec': 'sql/insert_grants.sql', 'log': lname, 'export_type': 'csv
 result_set = run_single_file_sql(config)
 
 config = {'in_fspec': 'sql/user_ddl.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'user', 'bucket_key': bucket_key}
+result_set = run_single_file_sql(config)
+
+config = {'in_fspec': 'sql/audit_01.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'audit', 'bucket_key': bucket_key}
+result_set = run_single_file_sql(config)
+
+config = {'in_fspec': 'sql/audit_02.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'audit', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
