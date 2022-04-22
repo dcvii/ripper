@@ -37,6 +37,9 @@ result_set = run_single_file_sql(config)
 config = {'in_fspec': 'sql/user_ddl.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src','schema': 'all_schemas','function':'user', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
+# config = {'in_fspec': 'sql/get_epochs.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'src','schema': 'all_schemas','function':'epochs', 'bucket_key': bucket_key}
+# result_set = run_single_file_sql(config)
+
 
 ## target side
 

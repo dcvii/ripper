@@ -30,7 +30,9 @@ CREATE TABLE if not exists migration.source_schemas
     is_partitioned boolean,
     row_count int,
     partition_expression varchar(8192),
-    export_type varchar(20)
+    export_type varchar(20),
+    audit_init_epoch int,
+    audit_init_ts timestamp
 );
 
 truncate table migration.source_schemas;
@@ -49,7 +51,9 @@ select
  is_partitioned,
  row_count,
  partition_expression,
-'CSV'::varchar(20) as export_type
+'CSV'::varchar(20) as export_type,
+null::int as audit_init_epoch,
+null::timestamp as audit_init_ts
 from
 (
 	select 
@@ -142,12 +146,17 @@ CREATE TABLE if not exists migration.audit
     src_row_count int,
     tgt_row_count int,
     audit_init_ts timestamp,
+    audit_init_epoch int,
     export_type varchar(20),
     export_cmd varchar(512),
     export_success boolean,
-    export_ts timestamp
+    export_ts timestamp,
+    update_ts timestamp
 
 );
 
+create or replace view migration.updated_source_schemas as
+select table_schema, table_name, row_count, audit_init_epoch, audit_init_ts from migration.source_schemas
+where  ((select last_good_epoch from system) - audit_init_epoch < 20000 );
 
 

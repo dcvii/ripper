@@ -16,7 +16,7 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 if is_valid_schema(schema):
    
 
-    cmd = "select table_schema, table_name, row_count, audit_init_epoch, audit_init_ts from migration.source_schemas where table_schema = '"+schema+"';\n"
+    cmd = "select table_schema, table_name, row_count from migration.source_schemas where table_schema = '"+schema+"';\n"
     
     fspec = "scripts/"+bucket_key+"_"+schema+"_get_audit.sql"
     f = open(fspec,'w')
@@ -35,11 +35,10 @@ if is_valid_schema(schema):
 
     # f.write(result_set)
     for row in result_set:
-        schema, table, ct, aie, ait = row
+        schema, table, ct = row
 
         audit_record = "update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V'," 
-        audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+"),"
-        audit_record += " audit_init_epoch = "+aie+", audit_init_ts = "+ait
+        audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+")"
         audit_record += " where table_schema = '"+schema+"' and table_name = '"+table+"';\n"
         # print(audit_record)
         f.write(audit_record)
