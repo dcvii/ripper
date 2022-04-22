@@ -9,16 +9,17 @@ from ripper.sql_runner import chunk_filter, chunkify, run_multi_sql, run_single_
 
 
 schema = sys.argv[1] or None
+database = os.getenv('SRC_DB_DATABASE')
 bucket_key = os.getenv('TARGET_BUCKET_KEY')
-lname = 'log/get_'+bucket_key+'_'+schema+'_audit.log'
+lname = 'log/get_'+bucket_key+'_'+schema+'_partial.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 if is_valid_schema(schema):
    
-
-    cmd = "select table_schema, table_name, row_count from migration.source_schemas where table_schema = '"+schema+"';\n"
+    # cmd = "select 'copy '||table_schema||'.'||table_name||' select * from VERTICA teva.'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;' as cmd from migration.updated_source_schemas where table_schema = 'metadata';"
+    cmd = "select 'copy '||table_schema||'.'||table_name||' select * from VERTICA "+database+".'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;\n' as cmd from migration.updated_source_schemas where table_schema = '"+schema+"';"
     
-    fspec = "scripts/"+bucket_key+"_"+schema+"_get_audit.sql"
+    fspec = "scripts/"+bucket_key+"_"+schema+"_get_partial.sql"
     f = open(fspec,'w')
     f.write(cmd)
     f.close
@@ -26,28 +27,25 @@ if is_valid_schema(schema):
     cset = []
     cset.append(cmd)
     config = {'in_fspec': fspec, 'log': lname, 'export_type': 'parquet', 'schema': schema,
-         'conn_type': 'src', 'function': 'ddl', 'bucket_key': bucket_key}
+         'conn_type': 'src', 'function': 'partial', 'bucket_key': bucket_key}
     result_set = run_multi_sql(cset,config)
 
     # now rewrite the same file and 
-    fspec = "scripts/"+bucket_key+"_"+schema+"_audit.sql"
+    fspec = "scripts/"+bucket_key+"_"+schema+"_partial.sql"
     f = open(fspec, 'w')
 
-    # f.write(result_set)
+    
     for row in result_set:
-        schema, table, ct = row
+        item = row[0]
 
-        audit_record = "update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V'," 
-        audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+")"
-        audit_record += " where table_schema = '"+schema+"' and table_name = '"+table+"';\n"
-        # print(audit_record)
-        f.write(audit_record)
+        f.write(item)
 
     f.close()
-    print("audit record file written: ",fspec)
+    print("partial record file written: ",fspec)
 
 
 else:
     print('invalid schema')
 
 
+###  select 'copy '||table_schema||'.'||table_name||' select * from VERTICA teva.'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;' as cmd from migration.updated_source_schemas where table_schema = 'metadata';
