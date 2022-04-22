@@ -5,7 +5,7 @@ import sys
 import logging
 
 
-from ripper.sql_runner import chunk_filter, chunkify, run_multi_sql, run_single_file_sql, run_migration_table, is_valid_schema
+from ripper.sql_runner import chunk_filter, chunkify, get_vv_string, run_multi_sql, run_single_file_sql, run_migration_table, is_valid_schema
 
 
 schema = sys.argv[1] or None
@@ -33,7 +33,7 @@ if is_valid_schema(schema):
     # now rewrite the same file and 
     fspec = "scripts/"+bucket_key+"_"+schema+"_partial.sql"
     f = open(fspec, 'w')
-
+    f.write(get_vv_string())
     
     for row in result_set:
         item = row[0]

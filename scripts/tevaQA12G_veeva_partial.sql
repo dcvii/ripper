@@ -1,3 +1,4 @@
+CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
 copy veeva.affiliation select * from VERTICA teva.veeva.affiliation where epoch > 62409386; commit;
 copy veeva.call_clickstream select * from VERTICA teva.veeva.call_clickstream where epoch > 62409369; commit;
 copy veeva.address select * from VERTICA teva.veeva.address where epoch > 62410233; commit;
