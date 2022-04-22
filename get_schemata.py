@@ -56,7 +56,7 @@ def run_each_v2v(config):
     function = config['function']
     # what are the results.
     fspec = "scripts/"+bucket_key+"_"+function+"_v2v.sql"
-    f = open(fspec, 'w')
+    f = open(fspec, 'w') 
 
     f.write(config['connection'])
 
@@ -224,7 +224,7 @@ bucket_key = os.getenv('TARGET_BUCKET_KEY')
 database = os.getenv('SRC_DB_DATABASE')
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
-config = {'in_fspec': 'sql/schemata.sql', 'out_fspec': 'sql/blah.sql',
+config = {'in_fspec': 'sql/valids.sql', 'out_fspec': 'sql/blah.sql',
          'log': lname, 'export_type': 'parquet', 'conn_type': 'src', 'function': 'csv', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
