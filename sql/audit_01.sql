@@ -1,4 +1,5 @@
 -- should run from the target
+-- this is the init.
 
 CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
 

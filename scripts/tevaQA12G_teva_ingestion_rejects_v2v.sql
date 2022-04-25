@@ -1,17 +1,9 @@
 CONNECT TO VERTICA teva USER dbadmin PASSWORD '360teva360' ON '10.5.10.15' , 5433;
-COPY /*30313*/ teva_ingestion.EXT_IMS_MHJ_CONTROL_M_src FROM VERTICA teva.teva_ingestion.EXT_IMS_MHJ_CONTROL_M_src;
 COPY /*381267*/ teva_ingestion.EXT_IMS_FIA_REJECT_V2_src FROM VERTICA teva.teva_ingestion.EXT_IMS_FIA_REJECT_V2_src;
 COPY /*5842125*/ teva_ingestion.EXT_IMS_FIA_PRODUCT_V2_src FROM VERTICA teva.teva_ingestion.EXT_IMS_FIA_PRODUCT_V2_src;
 COPY /*7734775*/ teva_ingestion.EXT_IMS_FIA_PLAN_V2_src FROM VERTICA teva.teva_ingestion.EXT_IMS_FIA_PLAN_V2_src;
 COPY /*12012280*/ teva_ingestion.EXT_IMS_SD809_TRANSACTION_src FROM VERTICA teva.teva_ingestion.EXT_IMS_SD809_TRANSACTION_src;
 COPY /*18688983*/ teva_ingestion.EXT_IMS_FIA_GEOGRAPHY_V2_src FROM VERTICA teva.teva_ingestion.EXT_IMS_FIA_GEOGRAPHY_V2_src;
-COPY /*22331670*/ teva_ingestion.EXT_TR_DDDMD_WEEKLY_DOLLARS_src FROM VERTICA teva.teva_ingestion.EXT_TR_DDDMD_WEEKLY_DOLLARS_src;
-COPY /*22513406*/ teva_ingestion.EXT_TR_DDDMD_WEEKLY_UNITS_src FROM VERTICA teva.teva_ingestion.EXT_TR_DDDMD_WEEKLY_UNITS_src;
-COPY /*83682688*/ teva_ingestion.MDM_HCO_src FROM VERTICA teva.teva_ingestion.MDM_HCO_src;
-COPY /*104581962*/ teva_ingestion.EXT_DOUBLECLICK_DCM_src FROM VERTICA teva.teva_ingestion.EXT_DOUBLECLICK_DCM_src;
-COPY /*109020701*/ teva_ingestion.EXT_VV_TSF_VOD__C_src FROM VERTICA teva.teva_ingestion.EXT_VV_TSF_VOD__C_src;
-COPY /*109594106*/ teva_ingestion.EXT_VV_ADDRESS_VOD__C_src FROM VERTICA teva.teva_ingestion.EXT_VV_ADDRESS_VOD__C_src;
-COPY /*110883938*/ teva_ingestion.EXT_IMS_MHJ_CNT_W_ADHOC_src FROM VERTICA teva.teva_ingestion.EXT_IMS_MHJ_CNT_W_ADHOC_src;
 COPY /*131434800*/ teva_ingestion.EXT_VV_CALL2_DETAIL_VOD__C_src FROM VERTICA teva.teva_ingestion.EXT_VV_CALL2_DETAIL_VOD__C_src;
 COPY /*139693682*/ teva_ingestion.MDM_RAW_NPI_src FROM VERTICA teva.teva_ingestion.MDM_RAW_NPI_src;
 COPY /*145329012*/ teva_ingestion.EXT_VV_CALL2_VOD__C_src FROM VERTICA teva.teva_ingestion.EXT_VV_CALL2_VOD__C_src;

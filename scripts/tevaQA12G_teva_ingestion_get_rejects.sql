@@ -1,2 +1,2 @@
 select 'COPY /*'||src_row_count||'*/ '||table_schema||'.'||table_name||' FROM VERTICA teva.' ||table_schema ||'.'|| table_name ||';
-' as cmd from migration.audit where table_schema = 'teva_ingestion' and src_row_count <> tgt_row_count order by src_row_count;
+' as cmd from migration.audit where table_schema = 'teva_ingestion' and src_row_count > coalesce(tgt_row_count,0) order by src_row_count;
