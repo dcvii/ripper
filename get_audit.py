@@ -35,18 +35,11 @@ if is_valid_schema(schema):
 
     # f.write(result_set)
     for row in result_set:
-<<<<<<< HEAD
         schema, table, ct, aie, ait = row
 
         audit_record = "update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V'," 
         audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+"),"
-        audit_record += " audit_init_epoch = "+aie+", audit_init_ts = "+ait
-=======
-        schema, table, ct = row
-
-        audit_record = "update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V'," 
-        audit_record += " tgt_row_count = (select count(*) from "+schema+"."+table+")"
->>>>>>> 3453a8db38c297d86650e5ea00596d5fe4ff2bda
+        audit_record += " audit_init_epoch = "+str(aie)+", audit_init_ts = '"+str(ait)+"'"
         audit_record += " where table_schema = '"+schema+"' and table_name = '"+table+"';\n"
         # print(audit_record)
         f.write(audit_record)
