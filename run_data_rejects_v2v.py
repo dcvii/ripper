@@ -18,7 +18,7 @@ if is_valid_schema(schema):
 
     cmd_set = chunkify('scripts/'+bucket_key+'_'+schema+'_rejects_v2v.sql')
     config = {'in_fspec': 'sql/get_all_csv.sql', 'log': lname, 'export_type': 'parquet', 'schema': schema,
-         'conn_type': 'tgt_commit', 'function': 'csv', 'bucket_key': bucket_key}
+         'conn_type': 'tgt_commit', 'function': 'v2v', 'bucket_key': bucket_key}
     result_set = run_multi_sql(cmd_set,config)
 
 else:
