@@ -13,6 +13,9 @@ A reject occurs when a data run fails to send any records to the target cluster.
 - **partial**<br>
 A partial occurs when the data changes in the source cluster. This can be evaluated by checking the 
 
+- overload<b>
+An overload occurs when 
+
 - **audit**<br>
 An audit needs to take place each time data is run from the source cluster to the target cluster. It sill be invoked 
 
@@ -26,18 +29,25 @@ this should happen after the init_migration and before the data run. Once the da
 
 
 ### refresh audit
-after rejects have been rerun
+After rejects have been rerun, a refresh audit should be run. It is reasonable to add a call to this (which works against all schemas) after each data run. As of this writing there have been performance problems running the four passes over the audit table. 
 
 
 
 ### refresh audit
-This is an idempotent process that will compare src_row_count to tgt_row_count. If they are unequal, export_success is set to `false` and `update_ts` is set to sysdate();
+This is an idempotent process that will compare `src_row_count` to `tgt_row_count`. If they are unequal, export_success is set to `false` and `update_ts` is set to sysdate(). The 01 item will update the target schema row counts. The 02 item will update the partials. Item 03 is for overloads and item 04 is for rejects.
 
 
-00 - target counts
+**01 - update target counts**
+```
+update migration.audit a 
+set tgt_row_count = c.row_count,
+update_ts = sysdate() 
+from migration.current_row_counts c 
+where a.table_schema = c.table_schema and a.table_name = c.table_name and a.tgt_row_count <> c.row_count;
+```
 
 
-01 - partials
+**02 - partials**
 ```
 update migration.audit 
 set update_ts = sysdate(),
@@ -46,7 +56,7 @@ export_status = 'partial'
 where src_row_count > tgt_row_count;
 ```
 
-02 - overloads
+**03 - overloads**
 ```
 update migration.audit 
 set update_ts = sysdate(),
@@ -55,7 +65,7 @@ export_status = 'overload'
 where src_row_count < tgt_row_count;
 ```
 
-03 - rejects
+**04 - rejects**
 ```
 update migration.audit 
 set update_ts = sysdate(),

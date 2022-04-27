@@ -1,3 +1,10 @@
+-- update tgt_rows
+update migration.audit a 
+set tgt_row_count = c.row_count,
+update_ts = sysdate() 
+from migration.current_row_counts c 
+where a.table_schema = c.table_schema and a.table_name = c.table_name and a.tgt_row_count <> c.row_count;
+
 update migration.audit 
 set update_ts = sysdate(),
 export_success = false,
@@ -23,3 +30,5 @@ set update_ts = sysdate(),
 export_success = true,
 export_status = 'good'
 where tgt_row_count = src_row_count;
+
+commit;

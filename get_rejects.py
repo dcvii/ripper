@@ -18,7 +18,7 @@ if is_valid_schema(schema):
    
     # cmd = "select 'copy '||table_schema||'.'||table_name||' select * from VERTICA teva.'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;' as cmd from migration.updated_source_schemas where table_schema = 'metadata';"
     # cmd = "select 'copy '||table_schema||'.'||table_name||' select * from VERTICA "+database+".'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;\n' as cmd from migration.updated_source_schemas where table_schema = '"+schema+"';"
-    cmd = "select 'COPY /*'||src_row_count||'*/ '||table_schema||'.'||table_name||' FROM VERTICA "+database+".' ||table_schema ||'.'|| table_name ||';\n' as cmd from migration.audit where table_schema = '"+schema+"' and src_row_count > coalesce(tgt_row_count,0) order by src_row_count;"
+    cmd = "select 'COPY /*'||src_row_count||'*/ '||table_schema||'.'||table_name||' FROM VERTICA "+database+".' ||table_schema ||'.'|| table_name ||';\n' as cmd from migration.audit where table_schema = '"+schema+"' and tgt_row_count =0 order by src_row_count;"
 
 
     fspec = "scripts/"+bucket_key+"_"+schema+"_get_rejects.sql"
