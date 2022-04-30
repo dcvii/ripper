@@ -145,10 +145,11 @@ CREATE TABLE if not exists migration.audit
     table_name varchar(128),
     src_row_count int,
     tgt_row_count int,
+    audit_phase_name varchar(50),
     audit_init_ts timestamp,
     audit_init_epoch int,
     export_type varchar(20),
-    export_cmd varchar(512),
+    export_status varchar(25),
     export_success boolean,
     export_ts timestamp,
     update_ts timestamp
