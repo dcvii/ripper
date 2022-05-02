@@ -1,6 +1,0 @@
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.MARKET) where table_schema = 'CUSTOMER_ORA' and table_name = 'MARKET';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.PRODUCT) where table_schema = 'CUSTOMER_ORA' and table_name = 'PRODUCT';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.PRODUCT_NDC) where table_schema = 'CUSTOMER_ORA' and table_name = 'PRODUCT_NDC';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.PRODUCT_PRICE) where table_schema = 'CUSTOMER_ORA' and table_name = 'PRODUCT_PRICE';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.MARKET_PRODUCT) where table_schema = 'CUSTOMER_ORA' and table_name = 'MARKET_PRODUCT';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from CUSTOMER_ORA.VENDOR) where table_schema = 'CUSTOMER_ORA' and table_name = 'VENDOR';

@@ -1,2 +1,0 @@
-select 'copy '||table_schema||'.'||table_name||' select * from VERTICA teva.'||table_schema||'.'||table_name||' where epoch > '||audit_init_epoch||'; commit;
-' as cmd from migration.updated_source_schemas where table_schema = 'veeva';

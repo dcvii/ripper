@@ -1,3 +1,4 @@
+archive/*
 log/*.log
 .envrc
 out.csv

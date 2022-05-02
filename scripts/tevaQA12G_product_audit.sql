@@ -1,8 +1,0 @@
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.promotional_item) where table_schema = 'product' and table_name = 'promotional_item';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.source) where table_schema = 'product' and table_name = 'source';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.normalization_factor) where table_schema = 'product' and table_name = 'normalization_factor';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.basket_item) where table_schema = 'product' and table_name = 'basket_item';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.mb_source_prod_06102020) where table_schema = 'product' and table_name = 'mb_source_prod_06102020';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.basket_price) where table_schema = 'product' and table_name = 'basket_price';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.basket) where table_schema = 'product' and table_name = 'basket';
-update migration.audit set export_ts = sysdate(), export_success = true, export_type = 'V2V', tgt_row_count = (select count(*) from product.source_product) where table_schema = 'product' and table_name = 'source_product';

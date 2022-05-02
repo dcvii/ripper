@@ -7,15 +7,15 @@ processed  boolean,
 ts_run_date timestamp
 );
 
-create table if not exists migration.data_exports (
-id    integer,
-rowcnt	integer,
-schema_nm	varchar(50),
-table_nm	varchar(75),
-script varchar(500),
-processed  boolean,
-ts_run_date timestamp
-);
+-- create table if not exists migration.data_exports (
+-- id    integer,
+-- rowcnt	integer,
+-- schema_nm	varchar(50),
+-- table_nm	varchar(75),
+-- script varchar(500),
+-- processed  boolean,
+-- ts_run_date timestamp
+-- );
 
 
 create table if not exists migration.target_grants_src (
@@ -31,8 +31,10 @@ CREATE TABLE if not exists migration.source_schemas
     row_count int,
     partition_expression varchar(8192),
     export_type varchar(20),
+    audit_phase_name varchar(50),
     audit_init_epoch int,
-    audit_init_ts timestamp
+    audit_init_ts timestamp,
+    update_ts timestamp
 );
 
 truncate table migration.source_schemas;
@@ -52,8 +54,10 @@ select
  row_count,
  partition_expression,
 'CSV'::varchar(20) as export_type,
+null::varchar(50) as audit_phase_name,
 null::int as audit_init_epoch,
-null::timestamp as audit_init_ts
+null::timestamp as audit_init_ts,
+now()::timestamp as update_ts
 from
 (
 	select 
@@ -121,20 +125,20 @@ order by grant_order, principal_name asc;
 
 -- dbparms & other odd objects
 
-CREATE TABLE if not exists migration.odd_parms_src
-(
-    grant_order int,
-    sql varchar(50000),
-    object_type varchar(8192),
-    object_name varchar(512)
-);
+-- CREATE TABLE if not exists migration.odd_parms_src
+-- (
+--     grant_order int,
+--     sql varchar(50000),
+--     object_type varchar(8192),
+--     object_name varchar(512)
+-- );
 
-create or replace view migration.odd_parms_vw
-as select sql from migration.odd_parms_src
-order by grant_order asc;
+-- create or replace view migration.odd_parms_vw
+-- as select sql from migration.odd_parms_src
+-- order by grant_order asc;
 
 
-truncate table migration.odd_parms_src;
+-- truncate table migration.odd_parms_src;
 
 
 -- ### audit stuff
