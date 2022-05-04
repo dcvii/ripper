@@ -13,8 +13,6 @@ def dir_wipe(target):
 
 
 bucket_key = os.getenv('SRC_BUCKET_KEY')
-
-
 lname = 'log/init_epochs.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
