@@ -1,7 +1,5 @@
-import vertica_python
 import os
 import logging
-import pandas as pd
 import glob
 
 from ripper.sql_runner import chunkify, run_multi_sql, run_single_file_sql
@@ -57,8 +55,13 @@ result_set = run_single_file_sql(config)
 config = {'in_fspec': 'sql/user_ddl.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'user', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
+# -- insert into audit history
+
 config = {'in_fspec': 'sql/audit_01.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'audit', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
 
 config = {'in_fspec': 'sql/audit_02.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'audit', 'bucket_key': bucket_key}
+result_set = run_single_file_sql(config)
+
+config = {'in_fspec': 'sql/audit_03.sql', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt','schema': 'all_schemas','function':'audit', 'bucket_key': bucket_key}
 result_set = run_single_file_sql(config)
