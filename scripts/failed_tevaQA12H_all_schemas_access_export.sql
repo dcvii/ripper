@@ -1,1246 +1,707 @@
 
-
-
-CREATE TABLE public.data_feed_metadata
-(
-    feed_id int NOT NULL,
-    short_name varchar(255) NOT NULL,
-    subject_area varchar(255) NOT NULL,
-    source_name varchar(255) NOT NULL,
-    description varchar(255) NOT NULL,
-    frequency varchar(255),
-    incremental boolean,
-    process_cleanse boolean NOT NULL,
-    process_intg boolean NOT NULL
-);
-
-
-CREATE TABLE public.scnpastbl
-(
-    id int,
-    name char(13),
-    tel char(11)
-);
-
-
-CREATE TABLE public.jhc_survey_old
-(
-    SALES_FORCE_ID varchar(2) NOT NULL,
-    TERRITORY_NUM varchar(8) NOT NULL,
-    VEEVA_SURVEY_TARGET_ID varchar(18) NOT NULL,
-    SURVEY_NAME varchar(80) NOT NULL,
-    VEEVA_ACCOUNT_ID varchar(18) NOT NULL,
-    STATUS varchar(255) NOT NULL,
-    REP_ID varchar(20) NOT NULL,
-    QUESTION_POSITION numeric(3,0) NOT NULL,
-    QUESTION varchar(1000) NOT NULL,
-    RESPONSE varchar(2500) NOT NULL,
-    LAST_UPDATE_DATE timestamp,
-    "MAX(SR.LAST_BUILD_DATE)" timestamp
-);
-
-
-CREATE TABLE public.JHC_DIM_TERR_HIST
-(
-    TERRITORY_NUM varchar(50),
-    EMPLOYEE_ID varchar(50),
-    START_DATE timestamp,
-    END_DATE timestamp,
-    TERM_DATE timestamp,
-    END_REASON varchar(10),
-    HIRE_DATE timestamp,
-    ORIG_HIRE_DATE timestamp
-);
-
-
-CREATE TABLE public.JHC_RX
-(
-    IMS_ID varchar(10),
-    TRX_CNT numeric(14,6),
-    TRX_QTY numeric(14,3)
-);
-
-
-CREATE TABLE public.JHC_TW_SPECIALTY_SALES
-(
-    DATA_SOURCE varchar(20) NOT NULL,
-    SHIP_TO_ADDRESS_ID numeric(38,0) NOT NULL,
-    BILL_TO_ADDRESS_ID numeric(38,0) NOT NULL,
-    CUSTOMER_CODE varchar(20) NOT NULL,
-    CUSTOMER_NAME varchar(100),
-    TRANSACTION_ID varchar(50),
-    INVOICE_DATE date,
-    PRODUCT_NDC varchar(20),
-    PRODUCT_BRAND varchar(50),
-    PRODUCT_SIZE numeric(20,4),
-    INVOICE_UNIT_PRICE numeric(20,4),
-    INVOICE_QUANTITY numeric(20,4),
-    INVOICE_AMOUNT numeric(20,4),
-    INVOICE_DISCOUNT numeric(20,4),
-    CUSTOMER_TYPE_CODE varchar(20),
-    PRICE_MATRIX_DEF varchar(20),
-    ORDER_TYPE_CODE varchar(20),
-    ORDER_TYPE_DESC varchar(50),
-    LOB_CODE_DESC varchar(100),
-    WHSE_CD varchar(20),
-    PARENT_CUSTOMER_CODE varchar(20),
-    PARENT_CUSTOMER_NAME varchar(100),
-    ADJ_INVOICE_UNIT_PRICE numeric(20,4),
-    ADJ_INVOICE_AMOUNT numeric(20,4),
-    ORDER_SOURCE varchar(20)
-);
-
-
-CREATE TABLE public.JHC_TW_SPECIALTY_ACCOUNT
-(
-    DATA_SOURCE varchar(20),
-    CUSTOMER_CODE varchar(20),
-    CUSTOMER_NAME varchar(100),
-    PARENT_CUSTOMER_CODE varchar(20),
-    PARENT_CUSTOMER_NAME varchar(100),
-    CUSTOMER_TYPE_CODE varchar(20),
-    PVP_340B_ID varchar(100),
-    START_DATE date,
-    END_DATE date,
-    ACTIVE_IND varchar(1),
-    DEA_NUM varchar(9),
-    HIN varchar(20)
-);
-
-
-CREATE TABLE public.jhc_survey
-(
-    SALES_FORCE_ID varchar(2),
-    TERRITORY_NUM varchar(8),
-    VEEVA_SURVEY_TARGET_ID varchar(18),
-    SURVEY_NAME varchar(80),
-    VEEVA_ACCOUNT_ID varchar(18),
-    STATUS varchar(255),
-    REP_ID varchar(20),
-    QUESTION_POSITION numeric(3,0),
-    QUESTION varchar(1000),
-    RESPONSE varchar(2500),
-    LAST_UPDATE_DATE timestamp
-);
-
-
-CREATE TABLE public.tmp_copay_mckesson_check
-(
-    asi_txn_id varchar(20),
-    orig_asi_txn_id varchar(20),
-    rx_num varchar(50),
-    days_supply int,
-    ndc_code varchar(20),
-    daw int,
-    new_refill int,
-    quantity numeric(37,15),
-    refills int,
-    program_number varchar(15),
-    copay_card_number varchar(15),
-    sex varchar(1),
-    age_at_redemption numeric(37,15),
-    pharmacy_chain_number varchar(5),
-    nabp varchar(7),
-    pharmacy_chain varchar(50),
-    pharmacy_name varchar(100),
-    pharmacy_address varchar(100),
-    pharmacy_address2 varchar(100),
-    pharmacy_city varchar(50),
-    pharmacy_state varchar(2),
-    pharmacy_zip varchar(15),
-    pharmacy_phone varchar(10),
-    pharmacy_npi_num varchar(20),
-    principle_physician_dea varchar(9),
-    physician_npi varchar(20),
-    physician_ims_id varchar(10),
-    physician_veeva_id varchar(20),
-    physician_name varchar(100),
-    physician_address1 varchar(100),
-    physician_address2 varchar(100),
-    physician_city varchar(50),
-    physician_state varchar(2),
-    physician_zip varchar(5),
-    rebate_amount numeric(37,15),
-    member_cash_expense numeric(37,15),
-    submitted_cost numeric(37,15),
-    pharmacy_fee numeric(37,15),
-    total_amount_due numeric(37,15),
-    calc_awp numeric(37,15),
-    occ_payment_type varchar(10),
-    counted_copay varchar(1)
-);
-
-
-CREATE TABLE public.ext_tw_anda_sales_bkp
-(
-    SALES_MONTH varchar(20),
-    SALES_DATE varchar(64),
-    CUSTOMER_NO varchar(64),
-    CUSTOMER varchar(100),
-    CUSTOMER_ADDRESS_LINE1 varchar(100),
-    CUSTOMER_ADDRESS_LINE2 varchar(100),
-    CITY varchar(50),
-    STATE varchar(2),
-    ZIP varchar(10),
-    BILL_CUSTOMER_NO varchar(64),
-    BILL_ADDRESS_LINE1 varchar(100),
-    BILL_ADDRESS_LINE2 varchar(100),
-    BILL_STATE varchar(2),
-    BILL_CITY varchar(50),
-    BILL_ZIP varchar(10),
-    CUSTOMER_TYPE_CD varchar(64),
-    CUSTOMER_TYPE varchar(50),
-    PVP_340B_ID varchar(20),
-    TRADE_CLASS varchar(50),
-    DEA_REGISTRATION_NO varchar(20),
-    DEA_REGISTRATION_EXPIRATION varchar(64),
-    STATE_LICENSE varchar(20),
-    STATE_LICENSE_EXPIRATION varchar(64),
-    ITEM_NO varchar(64),
-    NDC varchar(20),
-    BRAND varchar(50),
-    PACKAGE_SIZE varchar(64),
-    VENDOR varchar(50),
-    DOCUMENT_NO varchar(64),
-    ORDER_NO varchar(64),
-    UNITS_NET varchar(64),
-    NET_COST varchar(64),
-    NET_SALES_AMT varchar(64),
-    batch_id int,
-    row_id int,
-    update_ts timestamp
-);
-
-
-CREATE TABLE public.test_escapes
-(
-    rec int,
-    val1 varchar(255)
-);
-
-
-CREATE TABLE public.TBL_PROCESS_HIST
-(
-    PROCESS_ID int NOT NULL,
-    RUN_ID int NOT NULL,
-    RUN_STATUS varchar(1),
-    START_TS timestamp NOT NULL,
-    END_TS timestamp,
-    ELAPSED interval(3)
-);
-
-
-CREATE TABLE public.ddl_columns
-(
-    table_schema varchar(255),
-    table_name varchar(255),
-    column_name varchar(255)
-);
-
-
-CREATE TABLE public.bag
-(
-    bag_id int,
-    bag_name varchar(100),
-    first_valid_date timestamp,
-    last_valid_date timestamp,
-    valid_for_today varchar(1),
-    create_user varchar(30),
-    create_date timestamp,
-    update_user varchar(30),
-    update_date timestamp
-);
-
-
-CREATE TABLE public.EXT_TR_DDDMD_WEEKLY_DEMO_DOL
-(
-    client_num varchar(3),
-    report_num varchar(2),
-    ims_outlet_code varchar(10),
-    ims_facility_number varchar(11),
-    ims_prescriber_number varchar(7),
-    outlet_name varchar(30),
-    outlet_address varchar(120),
-    outlet_city varchar(40),
-    outlet_state varchar(2),
-    outlet_zip varchar(5),
-    facility_prescriber_name varchar(100),
-    facility_prescriber_address1 varchar(60),
-    facility_prescriber_address2 varchar(60),
-    facility_prescriber_address3 varchar(60),
-    facility_prescriber_address4 varchar(60),
-    facility_prescriber_city varchar(40),
-    facility_prescriber_state varchar(2),
-    facility_prescriber_zip varchar(5)
-);
-
-
-CREATE TABLE public.EXT_TR_DDDMD_WEEKLY_DEMO_UNITS
-(
-    client_num varchar(3),
-    report_num varchar(2),
-    ims_outlet_code varchar(10),
-    ims_facility_number varchar(11),
-    ims_prescriber_number varchar(7),
-    outlet_name varchar(30),
-    outlet_address varchar(120),
-    outlet_city varchar(40),
-    outlet_state varchar(2),
-    outlet_zip varchar(5),
-    facility_prescriber_name varchar(100),
-    facility_prescriber_address1 varchar(60),
-    facility_prescriber_address2 varchar(60),
-    facility_prescriber_address3 varchar(60),
-    facility_prescriber_address4 varchar(60),
-    facility_prescriber_city varchar(40),
-    facility_prescriber_state varchar(2),
-    facility_prescriber_zip varchar(5)
-);
-
-
-CREATE TABLE public.EXT_TR_DDDMD_WEEKLY_DOLLARS
-(
-    client_num varchar(3),
-    report_num varchar(2),
-    ims_outlet_code varchar(10),
-    subcategory_code varchar(10),
-    alt_seq_num varchar(10),
-    filler01 varchar(10),
-    category_code varchar(2),
-    ims_product_code varchar(9),
-    data_date varchar(6),
-    dol_wk01 numeric(19,1),
-    dol_wk02 numeric(19,1),
-    dol_wk03 numeric(19,1),
-    dol_wk04 numeric(19,1),
-    dol_wk05 numeric(19,1),
-    dol_wk06 numeric(19,1),
-    dol_wk07 numeric(19,1),
-    dol_wk08 numeric(19,1),
-    dol_wk09 numeric(19,1),
-    dol_wk10 numeric(19,1),
-    dol_wk11 numeric(19,1),
-    dol_wk12 numeric(19,1),
-    dol_wk13 numeric(19,1),
-    dol_wk14 numeric(19,1),
-    dol_wk15 numeric(19,1),
-    dol_wk16 numeric(19,1),
-    dol_wk17 numeric(19,1),
-    dol_wk18 numeric(19,1),
-    dol_wk19 numeric(19,1),
-    dol_wk20 numeric(19,1),
-    dol_wk21 numeric(19,1),
-    dol_wk22 numeric(19,1),
-    dol_wk23 numeric(19,1),
-    dol_wk24 numeric(19,1),
-    dol_wk25 numeric(19,1),
-    dol_wk26 numeric(19,1),
-    dol_wk27 numeric(19,1),
-    dol_wk28 numeric(19,1),
-    dol_wk29 numeric(19,1),
-    dol_wk30 numeric(19,1),
-    dol_wk31 numeric(19,1),
-    dol_wk32 numeric(19,1),
-    dol_wk33 numeric(19,1),
-    dol_wk34 numeric(19,1),
-    dol_wk35 numeric(19,1),
-    dol_wk36 numeric(19,1),
-    dol_wk37 numeric(19,1),
-    dol_wk38 numeric(19,1),
-    dol_wk39 numeric(19,1),
-    dol_wk40 numeric(19,1),
-    dol_wk41 numeric(19,1),
-    dol_wk42 numeric(19,1),
-    dol_wk43 numeric(19,1),
-    dol_wk44 numeric(19,1),
-    dol_wk45 numeric(19,1),
-    dol_wk46 numeric(19,1),
-    dol_wk47 numeric(19,1),
-    dol_wk48 numeric(19,1),
-    dol_wk49 numeric(19,1),
-    dol_wk50 numeric(19,1),
-    dol_wk51 numeric(19,1),
-    dol_wk52 numeric(19,1),
-    dol_wk53 numeric(19,1),
-    dol_wk54 numeric(19,1),
-    dol_wk55 numeric(19,1),
-    dol_wk56 numeric(19,1),
-    dol_wk57 numeric(19,1),
-    dol_wk58 numeric(19,1),
-    dol_wk59 numeric(19,1),
-    dol_wk60 numeric(19,1),
-    dol_wk61 numeric(19,1),
-    dol_wk62 numeric(19,1),
-    dol_wk63 numeric(19,1),
-    dol_wk64 numeric(19,1),
-    dol_wk65 numeric(19,1),
-    dol_wk66 numeric(19,1),
-    dol_wk67 numeric(19,1),
-    dol_wk68 numeric(19,1),
-    dol_wk69 numeric(19,1),
-    dol_wk70 numeric(19,1),
-    dol_wk71 numeric(19,1),
-    dol_wk72 numeric(19,1),
-    dol_wk73 numeric(19,1),
-    dol_wk74 numeric(19,1),
-    dol_wk75 numeric(19,1),
-    dol_wk76 numeric(19,1),
-    dol_wk77 numeric(19,1),
-    dol_wk78 numeric(19,1),
-    dol_wk79 numeric(19,1),
-    dol_wk80 numeric(19,1),
-    dol_wk81 numeric(19,1),
-    dol_wk82 numeric(19,1),
-    dol_wk83 numeric(19,1),
-    dol_wk84 numeric(19,1),
-    dol_wk85 numeric(19,1),
-    dol_wk86 numeric(19,1),
-    dol_wk87 numeric(19,1),
-    dol_wk88 numeric(19,1),
-    dol_wk89 numeric(19,1),
-    dol_wk90 numeric(19,1),
-    dol_wk91 numeric(19,1),
-    dol_wk92 numeric(19,1),
-    dol_wk93 numeric(19,1),
-    dol_wk94 numeric(19,1),
-    dol_wk95 numeric(19,1),
-    dol_wk96 numeric(19,1),
-    dol_wk97 numeric(19,1),
-    dol_wk98 numeric(19,1),
-    dol_wk99 numeric(19,1),
-    dol_wk100 numeric(19,1),
-    dol_wk101 numeric(19,1),
-    dol_wk102 numeric(19,1),
-    dol_wk103 numeric(19,1),
-    dol_wk104 numeric(19,1),
-    dol_wk105 numeric(19,1),
-    dol_wk106 numeric(19,1),
-    outlet_name varchar(30),
-    outlet_address varchar(30),
-    outlet_city varchar(25),
-    outlet_state varchar(2),
-    outlet_zip varchar(5)
-);
-
-
-CREATE TABLE public.EXT_TR_DDDMD_WEEKLY_UNITS
-(
-    client_num varchar(3),
-    report_num varchar(2),
-    ims_outlet_code varchar(10),
-    subcategory_code varchar(10),
-    alt_seq_num varchar(10),
-    filler01 varchar(10),
-    category_code varchar(2),
-    ims_product_code varchar(9),
-    data_date varchar(6),
-    qty_wk01 int,
-    qty_wk02 int,
-    qty_wk03 int,
-    qty_wk04 int,
-    qty_wk05 int,
-    qty_wk06 int,
-    qty_wk07 int,
-    qty_wk08 int,
-    qty_wk09 int,
-    qty_wk10 int,
-    qty_wk11 int,
-    qty_wk12 int,
-    qty_wk13 int,
-    qty_wk14 int,
-    qty_wk15 int,
-    qty_wk16 int,
-    qty_wk17 int,
-    qty_wk18 int,
-    qty_wk19 int,
-    qty_wk20 int,
-    qty_wk21 int,
-    qty_wk22 int,
-    qty_wk23 int,
-    qty_wk24 int,
-    qty_wk25 int,
-    qty_wk26 int,
-    qty_wk27 int,
-    qty_wk28 int,
-    qty_wk29 int,
-    qty_wk30 int,
-    qty_wk31 int,
-    qty_wk32 int,
-    qty_wk33 int,
-    qty_wk34 int,
-    qty_wk35 int,
-    qty_wk36 int,
-    qty_wk37 int,
-    qty_wk38 int,
-    qty_wk39 int,
-    qty_wk40 int,
-    qty_wk41 int,
-    qty_wk42 int,
-    qty_wk43 int,
-    qty_wk44 int,
-    qty_wk45 int,
-    qty_wk46 int,
-    qty_wk47 int,
-    qty_wk48 int,
-    qty_wk49 int,
-    qty_wk50 int,
-    qty_wk51 int,
-    qty_wk52 int,
-    qty_wk53 int,
-    qty_wk54 int,
-    qty_wk55 int,
-    qty_wk56 int,
-    qty_wk57 int,
-    qty_wk58 int,
-    qty_wk59 int,
-    qty_wk60 int,
-    qty_wk61 int,
-    qty_wk62 int,
-    qty_wk63 int,
-    qty_wk64 int,
-    qty_wk65 int,
-    qty_wk66 int,
-    qty_wk67 int,
-    qty_wk68 int,
-    qty_wk69 int,
-    qty_wk70 int,
-    qty_wk71 int,
-    qty_wk72 int,
-    qty_wk73 int,
-    qty_wk74 int,
-    qty_wk75 int,
-    qty_wk76 int,
-    qty_wk77 int,
-    qty_wk78 int,
-    qty_wk79 int,
-    qty_wk80 int,
-    qty_wk81 int,
-    qty_wk82 int,
-    qty_wk83 int,
-    qty_wk84 int,
-    qty_wk85 int,
-    qty_wk86 int,
-    qty_wk87 int,
-    qty_wk88 int,
-    qty_wk89 int,
-    qty_wk90 int,
-    qty_wk91 int,
-    qty_wk92 int,
-    qty_wk93 int,
-    qty_wk94 int,
-    qty_wk95 int,
-    qty_wk96 int,
-    qty_wk97 int,
-    qty_wk98 int,
-    qty_wk99 int,
-    qty_wk100 int,
-    qty_wk101 int,
-    qty_wk102 int,
-    qty_wk103 int,
-    qty_wk104 int,
-    qty_wk105 int,
-    qty_wk106 int,
-    outlet_name varchar(30),
-    outlet_address varchar(30),
-    outlet_city varchar(25),
-    outlet_state varchar(2),
-    outlet_zip varchar(5)
-);
-
-
-CREATE TABLE public.jhc_rx_mth
-(
-    PHARMACY varchar(20),
-    MTH varchar(6),
-    PRODUCT_NAME varchar(75) NOT NULL,
-    TRX_CNT numeric(39,0),
-    TRX_QTY numeric(39,0)
-);
-
-
-CREATE TABLE public.JHC_TW_SPECIALTY_ADDRESS
-(
-    DATA_SOURCE varchar(20),
-    ADDRESS_ID numeric(38,0),
-    ADDRESS varchar(100),
-    CITY varchar(50),
-    STATE varchar(2),
-    ZIP_CODE varchar(10),
-    PHONE varchar(50),
-    FAX varchar(50),
-    EMAIL varchar(100),
-    TAX_ID varchar(50)
-);
-
-
-CREATE TABLE public.tmp_rep_status
-(
-    employee_id varchar(100),
-    rms_territory_number__c varchar(255),
-    rms_territory_name__c varchar(255),
-    assignment_start_Date__c varchar(255),
-    assignment_End_date__c varchar(255),
-    assignment_status__c varchar(255),
-    first_name varchar(100),
-    last_name varchar(100),
-    rep_type varchar(10),
-    hire_date date,
-    original_hire_date date,
-    separation_date__c varchar(255),
-    end_reason varchar(4),
-    id varchar(18)
-);
-
-
-CREATE FLEX TABLE public.sql_files
-(
-
-);
-
-
-CREATE TABLE public.table_filter
-(
-    active_job varchar(1000)
-);
-
-
-CREATE TABLE public.source
-(
-    source_id int NOT NULL,
-    source_code varchar(20),
-    name varchar(100),
-    active char(1),
-    CONSTRAINT PK_vendor_1 PRIMARY KEY (source_id) DISABLED
-);
-
-
-CREATE TABLE public.bag_product
-(
-    bag_id int,
-    basket_id int,
-    basket_name varchar(300),
-    "position" float,
-    weight float,
-    create_user varchar(30),
-    create_date date,
-    update_user varchar(30),
-    update_date date
-);
-
-
-CREATE TABLE public.transform_test
-(
-    ID varchar(18),
-    ISDELETED varchar(5),
-    MASTERRECORDID varchar(18),
-    NAME varchar(255),
-    LASTNAME varchar(80),
-    FIRSTNAME varchar(40),
-    SALUTATION varchar(40),
-    TYPE varchar(40),
-    RECORDTYPEID varchar(18),
-    PHONE varchar(40),
-    FAX varchar(40),
-    WEBSITE varchar(255),
-    NUMBEROFEMPLOYEES numeric(8,0),
-    OWNERSHIP varchar(40),
-    OWNERID varchar(18),
-    CREATEDDATE varchar(24),
-    CREATEDBYID varchar(18),
-    LASTMODIFIEDDATE varchar(24),
-    LASTMODIFIEDBYID varchar(18),
-    SYSTEMMODSTAMP varchar(24),
-    LASTACTIVITYDATE varchar(10),
-    MAYEDIT varchar(5),
-    ISLOCKED varchar(5),
-    LASTVIEWEDDATE varchar(24),
-    LASTREFERENCEDDATE varchar(24),
-    ISEXCLUDEDFROMREALIGN varchar(5),
-    PERSONCONTACTID varchar(18),
-    ISPERSONACCOUNT varchar(5),
-    PERSONMAILINGSTREET varchar(255),
-    PERSONMAILINGCITY varchar(40),
-    PERSONMAILINGSTATE varchar(80),
-    PERSONMAILINGPOSTALCODE varchar(20),
-    PERSONMAILINGCOUNTRY varchar(80),
-    PERSONMAILINGLATITUDE numeric(18,15),
-    PERSONMAILINGLONGITUDE numeric(18,15),
-    PERSONOTHERSTREET varchar(255),
-    PERSONOTHERCITY varchar(40),
-    PERSONOTHERSTATE varchar(80),
-    PERSONOTHERPOSTALCODE varchar(20),
-    PERSONOTHERCOUNTRY varchar(80),
-    PERSONOTHERLATITUDE numeric(18,15),
-    PERSONOTHERLONGITUDE numeric(18,15),
-    PERSONMOBILEPHONE varchar(40),
-    PERSONHOMEPHONE varchar(40),
-    PERSONOTHERPHONE varchar(40),
-    PERSONASSISTANTPHONE varchar(40),
-    PERSONEMAIL varchar(80),
-    PERSONTITLE varchar(80),
-    PERSONDEPARTMENT varchar(80),
-    PERSONASSISTANTNAME varchar(40),
-    PERSONBIRTHDATE varchar(10),
-    PERSONHASOPTEDOUTOFEMAIL varchar(5),
-    PERSONHASOPTEDOUTOFFAX varchar(5),
-    PERSONDONOTCALL varchar(5),
-    PERSONLASTCUREQUESTDATE varchar(24),
-    PERSONLASTCUUPDATEDATE varchar(24),
-    PERSONEMAILBOUNCEDREASON varchar(255),
-    PERSONEMAILBOUNCEDDATE varchar(24),
-    JIGSAW varchar(20),
-    JIGSAWCOMPANYID varchar(20),
-    ACCOUNTSOURCE varchar(40),
-    SICDESC varchar(80),
-    EXTERNAL_ID_VOD__C varchar(120),
-    CREDENTIALS_VOD__C varchar(255),
-    EXCLUDE_FROM_ZIP_TO_TERR_PROCE varchar(5),
-    GROUP_SPECIALTY_1_VOD__C varchar(255),
-    GROUP_SPECIALTY_2_VOD__C varchar(255),
-    SPECIALTY_1_VOD__C varchar(255),
-    SPECIALTY_2_VOD__C varchar(255),
-    FORMATTED_NAME_VOD__C varchar(1300),
-    TERRITORY_TEST_VOD__C varchar(255),
-    MOBILE_ID_VOD__C varchar(100),
-    GENDER_VOD__C varchar(255),
-    ID_VOD__C varchar(20),
-    DO_NOT_SYNC_SALES_DATA_VOD__C varchar(5),
-    ID2_VOD__C varchar(20),
-    PREFERRED_NAME_VOD__C varchar(12),
-    SAMPLE_DEFAULT_VOD__C varchar(1000),
-    SEGMENTATIONS_VOD__C varchar(1000),
-    RESTRICTED_PRODUCTS_VOD__C varchar(1000),
-    PAYER_ID_VOD__C varchar(100),
-    ACCOUNT_STATUS_TVA__C varchar(255),
-    DO_NOT_CALL_VOD__C varchar(255),
-    BEDS__C numeric(4,0),
-    SPEND_AMOUNT__C varchar(128),
-    PDRP_OPT_OUT_VOD__C varchar(5),
-    SPEND_STATUS_VALUE_VOD__C varchar(1300),
-    PDRP_OPT_OUT_DATE_VOD__C varchar(10),
-    SPEND_STATUS_VOD__C varchar(1300),
-    ENABLE_RESTRICTED_PRODUCTS varchar(5),
-    CALL_REMINDER_VOD__C varchar(255),
-    ACCOUNT_GROUP_VOD__C varchar(80),
-    PRIMARY_PARENT_VOD__C varchar(18),
-    COLOR_VOD__C varchar(1300),
-    MIDDLE_VOD__C varchar(40),
-    SUFFIX_VOD__C varchar(10),
-    ACCOUNT_LOCATION_TVA__C varchar(50),
-    NO_ORDERS_VOD__C varchar(255),
-    ACCOUNT_MASTER_ID_TVA__C varchar(30),
-    ACCOUNT_EMAIL_TVA__C varchar(80),
-    ACCOUNT_SEARCH_FIRSTLAST varchar(1300),
-    ACCOUNT_SEARCH_LASTFIRST varchar(1300),
-    PERSON_PREFERRED_NAME_TVA__C varchar(50),
-    PRACTICE_AT_HOSPITAL_VOD__C varchar(5),
-    PRACTICE_NEAR_HOSPITAL_VOD__C varchar(5),
-    DO_NOT_CREATE_CHILD_ACCOUNT varchar(5),
-    TOTAL_MDS_DOS__C numeric(18,0),
-    AHA__C varchar(20),
-    ORDER_TYPE_VOD__C varchar(4000),
-    NPI_VOD__C varchar(25),
-    ME__C varchar(25),
-    SPEAKER__C varchar(5),
-    INVESTIGATOR_VOD__C varchar(5),
-    DEFAULT_ORDER_TYPE_VOD__C varchar(255),
-    PERSON_DEGREE_TVA__C varchar(30),
-    TAX_STATUS__C varchar(20),
-    MODEL__C varchar(20),
-    OFFERINGS__C varchar(4000),
-    DEPARTMENTS__C numeric(18,0),
-    ACCOUNT_TYPE__C varchar(255),
-    ACCOUNT_SEARCH_BUSINESS_VOD__C varchar(1300),
-    BUSINESS_PROFESSIONAL_PERSON varchar(18),
-    NO_SPEND_TVA__C varchar(5),
-    HOSPITAL_TYPE_VOD__C varchar(255),
-    ACCOUNT_CLASS_VOD__C varchar(20),
-    FURIGANA_VOD__C varchar(100),
-    TIRF_REMS_TVA__C varchar(50),
-    FENTORA_APP_TVA__C varchar(5),
-    TOTAL_REVENUE_000__C numeric(18,0),
-    NET_INCOME_LOSS_000__C numeric(18,0),
-    PMPM_INCOME_LOSS_000__C numeric(12,2),
-    COMMERCIAL_PREMIUMS_PMPM__C numeric(18,0),
-    MEDICAL_LOSS_RATIO__C numeric(12,2),
-    MEDICAL_EXPENSES_PMPM__C numeric(18,0),
-    COMMERCIAL_PATIENT_DAYS_1000 numeric(18,0),
-    HMO_MARKET_SHR__C numeric(6,1),
-    HMO__C numeric(18,0),
-    HMO_POS__C numeric(18,0),
-    PPO__C numeric(18,0),
-    PPO_POS__C numeric(18,0),
-    MEDICARE__C numeric(18,0),
-    MEDICAID__C numeric(18,0),
-    NUVIGIL_APP_TVA__C varchar(5),
-    MDS_STATUS_TVA__C varchar(5),
-    LIS_STATUS_TVA__C varchar(5),
-    DNC_PCS_TVA__C varchar(30),
-    DNC_CNS_TVA__C varchar(30),
-    SUFFIX_TVA__C varchar(255),
-    TYSABRI_STATUS_TVA__C varchar(4000),
-    BUSINESS_DESCRIPTION__C varchar(4000),
-    REGIONAL_STRATEGY__C varchar(4000),
-    CONTRACTS_PROCESS__C varchar(4000),
-    CML_PROFILED_TVA__C varchar(5),
-    CELL_PHONE_TVA__C varchar(40),
-    NO_CONTACT_TVA__C varchar(5),
-    OUTLET_ID_TVA__C varchar(100),
-    PMO_GPO_ACCOUNT_AFFILIATIONS varchar(4000),
-    TERRITORY_STATUS_TVA__C varchar(255),
-    ZDEA_NUMBER_TVA__C varchar(9),
-    VEEVA_ID_TVA__C varchar(1300),
-    TREANDA_LQ_TGT_TVA__C varchar(5),
-    TBO_FILGRASTIM_TARGET_TVA__C varchar(10),
-    SLN_RESCRUB_TVA__C varchar(5),
-    ACCOUNT_IDENTIFIER_VOD__C varchar(80),
-    TARGET__C varchar(5),
-    KOL_VOD__C varchar(5),
-    REMS_EXPIRATION_DATE_TEVA__C varchar(10),
-    ACCOUNT_DEMO_ID_TVA__C varchar(30),
-    TOTAL_LIVES__C numeric(18,0),
-    TOTAL_PHYSICIANS_ENROLLED__C numeric(18,0),
-    TIRF_REMS_EFF_DATE_TVA__C varchar(10),
-    BUSINESS_ASSOCIATE_AGREEMENT varchar(255),
-    DO_NOT_PROMOTE_TVA__C varchar(5),
-    ACCOUNT_DEA_TVA__C varchar(15),
-    BP_NUMBER__C varchar(1300),
-    PARAGARD_SEGMENTATION_TVA__C varchar(30),
-    TELESALES_ACTIVITY_TVA__C varchar(50),
-    DESIGNATION_TVA__C varchar(255),
-    TOTAL_PHARMACISTS__C numeric(3,0),
-    COMP_PRICING_TVA__C varchar(5),
-    FORMULARY_TVA__C varchar(255),
-    GLN_TVA__C varchar(15),
-    GPO_CONTRACTS_TVA__C varchar(4000),
-    HIN_TVA__C varchar(9),
-    MAX_ID_TVA__C varchar(15),
-    ONCOLOGY_SERVICES_TVA__C varchar(5),
-    PCP_PROGRAM_TVA__C varchar(5),
-    PHARMACY_LOCATION_TVA__C varchar(100),
-    PRIMARY_CREDENTIAL_TVA__C varchar(255),
-    PRIMARY_WHOLESALER_TVA__C varchar(255),
-    REP_CREDENTIALING_TVA__C varchar(255),
-    SECONDARY_CREDENTIAL_TVA__C varchar(255),
-    SIGN_IN_LOCATION_TVA__C varchar(100),
-    SPECIAL_TVA__C varchar(5),
-    SUB_TYPE_ID_TVA__C varchar(30),
-    SUB_TYPE_TVA__C varchar(50),
-    TEVA_CONTRACTS_TVA__C varchar(4000),
-    IMS_ORG_ID_TVA__C varchar(15),
-    CM_ID_TVA__C varchar(10),
-    YEAR_OF_BIRTH_TVA__C varchar(4),
-    TEACHING_HOSPITAL_TVA__C varchar(255),
-    ACCOUNT_ARCHIVED_TVA__C varchar(5),
-    MOBILE_ID_VOD__PC varchar(100),
-    batch_id int,
-    row_id int,
-    update_ts timestamp
-);
-
-
-CREATE TABLE public.jhc_survey_key_old
-(
-    veeva_survey_target_id varchar(18),
-    question_position numeric(3,0)
-);
-
-
-CREATE TABLE public.jhc_survey_key
-(
-    territory_num varchar(8),
-    VEEVA_SURVEY_TARGET_ID varchar(18),
-    QUESTION_POSITION numeric(3,0)
-);
-
-
-CREATE TABLE public.vertica
-(
-    tvcmid int,
-    ims_org_id varchar(11)
-);
-
-
-CREATE TABLE public.anda_sales_hin_xref
-(
-    customer_no varchar(20),
-    customer varchar(30),
-    customer_address_line1 varchar(40),
-    customer_address_line2 varchar(40),
-    city varchar(20),
-    state varchar(10),
-    zip varchar(10),
-    trade_class varchar(40),
-    bill_customer_no varchar(50),
-    dea_registration_no varchar(10),
-    dea_registration_expiration varchar(20),
-    health_industry_no varchar(20)
-);
-
-
-CREATE TABLE public.activity_event_goal_xref_temp
-(
-    gathered_from varchar(30) NOT NULL,
-    event_name varchar(120),
-    event_category varchar(90),
-    brand varchar(20),
-    occurrences int NOT NULL,
-    gtm_tag_name varchar(120),
-    is_event int,
-    is_goal boolean,
-    kpi_funnel varchar(20)
-);
-
-
-CREATE TABLE public.tmp_associates
-(
-    teva_id varchar(7),
-    hire_date date,
-    term_date date,
-    person_sys_id varchar(64),
-    territory_id varchar(15)
-);
-
-
-CREATE TABLE public.tmp_salesperson
-(
-    file_number varchar(6),
-    termination_date date,
-    rehire_date date,
-    orig_hire_date date
-);
-
-
-CREATE TABLE public.tmp_aud
-(
-    territory_id varchar(15),
-    teva_id varchar(7),
-    start_date date
-);
-
-
-CREATE TABLE public.tmp_terr_change
-(
-    ee_number varchar(24),
-    territory_move_date date,
-    territory_id_to varchar(8)
-);
-
-
-CREATE TABLE public.tmp_terr_change_hist
-(
-    teva_id varchar(25),
-    start_date date,
-    territory_id varchar(15)
-);
-
-
-CREATE  VIEW public.ddl_tables AS
- SELECT ddl_columns.table_schema,
-        ddl_columns.table_name
- FROM public.ddl_columns
- GROUP BY ddl_columns.table_schema,
-          ddl_columns.table_name;
-
-CREATE  VIEW public.DDDMD_WEEKLY_DEMO_DOL AS
- SELECT EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.client_num,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.report_num,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.ims_outlet_code,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.ims_facility_number,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.ims_prescriber_number,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.outlet_name,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.outlet_address,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.outlet_city,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.outlet_state,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.outlet_zip,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_name,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_address1,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_address2,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_address3,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_address4,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_city,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_state,
-        EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.facility_prescriber_zip
- FROM teva_ingestion.EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src
- WHERE (EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.batch_id IN ( SELECT max(EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src.batch_id) AS max
- FROM teva_ingestion.EXT_TR_DDDMD_WEEKLY_DEMO_DOL_src));
-
-CREATE  VIEW public.DDDMD_WEEKLY_DEMO_UNITS AS
- SELECT EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.client_num,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.report_num,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.ims_outlet_code,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.ims_facility_number,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.ims_prescriber_number,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.outlet_name,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.outlet_address,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.outlet_city,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.outlet_state,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.outlet_zip,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_name,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_address1,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_address2,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_address3,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_address4,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_city,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_state,
-        EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.facility_prescriber_zip
- FROM teva_ingestion.EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src
- WHERE (EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.batch_id IN ( SELECT max(EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src.batch_id) AS max
- FROM teva_ingestion.EXT_TR_DDDMD_WEEKLY_DEMO_UNITS_src));
-
-CREATE  VIEW public.parquet_export_events AS
- SELECT udx_events.report_time,
-        udx_events.node_name,
-        udx_events.session_id,
-        udx_events.user_id,
-        udx_events.user_name,
-        udx_events.transaction_id,
-        udx_events.statement_id,
-        udx_events.request_id,
-        udx_events.udx_name,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'file'::varchar(4)) AS file,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'created'::varchar(7)) AS created,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'closed'::varchar(6)) AS closed,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'rows'::varchar(4)) AS rows,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'row_groups'::varchar(10)) AS row_groups,
-        public.MapLookup((udx_events.__raw__)::long varchar(64000), 'size_mb'::varchar(7)) AS size_mb
- FROM v_monitor.udx_events
- WHERE (udx_events.udx_name ~~* 'ParquetExport%'::varchar(14));
-
-CREATE  VIEW public.sql_files_view AS
- SELECT 'Please run compute_flextable_keys_and_build_view() to update this view to reflect real and virtual columns in the flex table'::varchar(124) AS status
- FROM v_catalog.dual;
-
-CREATE  VIEW public.knipper_supplemental AS
- SELECT a.tvcmid AS TVCMID,
-        CASE WHEN (a.medical_suffix IS NULL) THEN ''::varchar ELSE a.medical_suffix END AS ProfDesig,
-        a.first_name AS FName,
-        a.last_name AS Lname,
-        CASE WHEN (a.middle_name IS NULL) THEN ''::varchar ELSE a.middle_name END AS MI,
-        CASE WHEN (a.personal_suffix IS NULL) THEN ''::varchar ELSE a.personal_suffix END AS Suffix,
-        CASE WHEN (a.hce_status_desc IS NULL) THEN 'A'::varchar(1) WHEN (a.hce_status_desc = 'ACTIVE'::varchar(6)) THEN 'A'::varchar(1) WHEN (a.hce_status_desc = 'INACTIVE'::varchar(8)) THEN 'I'::varchar(1) ELSE 'D'::varchar(1) END AS Status,
-        CASE WHEN (a.hce_status_desc = 'PRESUMED DEAD'::varchar(13)) THEN 'D'::varchar(1) WHEN (a.hce_status_desc = 'SEMI-RETIRED'::varchar(12)) THEN 'O'::varchar(1) WHEN (a.hce_status_desc = 'RETIRED'::varchar(7)) THEN 'R'::varchar(1) ELSE ''::varchar END AS DeleteReason,
-        CASE WHEN ((a.hce_status_desc IS NULL) OR (a.hce_status_desc <> ALL (ARRAY['ACTIVE'::varchar(8), 'INACTIVE'::varchar(8)]))) THEN to_char(e.last_update_date, 'MM/DD/YYYY'::varchar(10)) ELSE ''::varchar END AS DeleteDate,
-        CASE WHEN (a.primary_specialty IS NULL) THEN ''::varchar ELSE a.primary_specialty END AS Specialty,
-        CASE WHEN (a.address_line1 IS NULL) THEN ''::varchar ELSE a.address_line1 END AS Address1,
-        CASE WHEN (a.address_line2 IS NULL) THEN ''::varchar ELSE a.address_line2 END AS Address2,
-        ''::varchar AS Address3,
-        CASE WHEN (a.city IS NULL) THEN ''::varchar ELSE a.city END AS City,
-        CASE WHEN (a.state IS NULL) THEN ''::varchar ELSE a.state END AS State,
-        CASE WHEN (a.zip IS NULL) THEN ''::varchar ELSE a.zip END AS Zip,
-        CASE WHEN (b.sln IS NULL) THEN ''::varchar ELSE b.sln END AS SLN,
-        CASE WHEN ((b.sln IS NULL) OR (b.sln = ''::varchar)) THEN ''::varchar ELSE CASE WHEN (b.sln_status_code = 'A'::varchar(1)) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END END AS SLNActiveFlag,
-        CASE WHEN ((b.sln IS NULL) OR (b.sln = ''::varchar)) THEN ''::varchar ELSE to_char(b.sln_expiration_date, 'MM/DD/YYYY'::varchar(10)) END AS SLNExpirationDate,
-        CASE WHEN (c.flag_value = 'DNC'::varchar(3)) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END AS DNCWakeFlag,
-        CASE WHEN (d.tvcmid IS NOT NULL) THEN 'Y'::varchar(1) ELSE 'N'::varchar(1) END AS DNP
- FROM (((((( SELECT prescriber_rx.tvcmid
- FROM datamart.prescriber_rx
- GROUP BY prescriber_rx.tvcmid) exp JOIN ( SELECT hcp_demo.tvcmid,
-        hcp_demo.ims_hce_id,
-        hcp_demo.ims_id,
-        hcp_demo.npi,
-        hcp_demo.last_name,
-        hcp_demo.first_name,
-        hcp_demo.middle_name,
-        hcp_demo.personal_suffix,
-        hcp_demo.medical_suffix,
-        hcp_demo.primary_specialty,
-        hcp_demo.address_line1,
-        hcp_demo.address_line2,
-        hcp_demo.city,
-        hcp_demo.state,
-        hcp_demo.zip,
-        hcp_demo.c_bo_hce_address__address_id,
-        hcp_demo.legacy_address_id,
-        hcp_demo.business_phone,
-        hcp_demo.business_email,
-        hcp_demo.hce_status_desc,
-        hcp_demo.file_id,
-        hcp_demo.record_id,
-        hcp_demo.np_pa_flag
- FROM customer_master.hcp_demo
- WHERE (hcp_demo.file_id = ( SELECT max(hcp_demo.file_id) AS max
- FROM customer_master.hcp_demo))) a ON ((exp.tvcmid = a.tvcmid))) JOIN ( SELECT sample_eligibility.rowid_object,
-        sample_eligibility.creator,
-        sample_eligibility.create_date,
-        sample_eligibility.updated_by,
-        sample_eligibility.last_update_date,
-        sample_eligibility.consolidation_ind,
-        sample_eligibility.deleted_ind,
-        sample_eligibility.deleted_by,
-        sample_eligibility.deleted_date,
-        sample_eligibility.last_rowid_system,
-        sample_eligibility.dirty_ind,
-        sample_eligibility.interaction_id,
-        sample_eligibility.hub_state_ind,
-        sample_eligibility.cm_dirty_ind,
-        sample_eligibility.certification_desc,
-        sample_eligibility.sln,
-        sample_eligibility.sln_state,
-        sample_eligibility.sln_expiration_date,
-        sample_eligibility.sln_status_code,
-        sample_eligibility.sln_status_desc,
-        sample_eligibility.teva_sample_elig_flag,
-        sample_eligibility.teva_sched_iv_elig_flag,
-        sample_eligibility.teva_sched_v_elig_flag,
-        sample_eligibility.profession_short_desc,
-        sample_eligibility.teva_specialty_code,
-        sample_eligibility.certification_code,
-        sample_eligibility.file_id,
-        sample_eligibility.record_id,
-        sample_eligibility.tvcmid
- FROM customer_master.sample_eligibility
- WHERE (sample_eligibility.file_id = ( SELECT max(sample_eligibility.file_id) AS max
- FROM customer_master.sample_eligibility))) b ON (((a.tvcmid = b.tvcmid) AND (a.state = b.sln_state)))) LEFT  JOIN ( SELECT customer_flags.tvcmid,
-        customer_flags.product_name,
-        customer_flags.sales_force_id,
-        customer_flags.territory_number,
-        customer_flags.flag_type,
-        customer_flags.flag_value,
-        customer_flags.eff_start_date,
-        customer_flags.eff_end_date,
-        customer_flags.file_id,
-        customer_flags.record_id
- FROM customer_master.customer_flags
- WHERE (customer_flags.file_id = ( SELECT max(customer_flags.file_id) AS max
- FROM customer_master.customer_flags))) c ON (((a.tvcmid = c.tvcmid) AND (c.flag_type = 'DNC'::varchar(3)) AND (c.product_name = 'NUVIGIL'::varchar(7))))) LEFT  JOIN datamart.do_not_promote d ON ((a.tvcmid = d.tvcmid))) LEFT  JOIN ( SELECT hcp_detail.rowid_object,
-        hcp_detail.creator,
-        hcp_detail.create_date,
-        hcp_detail.updated_by,
-        hcp_detail.last_update_date,
-        hcp_detail.consolidation_ind,
-        hcp_detail.deleted_ind,
-        hcp_detail.deleted_by,
-        hcp_detail.deleted_date,
-        hcp_detail.last_rowid_system,
-        hcp_detail.dirty_ind,
-        hcp_detail.interaction_id,
-        hcp_detail.hub_state_ind,
-        hcp_detail.cm_dirty_ind,
-        hcp_detail.ims_prescriber_id,
-        hcp_detail.prefix,
-        hcp_detail.first_name,
-        hcp_detail.last_name,
-        hcp_detail.middle_name,
-        hcp_detail.suffix,
-        hcp_detail.healthcare_prof_status_cd,
-        hcp_detail.year_of_birth,
-        hcp_detail.date_of_death,
-        hcp_detail.gender_code,
-        hcp_detail.teva_specialty_code,
-        hcp_detail.file_id,
-        hcp_detail.record_id,
-        hcp_detail.tvcmid
- FROM customer_master.hcp_detail
- WHERE ((hcp_detail.file_id = ( SELECT max(hcp_detail.file_id) AS max
- FROM customer_master.hcp_detail)) AND (hcp_detail.hub_state_ind = 1::float))) e ON ((a.tvcmid = e.tvcmid)));
-
-CREATE  VIEW public.v_ob_AHM_Employee AS
- SELECT coalesce(Employee.employee_id, ''::varchar) AS EmployeeId,
-        coalesce(Employee.username, ''::varchar) AS Username,
-        coalesce(upper(Employee.username), ''::varchar) AS FederationId,
-        CASE WHEN (Employee.rep_type = 'REP'::varchar(3)) THEN 'TEVA Pharma Rep'::varchar(15) ELSE 'TEVA Pharma Manager'::varchar(19) END AS SFDCUserProfile,
-        coalesce(Manager.employee_id, ''::varchar) AS ManagerEmployeeId,
-        coalesce(Employee.first_name, ''::varchar) AS FirstName,
-        coalesce(Employee.last_name, ''::varchar) AS LastName,
-        coalesce(Employee.middle_name, ''::varchar) AS MiddleName,
-        ''::varchar AS Nickname,
-        ''::varchar AS GenderCode,
-        coalesce(Employee.title, ''::varchar) AS EmployeeRole,
-        coalesce(Employee.shipping_address_line1, ''::varchar) AS ShippingAddressLine1,
-        coalesce(Employee.shipping_address_line2, ''::varchar) AS ShippingAddressLine2,
-        ''::varchar AS ShippingAddressLine3,
-        coalesce(Employee.shipping_city, ''::varchar) AS ShippingCity,
-        ''::varchar AS ShippingNeighborhood,
-        coalesce(Employee.shipping_state, ''::varchar) AS ShippingStateProvince,
-        coalesce(Employee.shipping_zip, ''::varchar) AS ShippingPostalCode,
-        ''::varchar AS ShippingPostalCodeExtension,
-        'US'::varchar(2) AS ShippingCountryCode,
-        coalesce(Employee.address_line1, ''::varchar) AS HomeAddressLine1,
-        coalesce(Employee.address_line2, ''::varchar) AS HomeAddressLine2,
-        ''::varchar AS HomeAddressLine3,
-        coalesce(Employee.city, ''::varchar) AS HomeCity,
-        ''::varchar AS HomeNeighborhood,
-        coalesce(Employee.state, ''::varchar) AS HomeStateProvince,
-        coalesce(Employee.zip, ''::varchar) AS HomePostalCode,
-        ''::varchar AS HomePostalCodeExtension,
-        'US'::varchar(2) AS HomeCountryCode,
-        coalesce(Employee.business_address_line1, ''::varchar) AS WorkAddressLine1,
-        coalesce(Employee.business_address_line2, ''::varchar) AS WorkAddressLine2,
-        ''::varchar AS WorkAddressLine3,
-        coalesce(Employee.business_city, ''::varchar) AS WorkCity,
-        ''::varchar AS WorkNeighborhood,
-        coalesce(Employee.business_state, ''::varchar) AS WorkStateProvince,
-        coalesce(Employee.business_zip, ''::varchar) AS WorkPostalCode,
-        ''::varchar AS WorkPostalCodeExtension,
-        'US'::varchar(2) AS WorkCountryCode,
-        coalesce(Employee.business_phone, ''::varchar) AS WorkPhone,
-        ''::varchar AS WorkPhoneExtension,
-        coalesce(Employee.email, ''::varchar) AS EmailAddress,
-        coalesce(Employee.fax, ''::varchar) AS Fax,
-        'US'::varchar(2) AS RegionId,
-        coalesce((Employee.hire_date)::varchar(10), ''::varchar) AS HireDate,
-        ''::varchar AS TerminationDate,
-        'Active'::varchar(6) AS Status
- FROM (datamart.roster Employee LEFT  JOIN datamart.roster Manager ON ((Employee.parent_territory_number = Manager.territory_number)))
- WHERE (Employee.employee_id IS NOT NULL)
- GROUP BY coalesce(Employee.employee_id, ''::varchar),
-          coalesce(Employee.username, ''::varchar),
-          coalesce(upper(Employee.username), ''::varchar),
-          CASE WHEN (Employee.rep_type = 'REP'::varchar(3)) THEN 'TEVA Pharma Rep'::varchar(15) ELSE 'TEVA Pharma Manager'::varchar(19) END,
-          coalesce(Manager.employee_id, ''::varchar),
-          coalesce(Employee.first_name, ''::varchar),
-          coalesce(Employee.last_name, ''::varchar),
-          coalesce(Employee.middle_name, ''::varchar),
-          ''::varchar,
-          coalesce(Employee.title, ''::varchar),
-          coalesce(Employee.shipping_address_line1, ''::varchar),
-          coalesce(Employee.shipping_address_line2, ''::varchar),
-          coalesce(Employee.shipping_city, ''::varchar),
-          coalesce(Employee.shipping_state, ''::varchar),
-          coalesce(Employee.shipping_zip, ''::varchar),
-          'US'::varchar(2),
-          coalesce(Employee.address_line1, ''::varchar),
-          coalesce(Employee.address_line2, ''::varchar),
-          coalesce(Employee.city, ''::varchar),
-          coalesce(Employee.state, ''::varchar),
-          coalesce(Employee.zip, ''::varchar),
-          coalesce(Employee.business_address_line1, ''::varchar),
-          coalesce(Employee.business_address_line2, ''::varchar),
-          coalesce(Employee.business_city, ''::varchar),
-          coalesce(Employee.business_state, ''::varchar),
-          coalesce(Employee.business_zip, ''::varchar),
-          coalesce(Employee.business_phone, ''::varchar),
-          coalesce(Employee.email, ''::varchar),
-          coalesce(Employee.fax, ''::varchar),
-          coalesce((Employee.hire_date)::varchar(10), ''::varchar),
-          'Active'::varchar(6);
-
-CREATE  VIEW public.session_ratios AS
- SELECT sum(s_ratios.max_sessions) AS mx,
-        sum(s_ratios.total_sessions) AS ts,
-        sum(s_ratios.dead_sessions) AS ds,
-        ((sum(s_ratios.dead_sessions) / sum(s_ratios.total_sessions)))::numeric(18,4) AS dead_ratio,
-        ((sum(s_ratios.total_sessions) / sum(s_ratios.max_sessions)))::numeric(18,4) AS max_ratio
- FROM (( SELECT (configuration_parameters.current_value)::int AS max_sessions,
-        0 AS total_sessions,
-        0 AS dead_sessions
- FROM v_monitor.configuration_parameters
- WHERE (configuration_parameters.parameter_name = 'MaxClientSessions'::varchar(17)) UNION  SELECT 0 AS max_sessions,
-        count(*) AS total_sessions,
-        0 AS dead_sessions
- FROM v_monitor.sessions) UNION  SELECT 0,
-        0 AS "?column?2",
-        count(*) AS dead_sessions
- FROM v_monitor.sessions
- WHERE ((sessions.statement_id IS NULL) AND ((((statement_timestamp())::timestamp - sessions.transaction_start)) > '02:00'::interval))) s_ratios;
-
-CREATE FUNCTION public.isOrContains(map Long Varchar, val Varchar)
-RETURN boolean AS
-BEGIN
-RETURN CASE WHEN (public.MapSize(map) <> (-1)) THEN public.MapContainsValue(map, val) ELSE (map = (val)) END;
-
-CREATE FUNCTION public.weighted_oracle_task(key_value Varchar, points Integer)
-RETURN float AS
-BEGIN
-RETURN (CASE key_value WHEN 'select' THEN (points * 0.3) WHEN 'merge' THEN (points * 5) WHEN 'declare' THEN (points * 4) WHEN 'begin' THEN (points * 4) WHEN 'cursor' THEN (points * 25) WHEN 'loop' THEN (points * 25) WHEN 'rowid' THEN (points * 10) WHEN 'rownum' THEN (points * 5) WHEN 'oracle_join_syntax' THEN (points * 3) ELSE points END)::float;
+GRANT SELECT ON SEQUENCE reference.ONC_SALES_ADJUST_SEQ TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON SEQUENCE product.BASKET_ID_SEQ_test TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON SEQUENCE reference.unreported_sales_seq TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON SEQUENCE tableau.fingerprint_dim_seq TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_ATTENDEE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_COUNT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_ORGANIZATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_SPEAKER_TRAINING TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_TOPIC_PRODUCT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ANDA_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ANTIMIGRAINE_DDD_QUANTITY_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_VOUCHER_DETAIL_WKLY_MK TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CAREMARK_RX2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CLM_PRESENTATION_SLIDE_VC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CLM_PRESENTATION_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CLOZAPINE_UNIT_AP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CONNECTIVERX_COUPON TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CONNECTIVERX_COUPON_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CUSTOMER_FLAGS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DDD_445_CALENDAR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DIPLOMAT_ENROLLMENT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DIPLOMAT_RX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FACTORY_SALES_852 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_HEALTH_PLANS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_RESTRICTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_TIERS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_GOOGLE_ANALYTICS_360 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_AFFILIATION_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BUSINESS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BUSINESS_DETAIL_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CLASS_OF_TRADE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CLINICAL_CODE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CONTACT_AFFILTN_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_IDENTIFIER_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_INDENTIFIER_CAT_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROFESSIONAL_TITLE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROF_DETAIL_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_I3_RX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IDS_CALL2_DETAIL_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IDS_CALL2_KEY_MESSAGE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_COPAY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_DDD_CHANGE_LOG TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_FACT_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_MPD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_PRODUCT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_REJECT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_MHJ_QTY_W_ADHOC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_OCHL_W TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_PBM_XREF TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_PDRP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_PLAN_XREF TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_SD809_TRANSACTION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_INNOVID_DELIVERY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_MM_RAM_TO_STATE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_ACCOUNT_TARGETS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_MONTHLY_DEMO_DOL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_MONTHLY_DOLLARS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_WEEKLY_DEMO TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_SALES_QUOTAS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_OPTUMRX_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PCS_DDD_NONRETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PCS_DDD_RETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PROGNOS_CINQAIR_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PROGNOS_SYNDICATED_TRIGGER_REPORT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REFERENCE_INCLUDE_867_COT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REMS_FACILITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REMS_PRESCRIBER TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TB_CB_ACCOUNTS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TB_CB_TRANSACTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TB_DS_ACCOUNTS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TB_DS_TRANSACTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TEVA_AHM_UNNAMEDPARTICIPANT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TOUCHPOINT_CALL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TOUCHPOINT_PRESENTATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_AFFILIATION_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL2_KEY_MESSAGE_VOD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL_CLICKSTREAM_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_RECORDTYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_REMOTE_MEETING_ATTENDEE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SURVEY_QUESTION_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TERRITORY2MODEL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TERRITORY2TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_USERROLE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_USERTERRITORY2ASSOCIATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_WHOLESALE_867 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TN TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_TEVA_PAYER_MASTER_DETALS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_ADDRESS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_ADDRESS_LINK TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_ALTERNATE_ID TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_HCP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_HCP_TEVA_FLAG TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_LICENSE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_MERGES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_REGULATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_SAMPLE_ELIGIBILITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_SOURCE_DETAILS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ONC_SALES_ADJUSTMENT_LOAD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_CALC_PBM_KEY_PBM_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_COPAY_TIER_DERIVATION_CONFIG_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_COVERAGE_CATEGORY_DERIVATION_CONFIG TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_HAS_PA_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_MEDICAL_REC_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_OVERRIDE_BRIDGE_FTF_PLAN_TYPES_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_PA_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_PRES_PA_RESTRICTION_DESCRIPTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_RESTRICTION_CATEGORY_DERIVATION_CONFIG_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_UNSPECIFIED_REC_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.XPD_ADD_ON_DETAILS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_cnt_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_cnt_w_adhoc TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_control_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_qty_m_adhoc TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhk_cnt_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhk_qty_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_vv_approved_document__c TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_vv_objectterritory2assignmentruleitem TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXTERNAL_TABLE_CLEANUP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ACTIVITY_LINE_ITEM TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AGGREGATED_ACTIVITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_HOST TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_PRODUCT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_SPEAKER_CONTRACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_SPEAKER_LICENSE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ANTIMIGRAINE_DDD_DOLLARS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ANTIMIGRAINE_DDD_QUANTITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_DETAIL_WKLY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_DETAIL_WKLY_MCK TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_DETAIL_WKLY_PSKW TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_VOUCHER_DETAIL_WKLY_PSKW TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_VOUCHER_DETAIL_WKLY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AXTRIA_AXTRIASALESIQTM_EMPLOYEE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AXTRIA_AXTRIASALESIQTM_EMPLOYEE_v2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AXTRIA_EMPLOYEE_ASSIGNMENT_STATUS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_BING_ADS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CC_TITRATION_DOSAGE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CMOP_RX_DATA_TEVA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CMOP_RX_DATA_TEVA_HIST TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DA_DIGITAL_SPEND_DATA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DA_PRINT_SPEND_DATA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DDD_DOD_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DDD_QUANTITY_M_ADHOC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_F60Q TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_DRUGS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_FORMULARIES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_IMS_BRIDGE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_PBMS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_RESTRICTIONS_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_TEVA_WK_BRIDGE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_ACO_DETAIL_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_ACO_ORG_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_ACO_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BED_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BED_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BUSINESS_DETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CLINICAL_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CLINICAL_FACT_NATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_CLINICAL_FACT_STATE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_COT_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_DDD_XFER TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_FINANCIAL_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_INDENTIFIER_TERM_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROFESSIONAL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROFESSIONAL_DETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROF_SPECIALTY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROF_SPEC_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_RELATIONSHIP_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IDS_CALL2_SAMPLE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_GEOGRAPHY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_GEOGRAPHY_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_REJECT_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FR61 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_NTIS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_OMNICARE_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DDD_MONTHLY_RETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DDD_WEEKLY_RETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_WEEKLY_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PRIME_RX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PROGNOS_CINQAIR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REFERENCE_INCLUDE_DDD_SUBCAT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_RELIANCE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REMS_PHARMACY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_SIEBEL_PRSN_ACCTS_TO_VEEVA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TEVA_AHM_EXPENSE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TEVA_AHM_INTERACTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TIME_OFF_TERRITORY_KC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TRIALCARD_COUPON TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_BIOLOGICS_MISSING_INFO TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_ICS_ACCOUNT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_ICS_ASI TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_ADDRESS_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL_GOAL_TVA__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_DECILES_TVA__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_EMAIL_ACTIVITY_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_GROUP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_KEY_MESSAGE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_OBJECTTERRITORY2ASSOCIATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_QUESTION_RESPONSE_VOD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SUGGESTION_FEEDBACK_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SUGGESTION_TAG_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SUGGESTION_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SURVEY_TARGET_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SURVEY_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SYNC_TRACKING_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TERRITORY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TERRITORY2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_USER TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_USERTERRITORY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_WHOLESALE_867_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_YAHOO_GEMINI TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZIP_TO_TERR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_ALTERNATE_NAME TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_COMMUNICATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_HCO_TEVA_FLAG TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_PROFESSIONAL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_RAW_NPI TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_SPECIALTY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_CALCULATED_PBM_CONFIG_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_DRUG_ASSIGNMENTS_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FTF_OVERRIDE_PROVIDER_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FTF_PBM_FUNCTIONS_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_HAS_ST_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_IQVIA_PAYTYPEINDEX_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_KEY_CONTROLLER_LIST_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_MODEL_PAYTYPE_MAP_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_OVERRIDE_FID_IQVIA_KEY_CONTROLLER_LIST_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_PAT_PA_RESTRICTION_DESCRIPTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_STEP_RESTRICTION_DESCRIPTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_STEP_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.XPD_CORE_METRICS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.XPD_SWITCH_DETAILS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_drm45_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_cnt_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_control_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_qty_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_vv_objectterritory2assignmentrule TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_vv_rep_roster_vod__c TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ACTIVITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_EXPENSE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_EVENT_SPEAKER TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AHM_SPEAKER_PROFILE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ANTIMIGRAINE_DDD_DOLLARS_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_DETAIL_WKLY_CGD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_COPAY_REDEMPTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ASI_REDEMPTIONS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AXTRIA_EMPLOYEE_ASSIGNMENT_STATUS_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_AXTRIA_TERRITORY_HIERARCHY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_CMOP_RX_DATA_TEVA_ADD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DA_BROADCAST_DATA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DDD_DOD_QTY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DDD_DOLLARS_M_ADHOC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DX_CLAIMS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_DYNAMIC_SEGMENT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_ACCOUNTS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_CONTROL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_COPAYS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_DRUG_CLASS_THRPTC_AREA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_FTF_HEALTH_PLAN_GEOGRAPHY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_ACO_DETAIL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_ACO_PROFESSIONAL_RSTR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_BED_CLUSTER_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_IDENTIFIER_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_PROVIDER_AFFILTN_FACT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_HCOS_RELATIONSHIP_TYPE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_I3_BY_STRENGTH_RX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_I3_TYSABRI_RX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IDS_CALL2_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_DEA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_PLAN TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_PLAN_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_PRODUCT_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_FIA_PROVIDER_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_OCHL_M TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_IMS_PLAN_XREF_ACCELERATED TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_INNOVID_VIEWABILITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_INTEGRAL_AD_SCIENCE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_KEY_MESSAGE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_KNIPPER_SAMPLES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_CALL_DETAIL_GOALS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_MONTHLY_DEMO_QTY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_DMD_MONTHLY_QUANTITY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ONC_MANUAL_FCRS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_OPTUMRX TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PSKW_GRANIX_COUPON_SAVINGS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PSRF_UTIL_RPT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_PSR_REPORT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REFERENCE_COPAY_VOUCHER_PROGRAM TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_REMS_DISTRIBUTOR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_SIEBEL_BUS_ACCTS_TO_VEEVA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_SPECIALTY_PHARMACY_CM_LKUP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_SPECIALTY_PHARMACY_LOOKUPS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TEVA_AHM_PARTICIPANT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TIME_OFF_TERRITORY_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_ANDA_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_BIOLOGICS_DISPENSE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_BIOLOGICS_HUB TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_BIOLOGICS_REFERRAL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_BIOLOGICS_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_HD_SMITH_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_TW_ICS_SALES TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_ACCOUNT TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_ACCOUNTSHARE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_ACCT_MERGE_HISTORY_VOD TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_ASSESSMENT__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL2_DETAIL_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL2_SAMPLE_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL2_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_CALL2_VOD__HISTORY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_MEDICAL_EVENT_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_MEDICAL_INQUIRY_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_PRODUCT_METRICS_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_PRODUCT_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_REMOTE_MEETING_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_RULETERRITORY2ASSOCIATION TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_SENT_EMAIL_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TERRITORY2MODELHISTORY TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_VV_TSF_VOD__C TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZIP_TO_TERR_V2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TC TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TR TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_CALL_PLAN_TW TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.EXT_ZS_TEVA_PAYER_WRKBK TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_DEA_ADDRESS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_EMAIL_PREFERENCE TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_HCO TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_IMS_FLAG TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_MARKETING_CHANNEL TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_RAW_DEA TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.MDM_RELATIONSHIP TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_BOTOX_STEP_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_COVERAGE_CAT_DESCRIPTION_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_DELETE_BRIDGE_FTF_PLAN_TYPES_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FORMULARY_DERIVATION_CONFIG_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FTF_OVERRIDE_PLAN_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FTF_PAYTYPE_PAYTYPEINDEX_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_FTF_PLANS_PAYTYPEINDEX_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_IQVIA_PAYER_PAYTYPE_OVERRIDE_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_IQVIA_PLANS_DISCARD_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_PATIENT_PA_RESTRICTION_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_PROVIDER_OVERRIDE_DEFAULT_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_RESTRICTION_CAT_DESCRIPTION_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.PS_TIER_CAT_DESCRIPTION_MAPPING_V01 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.XPD_DEMOGRAPHICS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.XPD_RESTART_DIFF_DETAILS TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_drm45_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_cnt_m_adhoc TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhj_qty_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhk_cnt_m TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_ims_mhk_qty_w TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.ext_knipper_samples_v2 TO CDW_Admin;
+GRANT SELECT ON ingestion_reference.tmp2 TO CDW_Admin;
+GRANT INSERT ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_anti_psych_weekly_new_prescriber TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_anti_psych_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_anti_psych_weekly_prescriber_sales TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_anti_psych_weekly_prescriber_sales_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_monthly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_monthly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_monthly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_pre_call_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_pre_calls_anti_psych TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_weekly_geography_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_weekly_payer_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT INSERT ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT UPDATE ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DELETE ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT ALTER ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT REFERENCES ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT DROP ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT TRUNCATE ON reporting.nh_weekly_prescriber_summary TO CDW_Admin WITH GRANT OPTION;
+GRANT SELECT ON metadata.outbound_table_counts TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_infl_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_infl_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_infl_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_infl_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_infl_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_key_controlling_account_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_key_controlling_account_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_key_controlling_account_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_key_controlling_account_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_key_controlling_account_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_key_pbm_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_key_pbm_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_key_pbm_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_key_pbm_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_key_pbm_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ftf_hp_id_key_controlling_plan_account TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ftf_hp_id_key_controlling_plan_account TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ftf_hp_id_key_controlling_plan_account TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ftf_hp_id_key_controlling_plan_account TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ftf_hp_id_key_controlling_plan_account TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_iqvia_plan_code_ftf_hp_id TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_iqvia_plan_code_ftf_hp_id TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_iqvia_plan_code_ftf_hp_id TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_iqvia_plan_code_ftf_hp_id TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_iqvia_plan_code_ftf_hp_id TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_key_pbm_product_coverage_category_commercial TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_commercial TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_commercial TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_key_pbm_product_coverage_category_commercial TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_commercial TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_pay_type_product_copay_tier TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_pay_type_product_copay_tier TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_pay_type_product_copay_tier TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_pay_type_product_copay_tier TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_pay_type_product_copay_tier TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_pay_type_product_patient_pa TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_pay_type_product_patient_pa TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_pay_type_product_patient_pa TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_pay_type_product_patient_pa TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_pay_type_product_patient_pa TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_pay_type_product_step_edit_type TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_pay_type_product_step_edit_type TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_pay_type_product_step_edit_type TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_pay_type_product_step_edit_type TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_pay_type_product_step_edit_type TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_payer_spine25_plan_teva_brands TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_payer_spine25_plan_teva_brands TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_payer_spine25_plan_teva_brands TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_payer_spine25_plan_teva_brands TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_payer_spine25_plan_teva_brands TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_DDD_CHANGE_LOG TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_MHK_CNT_M TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_MHK_QTY_M TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_MHK_QTY_W TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_SIEBEL_BUS_ACCTS_TO_VEEVA TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_VV_CALL2_VOD__C_test TO CDW_Admin;
+GRANT SELECT ON metadata.datamart_table_counts TO CDW_Admin;
+GRANT SELECT ON metadata.raw_view_counts_by_file_id TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_cm_state_lives_formular_status TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_cm_state_lives_formular_status TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_cm_state_lives_formular_status TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_cm_state_lives_formular_status TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_cm_state_lives_formular_status TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ftf_hp_id_key_pbm TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ftf_hp_id_key_pbm TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ftf_hp_id_key_pbm TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ftf_hp_id_key_pbm TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ftf_hp_id_key_pbm TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_payer_spine25_detailed_teva_brands TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_payer_spine25_detailed_teva_brands TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_payer_spine25_detailed_teva_brands TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_payer_spine25_detailed_teva_brands TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_payer_spine25_detailed_teva_brands TO CDW_Admin;
+GRANT SELECT ON sfa_history.v_siebel_samples_prof TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXTERNAL_TABLE_CLEANUP TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_CAREMARK_RX2 TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_SIEBEL_PRSN_ACCTS_TO_VEEVA TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.MS_WKLY_RX_QTY TO CDW_Admin;
+GRANT SELECT ON metadata.reference_table_counts TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_all_changes TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_all_changes TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_all_changes TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_all_changes TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_all_changes TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_health_plan_detail TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_health_plan_detail TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_health_plan_detail TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_health_plan_detail TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_health_plan_detail TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_claims_proc_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_claims_proc_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_claims_proc_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_claims_proc_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_claims_proc_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_mgt_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_mgt_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_mgt_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_mgt_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_ftf_pbm_formulary_mgt_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_pbm_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_pbm_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_pbm_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_pbm_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_pbm_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_player_summary TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_player_summary TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_player_summary TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_player_summary TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ajovy_migraine_market_iqvia_player_summary TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_ftf_plan_master_file TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_ftf_plan_master_file TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_ftf_plan_master_file TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_ftf_plan_master_file TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_ftf_plan_master_file TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_commercial TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_commercial TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_commercial TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_commercial TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_key_controlling_account_product_coverage_category_commercial TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_key_pbm_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_key_pbm_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_key_pbm_product_coverage_category_allpaytypes TO CDW_Admin;
+GRANT INSERT ON payerspine.vw_final_extract_pay_type_product_coverage_category TO CDW_Admin;
+GRANT UPDATE ON payerspine.vw_final_extract_pay_type_product_coverage_category TO CDW_Admin;
+GRANT DELETE ON payerspine.vw_final_extract_pay_type_product_coverage_category TO CDW_Admin;
+GRANT REFERENCES ON payerspine.vw_final_extract_pay_type_product_coverage_category TO CDW_Admin;
+GRANT TRUNCATE ON payerspine.vw_final_extract_pay_type_product_coverage_category TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_CMOP_RX_DATA_TEVA_HIST TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_DEA TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_MHK_CNT_W TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_IMS_PDRP TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_NTIS TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.EXT_TW_ICS_ASI TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.MS_MTHLY_RX_CNT TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.MS_MTHLY_RX_QTY TO CDW_Admin;
+GRANT SELECT ON teva_ingestion.MS_WKLY_RX_CNT TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_file_id OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_pre_calls_anti_psych OWNER TO CDW_Admin;
+ALTER TABLE reporting.austedo_leadership_dashboard OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_outlet_subcat OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_remain_subcat OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_sales_adjusts OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_allocated OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_parents_no_outlet OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_parents OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_ddd_retail OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_prescribers OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_facilities OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_onc_demo_outlets OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_tvcmid_ddd_md OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_tvcmid_ddd OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_region_area_c_new OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_rx_decile_d OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_rx_decile_c OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_rx_decile_b OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_rx_decile_a OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_dollars OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_ddd OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445_2 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445_1 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_demo_rank2 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_demo_rank1 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_call_detail_cd OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_merge OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_oncology_adjusted_sales OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_product_model_all OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_tvcmid_combine_final OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_tvcmid_combine OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_ddd_md_qty OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_ddd_qty OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_dup_outlet OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_dup_tvcmid OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_teva OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_i3_by_strength OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_globals OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_anti_psych_weekly_payer_prescriber_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_anti_psych_weekly_prescriber_sales_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_anti_psych_weekly_prescriber_sales OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_anti_psych_weekly_new_prescriber OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_weekly_geography_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_weekly_payer_prescriber_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_weekly_prescriber_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_pre_call_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_monthly_geography_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_monthly_payer_prescriber_summary OWNER TO CDW_Admin;
+ALTER TABLE reporting.nh_monthly_prescriber_summary OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_region_area_c OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_digital_edetail2 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_digital_1 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_call_key_message OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_call_detail_dsa OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_digital_final OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_digital_3 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_TR OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_region_area_cs3 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_region_area_cs2 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_region_area_cs OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_sample_s OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_call_s OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_sfa_survey2 OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_sfa_survey OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_call_hist_c_new OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_product_model OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_ddd_md OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445_md OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445_2_md OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_445_1_md OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_file_id_ddd_md OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_file_id_ddd_md OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_lat_lon_sfa OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_demo_rank2 OWNER TO CDW_Admin;
+ALTER TABLE sandbox.tmp_demo_rank1 OWNER TO CDW_Admin;
+ALTER TABLE datamart.tmp_onc_demo_sales_alloc_adjusts OWNER TO CDW_Admin;
+ALTER TABLE datamart.tmp_globals OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_file_id_purge OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_rx_decile OWNER TO CDW_Admin;
+ALTER TABLE WSMP_ADMIN_ORA.tmp_global_date OWNER TO CDW_Admin;
+ALTER VIEW reporting.fcr_summary OWNER TO CDW_Admin;
+ALTER VIEW WSMP_ADMIN_ORA.Syneos_Cinqair_dddmd OWNER TO CDW_Admin;
+ALTER VIEW outbound.concur_hcp_delta OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_xpd_switch_details OWNER TO CDW_Admin;
+ALTER VIEW sandbox.ics_mop OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_calls_by_specialty_respiratory OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_calls_by_specialty_oncology OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_call_data_respiratory OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_call_data_oncology OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_call_data_cns OWNER TO CDW_Admin;
+ALTER VIEW sfa_history.v_siebel_samples_prof OWNER TO CDW_Admin;
+ALTER VIEW metadata.datamart_table_counts OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_detailed_data_respiratory OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_detailed_data_oncology OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_detailed_data_cns OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_access_monitor_calls_by_specialty_cns OWNER TO CDW_Admin;
+ALTER VIEW sandbox.ad_hoc_ad OWNER TO CDW_Admin;
+ALTER VIEW sandbox.knipper_supplemental_test OWNER TO CDW_Admin;
+ALTER VIEW sandbox.create_paragard_anda_sales OWNER TO CDW_Admin;
+ALTER VIEW metadata.cleansed_table_counts_by_file_id OWNER TO CDW_Admin;
+ALTER VIEW metadata.raw_view_counts_by_file_id OWNER TO CDW_Admin;
+ALTER VIEW metadata.reference_table_counts OWNER TO CDW_Admin;
+ALTER VIEW outbound.asrs_count OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_xpd_core_metrics OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_xpd_demographics OWNER TO CDW_Admin;
+ALTER VIEW sandbox.asi_market_access_w_test OWNER TO CDW_Admin;
+ALTER VIEW outbound.zs_calls_by_specialty OWNER TO CDW_Admin;
+ALTER VIEW outbound.ftf_ims_monthly_market_obm OWNER TO CDW_Admin;
+ALTER VIEW metadata.outbound_table_counts OWNER TO CDW_Admin;
