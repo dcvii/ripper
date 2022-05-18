@@ -7,7 +7,7 @@ march 2022
 
 ## order of runners
 
-It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate. The order of the grants follows. As the getters can be run in any order, each set of runners will handle a unique set of objects from the source databa
+It is very important that these runners be executed in the proper order such that we minimize errors with grants and precedence. This is a first estimate. The order of the grants follows. As the getters can be run in any order, each set of runners will handle a unique set of objects from the source database.
 
 
 order  | runner 
@@ -22,7 +22,7 @@ order  | runner
 07  | run_access
 09  | run_auth
 10  | run_locations
-11  |
+11  | run_custom
 
 
 

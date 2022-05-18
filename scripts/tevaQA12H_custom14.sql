@@ -135,3 +135,42 @@ GRANT DELETE ON metadata.data_feed_version_validation_rules TO Databurst_Updt;
 GRANT UPDATE ON metadata.data_feed_version_validation_rules TO Databurst_Updt;
 GRANT SELECT ON metadata.data_feed_version_validation_rules TO Databurst_Updt;
 GRANT INSERT ON metadata.data_feed_version_validation_rules TO Databurst_Updt;
+
+-- additional
+grant all on cleansed.ims_mhj_qty_w to Databurst_Updt;
+grant all on customer_master.tvcmid_xref to Databurst_Updt;
+grant all on datamart.oncology_invoice_adjustments to Databurst_Updt;
+grant all on datamart.prescriber_rx to Databurst_Updt;
+grant all on datamart.specialty_pharmacy_shipment  to Databurst_Updt;
+grant all on datamart.tvcmid_xref to Databurst_Updt;
+grant all on integration.copay_detail_weekly to Databurst_Updt;
+grant all on integration.prescriber_rx to Databurst_Updt;
+grant all on mdm.address to Databurst_Updt;
+grant all on metadata.id_lookup to Databurst_Updt;
+grant all on metadata.log_job_events to Databurst_Updt;
+grant all on metadata.workflow_command to Databurst_Updt;
+grant all on metadata.workflow_process  to Databurst_Updt;
+grant all on product.basket to Databurst_Updt;
+grant all on product.source_product to Databurst_Updt;
+grant all on sandbox.qc_table_stats to Databurst_Updt;
+grant all on sequence metadata.job_id_sequence to Databurst_Updt;
+grant all on sequence product.basket_id_seq to Databurst_Updt;
+grant all on teva_ingestion.ims_mhj_qty_w to Databurst_Updt;
+grant all on veeva.dsa_slide to Databurst_Updt;
+grant all on veeva.ids_call_detail to Databurst_Updt;
+grant all on veeva.v_product to Databurst_Updt;
+grant usage on schema mdm to Databurst_Updt;
+
+
+grant all on integration.copay_redemptions to Databurst_Updt;
+grant all on reporting.product_item to Databurst_Updt;
+grant all on reporting.sp_pre_call_summary to Databurst_Updt;
+grant all on datamart.roster to Databurst_Updt;
+grant all on integration.copay_redemptions to Databurst_Updt;
+grant all on reporting.product_item to Databurst_Updt;
+grant all on reporting.sp_pre_call_summary to Databurst_Updt;
+grant all on veeva.v_key_message to Databurst_Updt;
+grant all on sequence product.basket_id_seq to Databurst_Updt;
+grant all on veeva.v_account to Databurst_Updt;
+grant all on integration.specialty_pharmacy_shipment to Databurst_Updt;
+grant all on reporting.rs_monthly_payer_geography_summary to Databurst_Updt;
