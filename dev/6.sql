@@ -21,3 +21,5 @@ create table migration.source_schemas_tmp as select * from migration.source_sche
 
 drop table migration.source_schemas;
 
+select 'grant all on '||table_schema||'.'||table_name||' to Databurst_Updt;' from tables;
+

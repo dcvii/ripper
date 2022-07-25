@@ -174,3 +174,64 @@ grant all on sequence product.basket_id_seq to Databurst_Updt;
 grant all on veeva.v_account to Databurst_Updt;
 grant all on integration.specialty_pharmacy_shipment to Databurst_Updt;
 grant all on reporting.rs_monthly_payer_geography_summary to Databurst_Updt;
+
+
+grant all on reporting.rs_monthly_payer_geography_summary to Databurst_Updt;
+grant all on datamart.customer_address to Databurst_Updt;
+grant all on product.basket_item to Databurst_Updt;
+grant all on reporting.product  to Databurst_Updt;
+grant all on sequence product.basket_id_seq to Databurst_Updt;
+grant all on datamart.specialty_pharmacy_shipment  to Databurst_Updt;
+grant all on metadata.data_file_metadata  to Databurst_Updt;
+grant all on reporting.sp_pre_call_summary  to Databurst_Updt;
+grant all on reporting.sp_pre_call_summary_submarket  to Databurst_Updt;
+grant all on reporting.sp_weekly_payer_prescriber_summary   to Databurst_Updt;
+grant all on datamart.alternate_call_plans  to Databurst_Updt;
+grant all on integration.call_plan  to Databurst_Updt;
+grant all on reference.call_plan_active_dates  to Databurst_Updt;
+grant all on datamart.current_alignment  to Databurst_Updt;
+grant all on veeva.call  to Databurst_Updt;
+grant all on datamart.oncology_invoice_adjustments  to Databurst_Updt;
+grant all on integration.onc_sales_adjustment_load  to Databurst_Updt;
+grant all on datamart.sfa_demographics  to Databurst_Updt;
+grant all on integration.ddd_md  to Databurst_Updt;
+
+--- 2022-05-18
+
+grant all on datamart.customer_address_link to Databurst_Updt;
+grant all on veeva.v_approved_document to Databurst_Updt;
+grant all on sandbox.scd_roster to Databurst_Updt;
+grant all on veeva.v_key_message to Databurst_Updt;
+grant all on datamart.roster to Databurst_Updt;
+grant all on veeva.v_ids_call to Databurst_Updt;
+grant all on reference.oncology_account_id_ims_xref to Databurst_Updt;
+
+grant all on integration.ddd  to Databurst_Updt;
+grant all on reporting.roster  to Databurst_Updt;
+grant all on veeva.call_sample to Databurst_Updt;
+grant all on integration.ddd_md_demographics to Databurst_Updt;
+grant all on integration.oncology_call_detail_goals to Databurst_Updt;
+grant all on reporting.sp_monthly_payer_prescriber_summary to Databurst_Updt;
+grant all on datamart.customer_hcp_demographics to Databurst_Updt;
+grant all on reference.reporting_markets to Databurst_Updt;
+grant all on datamart.customer_hco_demographics to Databurst_Updt;
+
+---
+
+grant all on reporting.sales_force_product to Databurst_Updt;
+grant all on reporting.rs_pre_call_summary to Databurst_Updt;
+grant all on datamart.event to Databurst_Updt;
+grant all on datamart.call_plan to Databurst_Updt;
+grant all on reference.designations  to Databurst_Updt;
+grant all on reporting.sales_force_product to Databurst_Updt;
+grant all on reference.reporting_market_sales_force to Databurst_Updt;
+grant all on product.normalization_factor to Databurst_Updt;
+grant all on reporting.payer_mapping to Databurst_Updt;
+grant all on reporting.rs_pre_call_summary to Databurst_Updt;
+
+
+datamart.customer_level_flags
+sandbox.scd_sales_geography
+ 
+ truncate table metadata.python_lock;
+
