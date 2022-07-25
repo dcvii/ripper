@@ -14,13 +14,13 @@ A reject occurs when a data run fails to send any records to the target cluster.
 A partial occurs when the data changes in the source cluster. This can be evaluated by checking the 
 
 - **overload**<br>
-An overload occurs when there are more records in the target cluster table than in the source. This may be if data is accidently migrated twice, or if records are deleted in the source. In the second case, an overload is the flip side of a partial. 
+An overload occurs when there are more records in the target cluster table than in the source. This may be if data is accidentally migrated twice, or if records are deleted in the source. In the second case, an overload is the flip side of a partial. 
 
 - **audit**<br>
 An audit needs to take place each time data is run from the source cluster to the target cluster. It sill be invoked 
 
 ### init audit
-this should happen after the init_migration and before the data run. Once the data is run, you will need to check to see what rejects have occurd.  
+this should happen after the init_migration and before the data run. Once the data is run, you will need to check to see what rejects have occurred.  
 
 ### get rejects
 This will check the audit table and generate the proper v2v script for data that has failed to copy any records from the source to target. This is invoked on a schema by schema basis. 

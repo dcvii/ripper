@@ -1,5 +1,7 @@
 # running instructions
 
+July 2022
+
 
 make sure your source database is up and running. 
 
@@ -88,3 +90,14 @@ This is broken down into several processes that
 
 ### step one - get\_schemata.py
 This proc will run similarly to get_schema above but will generate separate scripts for each of the schemas in the database. In this case, when you execute the runners, you will have to enter the schema as a parameter and data will then be exported for that schema alone. 
+
+
+
+## scenario C - object restore
+
+### abstract
+If you run an object restore to your target database, this means you will have used `vbr.py` to make a schema by schema copy from the source to the target. The implications will be that users (other than dbadmin) will not have been transferred over. You will have to use the migrator to copy over the following:
+- users
+- resource pools
+- sequences
+- grants
