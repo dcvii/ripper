@@ -14,7 +14,7 @@ logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(me
 
 fspec = 'scripts/'+bucket_key+'_public_custom_ddl.sql'
 # this returns a large set of characters not lines
-config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN|SEQUENCE', 'fname': fspec}
+config = {'filter': 'PROJECTION|MANAGED EXTERNAL|MARK_DESIGN|SEQUENCE|TABLE|FUNCTION|WSMP_ADMIN_ORA', 'fname': fspec}
 filtered_results = chunk_filter(config)
 
 

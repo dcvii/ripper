@@ -7,7 +7,7 @@ lname = 'log/migrate_'+bucket_key+'_run_custom.log'
 logging.basicConfig(filename=lname, level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-cset = chunkify('scripts/'+bucket_key+'_custom15.sql')
+cset = chunkify('scripts/'+bucket_key+'_custom_01.sql')
 config = {'in_fspec': 'nil', 'log': lname, 'export_type': 'csv', 'conn_type': 'tgt', 'function': 'access', 'schema': 'all_schemas', 'bucket_key': bucket_key}
 result_set = run_multi_sql(cset, config)
 
