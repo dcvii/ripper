@@ -98,6 +98,12 @@ This proc will run similarly to get_schema above but will generate separate scri
 ### abstract
 If you run an object restore to your target database, this means you will have used `vbr.py` to make a schema by schema copy from the source to the target. The implications will be that users (other than dbadmin) will not have been transferred over. You will have to use the migrator to copy over the following:
 - users
+- roles
 - resource pools
 - sequences
 - grants
+- auth
+- ldap
+- views
+
+And maybe other oddments. 
