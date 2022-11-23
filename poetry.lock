@@ -275,7 +275,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "vertica-python"
-version = "1.0.5"
+version = "1.1.1"
 description = "Official native Python client for the Vertica database."
 category = "main"
 optional = false
@@ -296,7 +296,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "bd06e031730e1e7bc7796eb97852e49fdfba592613db111eef47fbabd3e831a6"
+content-hash = "fd561ab5631e64ee6e58f6b1fe5e122884867a2903e3cf44ed12bf76b4dc6ef8"
 
 [metadata.files]
 atomicwrites = [
@@ -576,10 +576,7 @@ urllib3 = [
     {file = "urllib3-1.26.9-py2.py3-none-any.whl", hash = "sha256:44ece4d53fb1706f667c9bd1c648f5469a2ec925fcf3a776667042d645472c14"},
     {file = "urllib3-1.26.9.tar.gz", hash = "sha256:aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"},
 ]
-vertica-python = [
-    {file = "vertica-python-1.0.5.tar.gz", hash = "sha256:9bdafa3fc1937a1c77dd03bf682b8a02bae927fc9c54758f910f6c3dcded99ea"},
-    {file = "vertica_python-1.0.5-py2.py3-none-any.whl", hash = "sha256:3d4020d6bd5c682df5966e7709db4a0846a5c488fa93b648c928c513577b29ea"},
-]
+vertica-python = []
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
     {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},

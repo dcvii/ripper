@@ -1,3 +1,4 @@
+```
      name      | is_internal | query_budget_MB | memorysize | maxmemorysize | plannedconcurrency | execution_parallelism | max_concurrency | queuetimeout | runtimecap | cascadeto  | priority | assigned_users | query_cnt |             since             | count
 ---------------+-------------+-----------------+------------+---------------+--------------------+-----------------------+-----------------+--------------+------------+------------+----------+----------------+-----------+-------------------------------+-------
 diuser_pool   | f           |            3644 | 0%         | 50%           | AUTO               | AUTO                  |                 | 00:05        |            |            |        0 |                |         0 | 2022-03-22 09:30:29.684324-04 |     4
@@ -15,3 +16,5 @@ alter resource pool small_pool MEMORYSIZE '1G' PLANNEDCONCURRENCY 1 RUNTIMECAP '
 alter resource pool large_pool MEMORYSIZE '4G' PLANNEDCONCURRENCY 1;
 -- alter resource pool large_pool MEMORYSIZE '20G' PLANNEDCONCURRENCY AUTO;
 select 'alter user '||user_name||' set RESOURCE POOL = ''small_pool'';' from users where resource_pool ilike 'general';
+
+```
