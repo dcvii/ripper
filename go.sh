@@ -6,9 +6,9 @@ python get_audit.py $1
 echo 'running ddl'
 python run_ddl.py $1
 echo 'pushing data'
-python run_data_v2v.py $1
+python run_data_s3.py $1
 echo 'running audit'
 python run_audit.py $1
 echo 'job complete'
-say -v Yuri 'This work is done.'
+say 'This work is done.'
 
